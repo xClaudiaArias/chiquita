@@ -1,5 +1,5 @@
 // order items
-import mongoose from 'mongoose';
+const mongoose = require("mongoose")
 
 const orderSchema = new mongoose.Schema({
     customer: {
@@ -37,4 +37,4 @@ function setPrice(num){
     return num*100;
 }
 
-export default mongoose.model('Order', orderSchema)
+module.exports =  mongoose.model('Order', orderSchema)

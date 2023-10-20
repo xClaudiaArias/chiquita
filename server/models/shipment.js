@@ -1,5 +1,5 @@
 // order items
-import mongoose from 'mongoose';
+const mongoose = require("mongoose")
 
 const shipmentSchema = new mongoose.Schema({
     street: {
@@ -31,4 +31,4 @@ const shipmentSchema = new mongoose.Schema({
     { timestamps: true }
 )
 
-export default mongoose.model('Shipment', shipmentSchema)
+module.exports =  mongoose.model('Shipment', shipmentSchema)

@@ -1,6 +1,6 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import customerController from "../controllers/customerController.js";
+const customerController = require('../controllers/customerController');
 
 
 router.route('/')

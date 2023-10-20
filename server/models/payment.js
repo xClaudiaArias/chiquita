@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require("mongoose")
 
 const paymentSchema = new mongoose.Schema({
     customer: {
@@ -33,4 +33,4 @@ function setPrice(num){
     return num*100;
 }
 
-export default mongoose.model('Payment', paymentSchema)
+module.exports =  mongoose.model('Payment', paymentSchema)

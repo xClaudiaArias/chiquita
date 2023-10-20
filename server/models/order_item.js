@@ -1,5 +1,5 @@
 // order items
-import mongoose from 'mongoose';
+const mongoose = require("mongoose")
 
 const orderItemSchema = new mongoose.Schema({
     quantity: {
@@ -24,4 +24,4 @@ function setPrice(num){
 }
 
 
-export default mongoose.model('OrderItem', orderItemSchema)
+module.exports =  mongoose.model('OrderItem', orderItemSchema)

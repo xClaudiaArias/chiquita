@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require("mongoose")
 
 const wishListSchema = new mongoose.Schema({
     customer: {
@@ -13,4 +13,4 @@ const wishListSchema = new mongoose.Schema({
     },
 })
 
-export default mongoose.model('Wishlist', wishListSchema)
+module.exports =  mongoose.model('Wishlist', wishListSchema)
