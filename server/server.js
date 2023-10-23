@@ -28,6 +28,8 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 // ROUTES 
 
 app.use('/customers', require('./routes/customer'))
+app.use('/admin', require('./routes/admin'))
+app.use('/card', require('./routes/card'))
 
 // ERROR PAGE
 
