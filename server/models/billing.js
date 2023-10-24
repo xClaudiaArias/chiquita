@@ -8,7 +8,7 @@ const billingSchema = new mongoose.Schema({
     },
     street2: {
         type: String,
-        required: true
+        required: false
     },
     city: {
         type: String,

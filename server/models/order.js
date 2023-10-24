@@ -12,10 +12,10 @@ const orderSchema = new mongoose.Schema({
         required: true,
         ref: 'Payment'
     },
-    order: {
+    shipment: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Order'
+        ref: 'Shipment'
     },
     total: {
         type: Number,

@@ -27,9 +27,17 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 
 // ROUTES 
 
-app.use('/customers', require('./routes/customer'))
 app.use('/admin', require('./routes/admin'))
+app.use('/billing', require('./routes/billing'))
 app.use('/card', require('./routes/card'))
+app.use('/cart', require('./routes/cart'))
+app.use('/category', require('./routes/category'))
+app.use('/customers', require('./routes/customer'))
+app.use('/order', require('./routes/order'))
+app.use('/payment', require('./routes/payment'))
+app.use('/product', require('./routes/product'))
+app.use('/shipment', require('./routes/shipment'))
+app.use('/wishlist', require('./routes/wishlist'))
 
 // ERROR PAGE
 
