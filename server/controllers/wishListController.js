@@ -2,9 +2,9 @@ const Wishlist = require("../models/Wishlist");
 const asyncHandler = require('express-async-handler');
 
 const getAllWishlists = asyncHandler(async(req, res) => {
-    const wishlists = Wishlist.find()
+    const wishlists = await Wishlist.find()
 
-    if (!wishlists.length) {
+    if (!wishlists?.length) {
         return res.status(400).json({message: "No wishlists found"})
     }
 
@@ -20,7 +20,7 @@ const createWishlist = asyncHandler(async(req, res) => {
 
     const wishlistObj = { customer, product }
 
-    const wishlist = Wishlist.create(wishlistObj)
+    const wishlist = await Wishlist.create(wishlistObj)
 
     res.json({message: "New wishlist created."})
 })

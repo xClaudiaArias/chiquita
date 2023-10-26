@@ -2,9 +2,9 @@ const Billing = require('../models/Billing');
 const asyncHandler = require('express-async-handler');
 
 const getBilling = asyncHandler(async(req, res) => {
-    const billings = Billing.find()
+    const billings = await Billing.find()
 
-    if (!billings.length) {
+    if (!billings?.length) {
         return res.status(400).json({message: "No billings found"})
     }
 
@@ -32,7 +32,7 @@ const updateBilling = asyncHandler(async(req, res) => {
         return res.status(400).json({message: "Fields can't be empty."})
     }
 
-    const billing = await Billing.findById(id).lean().exec()
+    const billing = await Billing.findById(id).exec()
 
     if (!billing) {
         return res.status(400).json({message: "No billing found."})

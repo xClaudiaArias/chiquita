@@ -2,9 +2,9 @@ const Cart = require("../models/Cart");
 const asyncHandler = require('express-async-handler');
 
 const getAllCarts = asyncHandler(async(req, res) => {
-    const carts = Cart.find()
+    const carts = await Cart.find()
 
-    if (!carts.length) {
+    if (!carts?.length) {
         return res.status(400).json({message: "No cart found"})
     }
 
@@ -32,7 +32,7 @@ const updateCart = asyncHandler(async(req, res) => {
         return res.status(400).json({message: "Fields can not be empty."})
     }
 
-    const cart = await Cart.findById(id).lean().exec()
+    const cart = await Cart.findById(id)
 
     if (!cart) {
         return res.status(400).json({message: "Cart doesn't exist"})

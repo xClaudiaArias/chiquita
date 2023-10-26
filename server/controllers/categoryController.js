@@ -1,13 +1,12 @@
 const Category = require("../models/Category");
 const asyncHandler = require('express-async-handler');
 
-const getAllCategories = asyncHandler(async(req, res) => {
-    const categories = Category.find()
-
-    if (!categories.length) {
+const getAllCategories = asyncHandler(async (req, res) => {
+    const categories = await Category.find()
+    
+    if (!categories?.length) {
         return res.status(400).json({message: "No categories found"})
     }
-
     res.json(categories)
 })
 
@@ -20,7 +19,7 @@ const createCategory = asyncHandler(async(req, res) => {
 
     const categoryObj = { categoryName }
 
-    const category = category.create(categoryObj)
+    const category = Category.create(categoryObj)
 
     res.json({message: "New category created."})
 })
@@ -32,7 +31,14 @@ const updateCategory = asyncHandler(async(req, res) => {
         return res.status(400).json({message: "Fields can't be empty."})
     }
 
-    const category = await category.findById(id).lean().exec()
+    const duplicateCategory = await Category.findOne({categoryName})
+
+    if (duplicateCategory) {
+        return res.status(400).json({message: "Category already exists."})
+    }
+
+
+    const category = await Category.findById(id)
 
     if (!category) {
         return res.status(400).json({message: "No category found."})

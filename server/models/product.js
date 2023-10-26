@@ -36,4 +36,12 @@ const productSchema = new mongoose.Schema({
     }
 })
 
+function getPrice(num){
+    return (num/100).toFixed(2);
+}
+
+function setPrice(num){
+    return num*100;
+}
+
 module.exports =  mongoose.model('Product', productSchema)

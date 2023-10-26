@@ -18,7 +18,7 @@ const createNewPayment = asyncHandler(async (req, res) => {
         return res.status(400).json({message: "All fields are required"})
     }
 
-    const paymentObject = { customer, payment, shipment, total }
+    const paymentObject = { customer, card, total, processed }
 
     const payment = await Payment.create(paymentObject)
 

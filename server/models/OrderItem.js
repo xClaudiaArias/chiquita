@@ -13,6 +13,11 @@ const orderItemSchema = new mongoose.Schema({
         get: getPrice, 
         set: setPrice
     },
+    order: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Order'
+    }
 })
 
 function getPrice(num){

@@ -12,13 +12,13 @@ const getAllOrderItems = asyncHandler(async (req, res) => {
 
 
 const createNewOrderItem = asyncHandler(async (req, res) => {
-    const { quantity, price } = req.body
+    const { order, quantity, price } = req.body
 
-    if (!customer || !quantity || !price) {
+    if (!order || !quantity || !price) {
         return res.status(400).json({message: "All fields are required"})
     }
 
-    const orderItemObject = { quantity, price }
+    const orderItemObject = { order, quantity, price }
 
     const orderItem = await OrderItem.create(orderItemObject)
 

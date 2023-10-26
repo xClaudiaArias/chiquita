@@ -1,10 +1,10 @@
 const Product = require("../models/Product");
 const asyncHandler = require('express-async-handler');
 
-const getAllProducts = asyncHandler(async(req, res) => {
-    const products = Product.find()
+const getAllProducts = asyncHandler(async (req, res) => {
+    const products = await Product.find()
 
-    if (!products.length) {
+    if (!products?.length) {
         return res.status(400).json({message: "No products found"})
     }
 
@@ -18,9 +18,9 @@ const createProduct = asyncHandler(async(req, res) => {
         return res.status(400).json({message: "Fields can't be empty."})
     }
 
-    const productObj = { category, product }
+    const productObj = { category, productName, color, units_in_stock, size, price}
 
-    const product = product.create(productObj)
+    const product = await Product.create(productObj)
 
     res.json({message: "New product created."})
 })
@@ -33,7 +33,7 @@ const updateProduct = asyncHandler(async(req, res) => {
     }
 
 
-    const product = await Product.findById(id).lean().exec()
+    const product = await Product.findById(id)
 
     if (!product) {
         return res.status(400).json({message: "No product found."})

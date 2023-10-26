@@ -2,7 +2,7 @@ const Shipment = require("../models/Shipment");
 const asyncHandler = require('express-async-handler');
 
 const getAllShipments = asyncHandler(async(req, res) => {
-    const shipments = await Card.find()
+    const shipments = await Shipment.find()
 
     if (!shipments?.length) {
         return res.status(400).json({message: "There are no shipments."})
@@ -12,7 +12,7 @@ const getAllShipments = asyncHandler(async(req, res) => {
 })
 
 const createShipment = asyncHandler(async(req, res) => {
-    const { customer, street, street2, state, zipcode} = req.body
+    const { customer, street, street2,  city,  state, zipcode} = req.body
 
     if (!customer || !street || !street2 || !city || !state || !zipcode) {
         return res.status(400).json({message: "Fields can't be empty."})
