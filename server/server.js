@@ -39,6 +39,13 @@ app.use('/payment', require('./routes/payment'))
 app.use('/product', require('./routes/product'))
 app.use('/shipment', require('./routes/shipment'))
 app.use('/wishlist', require('./routes/wishlist'))
+// ---------- auth 
+app.use('/admin-auth', require('./routes/auth/adminAuth'))
+app.use('/admin-auth/login', require('./routes/auth/adminAuth'))
+app.use('/admin-auth/register', require('./routes/auth/adminAuth'))
+app.use('/customer-auth', require('./routes/auth/customerAuth'))
+app.use('/customer-auth/login', require('./routes/auth/customerAuth'))
+app.use('/customer-auth/register', require('./routes/auth/customerAuth'))
 
 // ERROR PAGE
 
