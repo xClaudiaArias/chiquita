@@ -4,6 +4,8 @@ const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const session = require("express-session");
+
 
 
 // LOGIN 
@@ -21,16 +23,23 @@ router.post("/login", asyncHandler(async(req, res) => {
         res.status(400).json({message: "Fields can not be empty."})
     }
     // find email 
-    const customer = await Customer.findOne({ email }).exec.lean()
+    const customer = await Customer.findOne({ email }).lean().exec()
     // make sure password is correct 
+
     if (password === customer.password) {
+        req.session.user = {
+            id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email
+        }
         res.send("Welcome customer")
     } 
 
     // jwt token 
     if (customer) {
         const accessToken = jwt.sign(
-            {customer_id: customer._id, username },
+            {customer_id: customer._id, email },
             process.env.ACCESS_TOKEN_SECRET,
             {expiresIn: "2h"}
         );
@@ -38,7 +47,9 @@ router.post("/login", asyncHandler(async(req, res) => {
 
         // 🔴 SEND USER TO Dashboard
         
-        res.status(200).json(customer)    
+        // res.status(200).json(customer) 
+        console.log(customer)
+        res.send('Welcome customer')   
     } else {
         res.status(400).json({message: "Invalid customer data received"})
     }

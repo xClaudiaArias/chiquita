@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const session = require("express-session");
 
 
 // LOGIN 
@@ -25,6 +26,12 @@ router.post("/login", asyncHandler(async(req, res) => {
     const admin = await Admin.findOne({ username }).lean().exec()
     // make sure password is correct 
     if (password === admin.password) {
+        req.session.user = {
+            id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username
+        }
         res.send("Welcome admin")
     } 
 

@@ -1,19 +1,39 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express');
 const app = express();
 
 // dependencies 
-const path = require('path')
-const cookieParser = require('cookie-parser')
-const cors = require('cors')
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const session = require('express-session');
+const fileURLToPath = require('url');
+const dirname = require('path');
+const bodyParser = require('body-parser');
+const authCheck = require('./middleware/auth-check');
 
 //db connection 
 const connectDB = require('./config/dbConn')
-
 const mongoose = require('mongoose')
-const PORT = process.env.PORT || 3500
 
-console.log(process.env.NODE_ENV)
+// session 
+const sessionConfig = {
+    name: process.env.NAME,
+    secret: process.env.SECRET,
+    cookie: { 
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        secure: false,
+        httpOnly: true //means no access from javascript hackers
+    }, // 1 week
+    resave: false, // resave every time you go back and forth??
+    saveUninitialized: true // GDPR laws requires this to be false because user has to give consent
+};
+
+//port 
+const PORT = process.env.PORT || 3500
+const mode = process.env.NODE_ENV
+
+console.log(mode, process.env.NAME, process.env.SECRET)
 
 connectDB()
 
@@ -24,6 +44,11 @@ app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 app.use('/', express.static(path.join(__dirname, 'public')))
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json())
+app.use(cookieParser());
+app.use(session(sessionConfig));
+app.use(authCheck)
 
 // ROUTES 
 
