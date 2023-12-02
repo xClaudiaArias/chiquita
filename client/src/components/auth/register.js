@@ -1,39 +1,43 @@
 import React from "react"
 
-class Register extends React.Component {
-    render (){
-        return (
-        <>
+const Register = () => {
+    return (
+        <div className="register-container">
 
-            <p>Welcome to Chiquita</p>
-            <h1>Register</h1>
+            <div className="register-container__image">
+                <img src="" alt="--" />
+            </div>
 
-            <form action="" method="">
-                <label for="firstName">First name</label>
-                <input type="firstName" name="firstName" id="register-firstName"/>
+            <div className="login-container__form">
+                <p>Welcome to Chiquita</p>
+                <h1>Register</h1>
 
-                <label for="lastName">Last name</label>
-                <input type="lastName" name="lastName" id="register-lastName"/>
+                <form action="" method="">
+                    <label for="firstName">First name</label>
+                    <input type="firstName" name="firstName" id="register-firstName"/>
 
-                <label for="email">Email</label>
-                <input type="email" name="email" id="register-email"/>
+                    <label for="lastName">Last name</label>
+                    <input type="lastName" name="lastName" id="register-lastName"/>
 
-                <label for="password">Password</label>
-                <input type="password" name="password" id="register-password"/>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="register-email"/>
 
-                <div><span>Already have an account? </span><a href="/">Sign in!</a></div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="register-password"/>
 
-                <div>
-                    <input type="checkbox" name="newsletter" />
-                    <label for="checkbox" name="newsletter">Subscribe to our newsletter?</label>
+                    <div><span>Already have an account? </span><a href="/">Sign in!</a></div>
+
+                    <div>
+                        <input type="checkbox" name="newsletter" />
+                        <label for="checkbox" name="newsletter">Subscribe to our newsletter?</label>
+                    </div>
+
+                    <button>Register</button>
+
+                </form>
                 </div>
-
-                <button>Register</button>
-
-            </form>
-        </>
-        )
-    }
+        </div>
+    )
 }
 
 export default Register

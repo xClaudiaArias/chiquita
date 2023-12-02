@@ -1,7 +1,6 @@
 import  React, { useEffect } from 'react';
-import Navbar from './components/partials/navbar';
-import Product from './components/product';
 import Footer from './components/partials/footer';
+import Home from './components/home';
 import Layout from './components/layout';
 
 const App = () => {
@@ -12,6 +11,7 @@ const App = () => {
     return (
         <>
             <Layout />
+            <Home />
             <Footer />
         </>
     )

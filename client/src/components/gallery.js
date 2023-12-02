@@ -2,21 +2,18 @@ import React from "react"
 import Prod from "./prod"
 import ShopByCategory from "./shop-by-cat"
 
-class Gallery extends React.Component {
-    render (){
-        return (
+const Gallery = () => {
+    return (
         <>
+        <h1>BABIES -- Dresses</h1>
             <section>
-                    {/* shop by cat here  */}
+                <ShopByCategory />
             </section>
             <div id="container">
-                <Prod />
-                    
+                <Prod />   
             </div>
-
         </>
-        )
-    }
+    )
 }
 
 export default Gallery

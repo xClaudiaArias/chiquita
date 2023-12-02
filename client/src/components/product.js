@@ -2,9 +2,8 @@
 
 import React from "react"
 
-class Product extends React.Component {
-    render (){
-        return (
+const Product = () => {
+    return (
         <>
             <div className="product-card">
 
@@ -25,6 +24,7 @@ class Product extends React.Component {
                             <li>color 1</li>
                             <li>color 1</li>
                         </ul>
+                        <div id="prod-rating">****</div>
                     </div>
                     <div className="product-sizes">
                         <ul>
@@ -36,7 +36,6 @@ class Product extends React.Component {
                         </ul>
                     </div>
 
-                    <p>Product title</p>
                     <p>product description here.... hello</p>
 
 
@@ -59,8 +58,7 @@ class Product extends React.Component {
             </div>
 
         </>
-        )
-    }
+    )
 }
 
 export default Product

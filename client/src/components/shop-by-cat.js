@@ -1,10 +1,10 @@
 import React from "react";
 
-class ShopByCategory extends React.Component {
-    render() {
-        return (
-            <>
-                <p>Shop by category</p>
+const ShopByCategory = () => {
+    return (
+        <>
+            <div className="shop_by_category">
+            <p>Shop by category</p>
                 <ul>
                     <li>Color</li>
                     <li>Size</li>
@@ -13,9 +13,9 @@ class ShopByCategory extends React.Component {
                     <li>Pattern</li>
                     <li>Design</li>
                 </ul>
-            </>
-        )
-    }
+            </div>
+        </>
+    )
 }
 
 export default ShopByCategory
