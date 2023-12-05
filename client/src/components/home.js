@@ -1,9 +1,10 @@
-import react from 'react';
+import React from 'react';
+import CategoriesNav from "./categories-nav";
 
 const Home = () => {
     return (
         <>
-        <h1>Welcome to Chiquita</h1>
+        <CategoriesNav />
         <div className="home-container">
             <img src="" alt="1" />
             <img src="" alt="1" />

@@ -16,7 +16,7 @@ const Layout = () => {
 
                 <ul className='layout__navCenter'>
                     <li className="layout__home-link">
-                        <Link to="/">🍒</Link>
+                        <Link to="/">CHIQUITA</Link>
                     </li>
                 </ul>
 

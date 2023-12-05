@@ -1,4 +1,5 @@
-import React from "react"
+import React from "react";
+import { Outlet, Link } from 'react-router-dom';
 
 
 const CategoriesNav = () => {
@@ -24,6 +25,7 @@ const CategoriesNav = () => {
                     </li>
                 </ul>
             </div>
+            <Outlet />
         </>
     )
 }

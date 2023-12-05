@@ -5,11 +5,11 @@ class Footer extends React.Component {
         return (
         <>
             <div id="foot-container">
-                <div id="foot-logo">
+                <div className="foot-cont" id="foot-logo">
                     <p>FOOTER LOGO</p>
                 </div>
 
-                <div id="foot-links">
+                <div className="foot-cont"  id="foot-links">
                     <div id="foot-left-links">
                         <a href="/">link 1</a>
                         <a href="/">link 2</a>
@@ -20,7 +20,7 @@ class Footer extends React.Component {
                     </div>
                 </div>
 
-                <div id="subcribe-footer">
+                <div className="foot-cont" id="subcribe-footer">
                     <form>
                         <input type="email" placeholder="email" />
                         <button type="submit">Subscribe</button>
