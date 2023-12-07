@@ -1,6 +1,51 @@
-import React from "react"
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 const Register = () => {
+    const navigate = useNavigate();
+
+    // form state 
+    const [form, setForm] = useState({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: ""
+    });
+
+    // function to update submission 
+    const updateForm = (value)  => {
+        return setForm((prev) => {
+            return { ...prev, ...value };
+        });
+    }
+
+    // function that will handle the submission 
+
+    const onSubmit = async (e) => {
+        e.preventDefault()
+
+        // create a new customer 
+        const newCustomer = {...form}
+        await fetch("http://localhost:8000/customers",{
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newCustomer),
+        }) 
+        .catch(error => {
+            window.alert(error);
+            return;
+        });
+        setForm({
+            firstname: "",
+            lastname: "",
+            email: "",
+            password: ""
+        })
+        navigate("/")
+    }
+
     return (
         <div className="register-container">
 
@@ -12,18 +57,18 @@ const Register = () => {
                 <p>Welcome to Chiquita</p>
                 <h1>Register</h1>
 
-                <form action="" method="">
-                    <label for="firstName">First name</label>
-                    <input type="firstName" name="firstName" id="register-firstName"/>
+                <form onSubmit={onSubmit}>
+                    <label for="firstname">First name</label>
+                    <input type="firstname" name="firstname" value={form.firstname} id="register-firstname" onChange={(e) => updateForm({firstname : e.target.value})}/>
 
-                    <label for="lastName">Last name</label>
-                    <input type="lastName" name="lastName" id="register-lastName"/>
+                    <label for="lastname">Last name</label>
+                    <input type="lastname" name="lastname" value={form.lastname}  id="register-lastname" onChange={(e) => updateForm({lastname : e.target.value})}/>
 
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="register-email"/>
+                    <input type="email" name="email" value={form.email}  id="register-email" onChange={(e) => updateForm({email : e.target.value})}/>
 
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="register-password"/>
+                    <input type="password" name="password" value={form.password} id="register-password" onChange={(e) => updateForm({password : e.target.value})}/>
 
                     <div><span>Already have an account? </span><a href="/">Sign in!</a></div>
 
@@ -32,7 +77,7 @@ const Register = () => {
                         <label for="checkbox" name="newsletter">Subscribe to our newsletter?</label>
                     </div>
 
-                    <button>Register</button>
+                    <button type="submit">Register</button>
 
                 </form>
                 </div>

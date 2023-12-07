@@ -8,24 +8,28 @@ const CategoriesNav = () => {
             <div className="layout__top-bar">
                 <ul> 
                     <li>
-                        <Link to="/categories/babies">Babies</Link>
+                        {/* <Link to="/gallery/babies">Babies</Link> */}
+                        <a href="/">Babies</a>
                     </li>
 
                     <li>
-                        <Link to="/categories/toddlers">Toddlers</Link>
+                        {/* <Link to="/gallery/toddlers">Toddlers</Link> */}
+                        <a href="/">Toddlers</a>
                     </li>
 
                     <li>
-                        <Link to="/categories/kids">Kids</Link>
+                        {/* <Link to="/gallery/kids">Kids</Link> */}
+                        <a href="/">Kids</a>
                     </li>
 
 
                     <li>
-                        <Link to="/categories/accessories">Accessories</Link>
+                        {/* <Link to="/gallery/accessories">Accessories</Link> */}
+                        <a href="/">Accessories</a>
                     </li>
                 </ul>
             </div>
-            <Outlet />
+            {/* <Outlet /> */}
         </>
     )
 }

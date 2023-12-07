@@ -5,6 +5,7 @@ import Home from './components/home';
 import Gallery from "./components/gallery";
 import Search from "./components/search";
 import Layout from './components/layout';
+import Register from './components/auth/register';
 
 const App = () => {
     useEffect(() => {
@@ -18,6 +19,7 @@ const App = () => {
                     <Route path="/" element={<Home />}/>
                     <Route path="/gallery" element={<Gallery />} />
                     <Route path="/search" element={<Search />} />
+                    <Route path="/register" element={<Register />} />
                 </Routes>
             <Footer />
         </>
