@@ -1,0 +1,10 @@
+{
+    "editor.letterSpacing": 1,
+    "editor.guides.bracketPairs": true,
+    "editor.semanticHighlighting.enabled": true,
+    "editor.stickyScroll.scrollWithEditor": true,
+    "editor.stickyTabStops": false,
+    "editor.tabSize": 4,
+    "editor.wordWrap": "on",
+    "editor.suggest.showStatusBar": true
+}
