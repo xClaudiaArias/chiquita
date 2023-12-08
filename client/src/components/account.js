@@ -19,7 +19,7 @@ const Account = () => {
                 </div>
 
                 <div className="password__form">
-                    <h3>Personal information</h3>
+                    <h3>Password</h3>
                     <form>
                         <input type="text" placeholder="Password" />
                         <input type="text" placeholder="confirm password" />
@@ -28,7 +28,7 @@ const Account = () => {
                 </div>
 
                 <div className="shipping-information__form">
-                    <h3>Personal information</h3>
+                    <h3>Shipping Information</h3>
                     <form>
                         <input type="text" placeholder="Street" />
                         <input type="text" placeholder="Street2" />
@@ -41,7 +41,7 @@ const Account = () => {
                 </div>
 
                 <div className="payment-information__form">
-                    <h3>Personal information</h3>
+                    <h3>Payment Information</h3>
                     <form>
                     <input type="text" placeholder="Card Name" />
                         <input type="text" placeholder="Card Number" />

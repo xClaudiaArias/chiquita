@@ -63,7 +63,7 @@ app.use('/customers', require('./routes/customer'))
 // app.use('/payment', require('./routes/payment'))
 // app.use('/product', require('./routes/product'))
 // app.use('/shipment', require('./routes/shipment'))
-// app.use('/wishlist', require('./routes/wishlist'))
+app.use('/wishlist', require('./routes/wishlist'))
 // ---------- auth 
 // app.use('/admin-auth', require('./routes/auth/adminAuth'))
 // app.use('/admin-auth/login', require('./routes/auth/adminAuth'))

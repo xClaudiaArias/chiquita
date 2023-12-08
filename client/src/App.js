@@ -6,6 +6,8 @@ import Gallery from "./components/gallery";
 import Search from "./components/search";
 import Layout from './components/layout';
 import Register from './components/auth/register';
+import Wishlist from './components/wishlist';
+import Account from './components/account';
 
 const App = () => {
     useEffect(() => {
@@ -20,6 +22,8 @@ const App = () => {
                     <Route path="/gallery" element={<Gallery />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/wishlist" element={<Wishlist />} />
+                    <Route path="/account" element={<Account />} />
                 </Routes>
             <Footer />
         </>

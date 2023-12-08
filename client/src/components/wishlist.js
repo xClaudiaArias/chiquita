@@ -1,4 +1,5 @@
 import React from 'react';
+import Prod from './prod';
 
 const Wishlist = () => {
     return (

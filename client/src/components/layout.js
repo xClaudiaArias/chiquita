@@ -6,33 +6,28 @@ const Layout = () => {
             <div className='layout__navBar'>
                 <ul className='layout__navLeft'>
                     <li>
-                        {/* <Link to="/wishlist">Wishlist</Link> */}
-                        <a href="/">wishlist</a>
+                        <Link to="/wishlist">Wishlist</Link>
                     </li>
 
                     <li>
-                        {/* <Link to="/account">Account</Link> */}
-                        <a href="/">Account</a>
+                        <Link to="/account">Account</Link>
                     </li>
                 </ul>
 
                 <ul className='layout__navCenter'>
                     <li className="layout__home-link">
-                        {/* <Link to="/">CHIQUITA</Link> */}
-                        <a href="/">Chiquitas</a>
+                        <Link to="/">CHIQUITA</Link>
                     </li>
                 </ul>
 
                 <ul className='layout__navRight'>
                     <li>
-                        {/* <Link to="/search">Search</Link> */}
-                        <a href="/">Search</a>
+                        <Link to="/search">Search</Link>
                     </li>
 
 
                     <li>
-                        {/* <Link to="/cart">Cart</Link> */}
-                        <a href="/">Cart</a>
+                        <Link to="/cart">Cart</Link>
                     </li>
                 </ul>
             </div>
