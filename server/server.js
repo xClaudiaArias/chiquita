@@ -10,7 +10,7 @@ const session = require('express-session');
 const fileURLToPath = require('url');
 const dirname = require('path');
 const bodyParser = require('body-parser');
-const authCheck = require('./middleware/auth-check');
+// const authCheck = require('./middleware/auth-check');
 
 //db connection 
 const connectDB = require('./config/dbConn')
@@ -48,7 +48,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 app.use(cookieParser());
 app.use(session(sessionConfig));
-app.use(authCheck)
+// app.use(authCheck)
 
 // ROUTES 
 
@@ -56,12 +56,12 @@ app.use(authCheck)
 // app.use('/billing', require('./routes/billing'))
 // app.use('/card', require('./routes/card'))
 // app.use('/cart', require('./routes/cart'))
-// app.use('/gallery', require('./routes/gallery'))
+app.use('/category', require('./routes/category'))
 app.use('/customers', require('./routes/customer'))
 // app.use('/order', require('./routes/order'))
 // app.use('/order-item', require('./routes/orderItem'))
 // app.use('/payment', require('./routes/payment'))
-// app.use('/product', require('./routes/product'))
+app.use('/product', require('./routes/product'))
 // app.use('/shipment', require('./routes/shipment'))
 app.use('/wishlist', require('./routes/wishlist'))
 // ---------- auth 
