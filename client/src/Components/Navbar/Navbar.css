@@ -1,0 +1,70 @@
+.navbar {
+    width: 100%;
+    background-color: #CE75DD;
+    padding: 0 30px;
+    height: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navMenu {
+    width: inherit;
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style-type: none;
+}
+
+.navMenu li {
+    padding: 0 30px;
+}
+
+.navMenu li a {
+    font-size: 12px;
+    letter-spacing: 0.2rem;
+    font-weight: 300;
+}
+
+.navMenu .nav-logo {
+    flex: 1;
+    text-align: center;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navMenu .nav-logo a {
+    font-size: 10px;
+    font-weight: 400;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 16px;
+    box-shadow: 2px 2px 8px rgba(122,58,133, 0.4) ;
+}
+
+.nav-cart {
+    position: relative;
+}
+
+.nav-cart-count {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -18px;
+    left: 34px;
+    border-radius: 11px;
+    font-size: 12px;
+    background: white;
+    color: black;
+    font-size: 12px;
+}
+
