@@ -7,6 +7,10 @@ const productSchema = new mongoose.Schema({
         required: true,
         ref: 'Category'
     },
+    productImages: [{
+        type: String,
+        required: false
+    }],
     productName: {
         type: String,
         required: true

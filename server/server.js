@@ -52,25 +52,12 @@ app.use(session(sessionConfig));
 
 // ROUTES 
 
-// app.use('/admin', require('./routes/admin'))
-// app.use('/billing', require('./routes/billing'))
-// app.use('/card', require('./routes/card'))
-// app.use('/cart', require('./routes/cart'))
+
 app.use('/category', require('./routes/category'))
 app.use('/customers', require('./routes/customer'))
-// app.use('/order', require('./routes/order'))
-// app.use('/order-item', require('./routes/orderItem'))
-// app.use('/payment', require('./routes/payment'))
 app.use('/product', require('./routes/product'))
-// app.use('/shipment', require('./routes/shipment'))
 app.use('/wishlist', require('./routes/wishlist'))
-// ---------- auth 
-// app.use('/admin-auth', require('./routes/auth/adminAuth'))
-// app.use('/admin-auth/login', require('./routes/auth/adminAuth'))
-// app.use('/admin-auth/register', require('./routes/auth/adminAuth'))
-// app.use('/customer-auth', require('./routes/auth/customerAuth'))
-// app.use('/customer-auth/login', require('./routes/auth/customerAuth'))
-// app.use('/customer-auth/register', require('./routes/auth/customerAuth'))
+
 
 // ERROR PAGE
 
