@@ -41,11 +41,12 @@ const productSchema = new mongoose.Schema({
 })
 
 function getPrice(num){
-    return (num/100).toFixed(2);
+    return (num/100).toFixed(2)
 }
 
 function setPrice(num){
-    return num*100;
+    console.log(typeof(num), " ::2")
+    return num;
 }
 
 module.exports =  mongoose.model('Product', productSchema)
