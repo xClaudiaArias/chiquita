@@ -2,6 +2,11 @@
 const mongoose = require("mongoose")
 
 const productSchema = new mongoose.Schema({
+    mainCategory: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'MainCategory'
+    },
     category: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

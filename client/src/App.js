@@ -13,7 +13,7 @@ import Search from './Pages/Search';
 
 const App = () => {
     useEffect(() => {
-        document.title = 'Chiquita';
+        document.title = 'Chiquita | SHOP';
     }, []);
 
     return (

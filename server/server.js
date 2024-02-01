@@ -54,6 +54,7 @@ app.use(session(sessionConfig));
 
 
 app.use('/category', require('./routes/category'))
+app.use('/main-category', require('./routes/mainCategory'))
 app.use('/customers', require('./routes/customer'))
 app.use('/product', require('./routes/product'))
 app.use('/wishlist', require('./routes/wishlist'))
