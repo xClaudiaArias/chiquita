@@ -11,7 +11,6 @@ const Item = (props) => {
                 <li><img src={props.productImages[0]} alt="" /></li>
                 <li><img src={props.productImages[1]} alt="" /></li>
                 <li><img src={props.productImages[2]} alt="" /></li>
-                <li><img src={props.productImages[3]} alt="" /></li>
             </ul>
             <ul className="product-colors">
                 <li>{props.color}</li>

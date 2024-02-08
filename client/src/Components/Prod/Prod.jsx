@@ -7,8 +7,6 @@ import axios from 'axios'
 const Prod = () => {
     const [products, setProducts] = useState([]);
 
-    // TODO: create an objeect here for the response data 
-
     useEffect(() => {
         async function fetchData() {
             try {
