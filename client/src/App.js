@@ -28,10 +28,10 @@ const App = () => {
                     <Route path="/" element={<Home/>} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/wishlist" element={<Wishlist />} />
-                    <Route path="/babies" element={<ShopCategory banner={baby_banner} mainCategory="65bbe5b0062e04db1ac1b0bd"/>} />
-                    <Route path="/toddlers" element={<ShopCategory banner={kids_banner} mainCategory="65bbe5bd062e04db1ac1b0bf"/>} />
-                    <Route path="/kids" element={<ShopCategory banner={toddler_banner} mainCategory="65bbe5c2062e04db1ac1b0c1"/>} />
-                    <Route path="/accessories" element={<ShopCategory banner={accessories_banner} mainCategory="65bbe5ca062e04db1ac1b0c3"/>} />
+                    <Route path="/babies" element={<ShopCategory banner={baby_banner} mainCategoryName="babies" mainCategory="65bbe5b0062e04db1ac1b0bd"/>} />
+                    <Route path="/toddlers" element={<ShopCategory banner={toddler_banner} mainCategoryName="toddlers"  mainCategory="65bbe5bd062e04db1ac1b0bf"/>} />
+                    <Route path="/kids" element={<ShopCategory banner={kids_banner} mainCategoryName="kids"  mainCategory="65bbe5c2062e04db1ac1b0c1"/>} />
+                    <Route path="/accessories" element={<ShopCategory banner={accessories_banner} mainCategoryName="accessories"  mainCategory="65bbe5ca062e04db1ac1b0c3"/>} />
 
                     <Route path="/product" element={<Product />}>
                         <Route path=":productId" element={<Product />} />

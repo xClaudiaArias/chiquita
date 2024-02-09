@@ -3,27 +3,40 @@ import "./Item.css"
 
 const Item = (props) => {
 
+    const colorStyle = {
+        "backgroundColor": `${props.color}`,
+        "width": "15px",
+        "height": "15px",
+        "borderRadius": "50px"
+    }
+
     console.log(props, " --> props")
     return (
         <div className="item">
-            <p>{props.productName}</p>
             <ul className="product-images">
-                <li><img src={props.productImages[0]} alt="" /></li>
-                <li><img src={props.productImages[1]} alt="" /></li>
-                <li><img src={props.productImages[2]} alt="" /></li>
+                {/* {
+                    props.productImages.map((imge) => {
+                        return <li><img src={imge} alt="" /></li>
+                    })
+                } */}
+                <li><img src={props.productImages[0]} alt={props.productName} /></li>
             </ul>
             <ul className="product-colors">
-                <li>{props.color}</li>
+                <li><div style={colorStyle}></div></li>
             </ul>
+            <p className="product-name">{props.productName}</p>
+            {/* <div className="product-sizes">
+                <p>Sizes:</p>
+                <ul>
+                    {
+                        props.size.map((sz) => {
+                            return  <li> {sz} </li>
+                        })
+                    }
+                </ul>
+            </div> */}
             <div className="product-price">
-                    ${props.price}
-            </div>
-            <div className="product-sizes">
-                <li>{props.size[0]}</li>
-                <li>{props.size[1]}</li>
-                <li>{props.size[2]}</li>
-                <li>{props.size[3]}</li>
-                <li>{props.size[4]}</li>
+                <p>${props.price}</p>
             </div>
         </div>
     )

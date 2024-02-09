@@ -1,20 +1,32 @@
 import React, { useContext } from 'react'
 import { ShopContext } from '../Context/ShopContext'
 import Item from '../Components/Item/Item.jsx'
+import './CSS/ShopCategory.css'
 
 const ShopCategory = (props) => {
     const {products} = useContext(ShopContext);
+    let productLength = 0
+
+    products.map((item, i) => {
+        if (props.mainCategory === item.mainCategory) {
+            return productLength += 1;
+        }
+    })
 
     return (
         <div className='shop-category'>
-        <img src={props.banner} alt=""/>
+            <h1>{props.mainCategoryName}</h1>
+        {/* <img src={props.banner} alt=""/> */}
         <div className='shopcategory-indexSort'>
-            <p>
-            <span>Showing 1-12</span> out of 36 products
-            </p>
-        </div>
-        <div className="shopcategory-sort">
-            Sort by v
+            
+
+        <p className="shop-show"><span>Showing 1-{productLength}</span> out of {productLength} products</p>
+
+
+
+            <div className="shopcategory-sort">
+                Sort by
+            </div>
         </div>
         <div className="shopcategory-products">
             {

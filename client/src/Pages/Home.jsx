@@ -1,10 +1,10 @@
 import React from 'react'
-import Prod from '../Components/Prod/Prod'
 
 const Home = () => {
+    // TODO: boilerplates for EVRY PAGE
     return (
         <div>
-            <Prod />
+
         </div>
     )
 }
