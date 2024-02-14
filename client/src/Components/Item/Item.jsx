@@ -1,5 +1,6 @@
 import React from 'react'
 import "./Item.css"
+import { Link } from 'react-router-dom'
 
 const Item = (props) => {
 
@@ -10,7 +11,7 @@ const Item = (props) => {
         "borderRadius": "50px"
     }
 
-    console.log(props, " --> props")
+    // console.log(props, " --> props")
     return (
         <div className="item">
             <ul className="product-images">
@@ -19,7 +20,7 @@ const Item = (props) => {
                         return <li><img src={imge} alt="" /></li>
                     })
                 } */}
-                <li><img src={props.productImages[0]} alt={props.productName} /></li>
+                <li><Link to={`/product/${props.id}`}><img src={props.productImages[0]} alt={props.productName}/></Link></li>
             </ul>
             <ul className="product-colors">
                 <li><div style={colorStyle}></div></li>

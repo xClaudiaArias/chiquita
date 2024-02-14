@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import './Navbar.css'
-//TODO: import logo 
-//TODO: import cart icon 
+
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
