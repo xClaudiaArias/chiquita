@@ -4,7 +4,7 @@ import Item from '../Components/Item/Item.jsx'
 import './CSS/ShopCategory.css'
 
 const ShopCategory = (props) => {
-    const {products, categories} = useContext(ShopContext);
+    const {products, mainCategories, categories} = useContext(ShopContext);
 
     let productLength = 0
 

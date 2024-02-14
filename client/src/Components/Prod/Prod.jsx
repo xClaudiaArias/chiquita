@@ -5,10 +5,6 @@ import Item from '../Item/Item'
 import axios from 'axios'
 
 const Prod = () => {
-
-    
-
-
     return (
         <div>
 

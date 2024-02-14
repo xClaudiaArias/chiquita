@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 
 const Item = (props) => {
 
+    // console.log(props, " ::props in ITEM")
+
     const colorStyle = {
         "backgroundColor": `${props.color}`,
         "width": "15px",

@@ -3,12 +3,16 @@ import './Breadcrums.css'
 
 
 const Breadcrums = (props) => {
-    const {product, category} = props;
+    const {product, category, mainCategory} = props;
 
-    console.log(category.categoryName, "category")
     return (
         <div className='breadcrums'>
-            HOME | SHOP | {category.categoryName}  |
+            <p>
+                <span className='main-cat'>{mainCategory.mainCategoryName}</span>
+                <span className='divider'>|</span> 
+                <span className='cat'>{category.categoryName}</span>
+                <span className='divider'>|</span>
+                {product.productName} </p>
         </div>
     )
 }
