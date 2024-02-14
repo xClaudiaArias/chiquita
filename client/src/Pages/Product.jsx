@@ -30,7 +30,7 @@ const Product = () => {
     return (
         <div className="products">
             <Breadcrums product={product} category={category} mainCategory={mainCategory}/>
-            <Prod product={product} category={category}/>
+            <Prod product={product} category={category} mainCategory={mainCategory}/>
         </div>
     )
 }

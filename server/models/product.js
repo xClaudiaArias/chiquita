@@ -1,6 +1,8 @@
 // order items
 const mongoose = require("mongoose")
 
+// TODO: add a product description category
+
 const productSchema = new mongoose.Schema({
     mainCategory: {
         type: mongoose.Schema.Types.ObjectId,
