@@ -12,13 +12,13 @@ const getAllProducts = asyncHandler(async (req, res) => {
 })
 
 const createProduct = asyncHandler(async(req, res) => {
-    const { mainCategory, category, productName, productImages, color, units_in_stock, size, price } = req.body
+    const { mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price } = req.body
 
-    if (!mainCategory || !category || !productName || !productImages || !color || !units_in_stock || !size || !price) {
+    if (!mainCategory || !category || !productName || !productDescription || !productImages || !color || !units_in_stock || !size || !price) {
         return res.status(400).json({message: "Fields can't be empty."})
     }
 
-    const productObj = { mainCategory, category, productName, productImages, color, units_in_stock, size, price}
+    const productObj = { mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price}
 
     const product = await Product.create(productObj)
 
@@ -26,12 +26,11 @@ const createProduct = asyncHandler(async(req, res) => {
 })
 
 const updateProduct = asyncHandler(async(req, res) => {
-    const { id, mainCategory, category, productName, productImages, color, units_in_stock, size, price } = req.body
+    const { id, mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price } = req.body
 
-    if ( !id || !mainCategory ||  !category || !productName || !productImages || !color || !units_in_stock || !size || !price  ) {
+    if ( !id || !mainCategory ||  !category || !productName || !productDescription || !productImages || !color || !units_in_stock || !size || !price  ) {
         return res.status(400).json({message: "Fields can't be empty."})
     }
-
 
     const product = await Product.findById(id)
 
@@ -43,6 +42,7 @@ const updateProduct = asyncHandler(async(req, res) => {
     product.productImages = productImages
     product.category = category
     product.mainCategory = mainCategory
+    product.productDescription = productDescription
     product.color = color
     product.units_in_stock = units_in_stock
     product.price = price
