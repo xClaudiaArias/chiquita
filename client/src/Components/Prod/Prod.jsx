@@ -1,6 +1,6 @@
 // fetches products
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './Prod.css'
 import star_icon from '../Assets/star-icon.png'
 import star_icon_full from '../Assets/star-icon-full.png'
@@ -10,8 +10,10 @@ import { ShopContext } from '../../Context/ShopContext'
 const Prod = (props) => {
     //TODO: add all images
     //FIXME: change size IN CSS file
+
     const { product } = props;
-    console.log(product.size, " ----> prodcut size")
+    const { addToCart } = useContext(ShopContext)
+    // console.log(product,  " ---> in prod.jsx")
 
     const colorStyle = {
         "backgroundColor": `${product.color}`,
@@ -68,7 +70,7 @@ const Prod = (props) => {
                 <div className="product-price">
                     <p>${product.price}</p>
                 </div>
-                <button>ADD TO CART</button>
+                <button onClick={() => addToCart(product._id)}>ADD TO CART</button>
             </div>
         </div>  
     )
