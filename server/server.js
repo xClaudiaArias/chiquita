@@ -16,6 +16,9 @@ const bodyParser = require('body-parser');
 const connectDB = require('./config/dbConn')
 const mongoose = require('mongoose')
 
+const multer = require('multer')
+const jwt = require('jsonwebtoken')
+
 // session 
 const sessionConfig = {
     name: process.env.NAME,
@@ -40,7 +43,7 @@ connectDB()
 // ------
 
 
-app.use(cors())
+app.use(cors()) 
 app.use(express.json())
 app.use(cookieParser())
 app.use('/', express.static(path.join(__dirname, 'public')))
@@ -59,7 +62,28 @@ app.use('/customers', require('./routes/customer'))
 app.use('/product', require('./routes/product'))
 app.use('/wishlist', require('./routes/wishlist'))
 
+// IMAGE STORAGE ENGINE
+const storage = multer.diskStorage({
+    destination: './upload/images',
+    filename: (req, file, callback) => {
+        return callback(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}` )
+    }
+})
 
+// pass fn to our disk config 
+const upload = multer({storage:storage})
+
+//static endpoint
+app.use('/images', express.static('upload/images'))
+
+// endpoint to upload the images
+app.post("/upload", upload.single('product'), (req, res) => {
+    // will get and rename and store the image
+    res.json({
+        success: 1,
+        image_url: `http://localhost:${PORT}/images/${req.file.filename}`
+    })
+})
 
 // ERROR PAGE
 
