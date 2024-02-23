@@ -85,6 +85,9 @@ app.post("/upload", upload.single('product'), (req, res) => {
     })
 })
 
+// add the images to or mongo database 
+const productModel = require('./models/Product')
+
 // ERROR PAGE
 
 app.all('*', (req, res) => {
@@ -99,7 +102,6 @@ app.all('*', (req, res) => {
 })
 
 // mongoose connection
-
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
     // connect and start server 

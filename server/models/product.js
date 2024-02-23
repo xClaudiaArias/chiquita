@@ -12,6 +12,11 @@ const productSchema = new mongoose.Schema({
         required: true,
         ref: 'Category'
     },
+    id_num: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     productImages: [{
         type: String,
         required: false
@@ -24,10 +29,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    color: {
+    color: [{
         type: String,
         required: true
-    },
+    }],
     units_in_stock: {
         type: Number,
         default: 0
@@ -45,9 +50,15 @@ const productSchema = new mongoose.Schema({
     },
     in_stock: {
         type: Boolean,
-        default: false
+        default: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
-})
+},
+    { timestamps : true }
+)
 
 function getPrice(num){
     return (num/100).toFixed(2)

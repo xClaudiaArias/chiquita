@@ -12,17 +12,32 @@ const getAllProducts = asyncHandler(async (req, res) => {
 })
 
 const createProduct = asyncHandler(async(req, res) => {
+    const products = await Product.find({})
+    let id_num;
+
+    console.log(products, " products")
+
     const { mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price } = req.body
+
+    if (products.length > 0) {
+        // get last product
+        let last_product_num = products.slice(-1)
+        let last_product = last_product_num[0] //access our one product
+        id_num = last_product.id_num + 1
+    } else {
+        id_num = 1
+    }
+
 
     if (!mainCategory || !category || !productName || !productDescription || !productImages || !color || !units_in_stock || !size || !price) {
         return res.status(400).json({message: "Fields can't be empty."})
     }
 
-    const productObj = { mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price}
+    const productObj = { id_num, mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price}
 
     const product = await Product.create(productObj)
 
-    res.json({message: "New product created."})
+    res.json({message: `Product with id ${product._id} was created.`})
 })
 
 const updateProduct = asyncHandler(async(req, res) => {
