@@ -29,14 +29,13 @@ const Prod = (props) => {
             {/* img  */}
             <div className="prodDisplay-left">
                 <ul>
-                    {
-                        product.productImages.map((img, i) => {
-                            return <li><img key={i} src={img} alt={product.productName}/></li>
-                        })
-                    }
-                    {/* remove this 👇 */}
-                    <img src={product.productImages[0]} alt={product.productName}/>
-                    <img src={product.productImages[1]} alt={product.productName}/>
+                    <li>
+                        {
+                            product.productImages.map((img, i) => {
+                                return <li><img key={i} src={img} alt={product.productName}/></li>
+                            })
+                        }
+                    </li>
                 </ul>
             </div>
 

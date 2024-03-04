@@ -1,5 +1,4 @@
 import React, { createContext, useState } from "react";
-import axios from "axios";
 import FetchData from "../Data/FetchData";
 
 export const ShopContext = createContext(null);
@@ -17,14 +16,14 @@ const getDefaultCart = () => {
 }
 
 const ShopContextProvider = (props) => {
-    const products = [], categories = [], mainCategories = []
+    // const products = [], categories = [], mainCategories = []
     // cart products
     const [cartProducts, setCartProducts] = useState(getDefaultCart())
 
 
     // add product to cart fn
     const addToCart = (productId) => {
-        setCartProducts((prev, i) => ({...prev, [productId] : i + 1}))
+        setCartProducts((prev) => ({...prev, [productId] : prev[productId] + 1}))
         console.log(cartProducts, " cart products --- addToCart fn")
     }
 
