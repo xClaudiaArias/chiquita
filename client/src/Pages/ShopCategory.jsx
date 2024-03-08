@@ -8,23 +8,18 @@ const ShopCategory = (props) => {
 
     let productLength = 0
 
-    products.map((item, i) => {
+    products.map((item) => {
         if (props.mainCategory === item.mainCategory) {
             return productLength += 1;
         }
     })
+    
 
     return (
         <div className='shop-category'>
             <h1>{props.mainCategoryName}</h1>
-        {/* <img src={props.banner} alt=""/> */}
-            <div className='shopcategory-indexSort'>
-                
-
+            <div className='shopcategory-indexSort'>       
             <p className="shop-show"><span>Showing 1-{productLength}</span> out of {productLength} products</p>
-
-
-
                 <div className="shopcategory-sort">
                     Sort by
                 </div>
@@ -32,8 +27,9 @@ const ShopCategory = (props) => {
             <div className="shopcategory-products">
                 {
                     products.map((item, i) => {
+                        // console.log(props.mainCategory, item.mainCategory, " tired ")
                         if (props.mainCategory === item.mainCategory) {
-                        return <Item key={i} id={item._id} productName={item.productName} productImages={item.productImages} size={item.size} color={item.color} price={item.price} />
+                        return <Item key={i} id={item.id} _id={item._id} productName={item.productName} productImages={item.productImages} size={item.size} color={item.color} price={item.price} />
                         } else {
                             return null;
                         }
@@ -49,3 +45,5 @@ const ShopCategory = (props) => {
 }
 
 export default ShopCategory
+
+

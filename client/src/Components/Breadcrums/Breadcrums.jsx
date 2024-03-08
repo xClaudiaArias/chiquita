@@ -4,7 +4,6 @@ import './Breadcrums.css'
 
 const Breadcrums = (props) => {
     const {product, category, mainCategory} = props;
-
     return (
         <div className='breadcrums'>
             <p>

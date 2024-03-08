@@ -31,20 +31,4 @@ const FetchData = () => {
 
 export default FetchData
 
-// import axios from "axios";
-
-// const FetchData = async () => {
-//     const products = []
-
-//         try {
-//             const res = await axios.get('http://localhost:8000/product');
-//             products.push(res.data)
-//         } catch (err) {
-//             console.log(err)
-//         }
-
-//     return products
-// }
-
-// export default FetchData
 

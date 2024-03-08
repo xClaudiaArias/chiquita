@@ -6,26 +6,24 @@ import Prod from '../Components/Prod/Prod.jsx'
 
 const Product = () => {
     const { products, categories, mainCategories } = useContext(ShopContext)
-    const productId = useParams()
+    const { productId } = useParams();
+
 
     let productCategory = ""
     let productMainCategory = ""
+    
+    const product = products.find((e) => {
+        productCategory = e.category
+        productMainCategory = e.mainCategory
+        return e.id === Number(productId)
+    })
+    
+    
+    const category = categories.find((e) => e._id === productCategory)
+    const mainCategory = mainCategories.find((e) => e._id === productMainCategory)
 
-    const product = products.find((e) => 
-        {
-            productCategory = e.category
-            productMainCategory = e.mainCategory
-            return e._id === productId.productId
-        }
-    )
+    
 
-    const category = categories.find((e) => 
-        e._id === productCategory
-    )
-
-    const mainCategory = mainCategories.find((e) => 
-        e._id === productMainCategory
-    )
 
     return (
         <div className="products">
@@ -36,3 +34,4 @@ const Product = () => {
 }
 
 export default Product
+

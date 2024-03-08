@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 
 const Item = (props) => {
 
-    // console.log(props, " ::props in ITEM")
-
     const colorStyle = {
         "backgroundColor": `${props.color}`,
         "width": "15px",
@@ -13,7 +11,7 @@ const Item = (props) => {
         "borderRadius": "50px"
     }
 
-    // console.log(props, " --> props")
+
     return (
         <div className="item">
             <ul className="product-images">
@@ -31,3 +29,4 @@ const Item = (props) => {
 }
 
 export default Item
+

@@ -1,5 +1,3 @@
-// fetches products
-
 import React, { useState, useEffect, useContext } from 'react'
 import './Prod.css'
 import star_icon from '../Assets/star-icon.png'
@@ -8,12 +6,8 @@ import { ShopContext } from '../../Context/ShopContext'
 
 
 const Prod = (props) => {
-    //TODO: add all images
-    //FIXME: change size IN CSS file
-
     const { product } = props;
     const { addToCart } = useContext(ShopContext)
-    // console.log(product,  " ---> in prod.jsx")
 
     const colorStyle = {
         "backgroundColor": `${product.color}`,
@@ -22,20 +16,16 @@ const Prod = (props) => {
         "borderRadius": "50px"
     }
 
-    const [mainImage, setMainImage] = useState("main-image")
-
     return (
         <div className='prodDisplay'>
             {/* img  */}
             <div className="prodDisplay-left">
                 <ul>
-                    <li>
                         {
                             product.productImages.map((img, i) => {
-                                return <li><img key={i} src={img} alt={product.productName}/></li>
+                                return <li key={i}><img src={img} alt={product.productName}/></li>
                             })
                         }
-                    </li>
                 </ul>
             </div>
 
@@ -61,18 +51,21 @@ const Prod = (props) => {
                 <ul className="product-sizes">
                     <li>Sizes:</li>
                     {    
-                        product.size.map((s) => {
-                            return <li><a href="/">{s}</a></li>
+                        product.size.map((s, i) => {
+                            return <li key={i}><a href="/">{s}</a></li>
                         })
                     }
                 </ul>
                 <div className="product-price">
                     <p>${product.price}</p>
                 </div>
-                <button onClick={() => addToCart(product._id)}>ADD TO CART</button>
+                <button onClick={() => {addToCart(product.id)}}>ADD TO CART</button>
+                <p className='productdisplay-right-category'><span>Category:</span> {product.category}, {product.productName}</p>
             </div>
         </div>  
     )
 }
 
 export default Prod
+
+

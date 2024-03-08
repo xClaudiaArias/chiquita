@@ -80,13 +80,11 @@ app.use('/images', express.static('upload/images'))
 app.post("/upload", upload.single('product'), (req, res) => {
     // will get and rename and store the image
     res.json({
-        success: 1,
+        success: true,
         image_url: `http://localhost:${PORT}/images/${req.file.filename}`
     })
 })
 
-// add the images to or mongo database 
-const productModel = require('./models/Product')
 
 // ERROR PAGE
 

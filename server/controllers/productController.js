@@ -13,7 +13,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
 const createProduct = asyncHandler(async(req, res) => {
     const products = await Product.find({})
-    let id_num;
+    let id;
 
     console.log(products, " products")
 
@@ -22,10 +22,10 @@ const createProduct = asyncHandler(async(req, res) => {
     if (products.length > 0) {
         // get last product
         let last_product_num = products.slice(-1)
-        let last_product = last_product_num[0] //access our one product
-        id_num = last_product.id_num + 1
+        let last_product = last_product_num[0] //access one product
+        id = last_product.id + 1
     } else {
-        id_num = 1
+        id = 1
     }
 
 
@@ -33,26 +33,27 @@ const createProduct = asyncHandler(async(req, res) => {
         return res.status(400).json({message: "Fields can't be empty."})
     }
 
-    const productObj = { id_num, mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price}
+    const productObj = { id, mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price}
 
     const product = await Product.create(productObj)
 
-    res.json({message: `Product with id ${product._id} was created.`})
+    res.json({message: `Product with id ${product.id} was created.`})
 })
 
 const updateProduct = asyncHandler(async(req, res) => {
-    const { id, mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price } = req.body
+    const { _id, id, mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price } = req.body
 
-    if ( !id || !mainCategory ||  !category || !productName || !productDescription || !productImages || !color || !units_in_stock || !size || !price  ) {
+    if ( !_id || !id || !mainCategory ||  !category || !productName || !productDescription || !productImages || !color || !units_in_stock || !size || !price  ) {
         return res.status(400).json({message: "Fields can't be empty."})
     }
 
-    const product = await Product.findById(id)
+    const product = await Product.findById(_id)
 
     if (!product) {
         return res.status(400).json({message: "No product found."})
     }
 
+    product.id = id
     product.productName = productName
     product.productImages = productImages
     product.category = category
@@ -69,17 +70,17 @@ const updateProduct = asyncHandler(async(req, res) => {
 })
 
 const deleteProduct = asyncHandler(async(req, res) => {
-    const { id } = req.body
+    const { _id } = req.body
 
-    if ( !id ) {
+    if ( !_id ) {
         return res.status(400).json({message: "Fields can't be empty."})
     }
 
-    const product = await product.findById(id)
+    const product = await product.findById(_id)
 
     const deleteproduct = product.deleteOne()
 
-    res.json({message: `product with ID ${deleteproduct.id} has been deleted.`})
+    res.json({message: `product with ID ${deleteproduct._id} has been deleted.`})
 })
 
 module.exports = {
