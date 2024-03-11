@@ -1,31 +1,43 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import './CartProducts.css'
 import { ShopContext } from '../../Context/ShopContext'
 
 const CartProducts = () => {
-    const { products, cartProducts } = useContext(ShopContext)
-    // console.log(cartProducts.length, " --> cartProducts.length")
+    const { products, cartProducts, count } = useContext(ShopContext)
+
+    let sum = 0
+
+    const colorStyle = (e) => {
+        return {
+            "backgroundColor": `${e}`,
+            "width": "15px",
+            "height": "15px",
+            "borderRadius": "50px",
+            "boxShadow": "2px 2px 2px rgba(146, 147, 147, .4)"
+        }
+    }
 
     return (
         <div className='cartproducts'>
             <h1>CART</h1>
-            <p><span>0</span> Products</p>
+            <p className='cartproducts-itemcount'><span>{count}</span> items</p>
 
             <div className='cartproducts-list'>
                 {
                     products.map((e, i) => {
-                            // console.log(cartProducts, cartProducts[e.id], " --->cartProducts")
-                            // console.log(e.id, " ---> e.id")
                             if(cartProducts[e.id] > 0){
                                 return <div key={i} className='cartproducts-list-card'>
-                                    <img src={e.image} alt="" />
+                                    <p className='cartproducts-list-card-index'>
+                                        {sum += 1}
+                                    </p>
+                                    <img className='cartproducts-list-card-image' src={e.productImages[0]} alt="" />
                                     <div className="cartproducts-list-card-info">
-                                        <p>{e.productName}</p>
-                                        <p>{e.productDescription}</p>
+                                        <p className='cartproducts-list-card-info-productName'>{e.productName}</p>
+                                        <p className='cartproducts-list-card-info-description'>{e.productDescription}</p>
                                         <div className="cartproducts-list-card-info-colorsize">
                                             <div className="cartproducts-list-card-info-color">
                                                 <p>Color:</p>
-                                                <div>{e.color}</div>
+                                                <div style={colorStyle(e.color)}></div>
                                             </div>
                                             <div className="cartproducts-list-card-info-size">
                                                 <p>Size:</p>
@@ -41,11 +53,10 @@ const CartProducts = () => {
                                             </div>
                                         </div>
                                         <div className="cartproducts-list-card-info-price">
-                                            {e.price}
+                                            <p>${e.price}</p>
                                         </div>
                                         <div className='add-to-wishlist'>
-                                            <img width="24" height="24" src="https://img.icons8.com/material-outlined/24/like--v1.png" alt="like--v1"/>
-                                            <p>Add to wishlist instead?</p>
+                                            <a href="/">Add to wishlist instead?</a>
                                         </div>
                                     </div>
                                 </div> 

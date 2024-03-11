@@ -25,6 +25,7 @@ const ShopContextProvider = (props) => {
     const [categories, setCategories] = useState([]);
     const [mainCategories, setMainCategories] = useState([]);
     const [cartProducts, setCartProducts] =  useState(getDefaultCart()); 
+    const [count, setCount] = useState(0)
 
     useEffect(() => {
         async function fetchData() {
@@ -53,6 +54,7 @@ const ShopContextProvider = (props) => {
         //     console.log({...prev}, prev[itemId], " prev")
         //     return ({...prev, [itemId] : prev[itemId] + 1})
         // })
+        setCount(count + 1)
         console.log(cartProducts)
     }
 
@@ -61,7 +63,8 @@ const ShopContextProvider = (props) => {
         categories,
         mainCategories,
         cartProducts,
-        addToCart
+        addToCart, 
+        count
     }
 
     return (
