@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import './CartProducts.css'
 import { ShopContext } from '../../Context/ShopContext'
 
 const CartProducts = () => {
-    const { products, cartProducts, count } = useContext(ShopContext)
+    const { products, cartProducts, count, addToCart, removeFromCart, getTotalCartAmount } = useContext(ShopContext)
 
     let sum = 0
 
@@ -19,10 +19,9 @@ const CartProducts = () => {
 
     return (
         <div className='cartproducts'>
-            <h1>CART</h1>
-            <p className='cartproducts-itemcount'><span>{count}</span> items</p>
-
             <div className='cartproducts-list'>
+                <h1>CART</h1>
+                <p className='cartproducts-itemcount'><span>{count}</span> items</p>
                 {
                     products.map((e, i) => {
                             if(cartProducts[e.id] > 0){
@@ -47,9 +46,9 @@ const CartProducts = () => {
                                         <div className="cartproducts-info-quantity">
                                             <p>Quantity</p>
                                             <div className="qty">
-                                                <button>-</button>
-                                                <p>0</p>
-                                                <button>+</button>
+                                                <button onClick={() => {removeFromCart(e.id)}}>-</button>
+                                                <p>{cartProducts[e.id]}</p> 
+                                                <button onClick={() => {addToCart(e.id)}}>+</button>
                                             </div>
                                         </div>
                                         <div className="cartproducts-list-card-info-price">
@@ -66,6 +65,35 @@ const CartProducts = () => {
                     })
                 }
             </div>
+
+            <div className="cartProducts-side">
+                <div className="cartProducts-total">
+                    <h1>TOTAL</h1>
+                    <div>
+                        <div className="cartProducts-total-item">
+                            <p>Subtotal:</p>
+                            <hr />
+                            <p>${getTotalCartAmount()}.00</p>
+                        </div>
+                        {/* <hr /> */}
+                        <div className="cartProducts-total-item">
+                            <p>Shipping:</p>
+                            <hr />
+                            <p>Free</p>
+                        </div>
+                        {/* <hr /> */}
+                        <div className="cartProducts-total-item mainCartProducts-total-item">
+                            <p>Total:</p>
+                            <hr />
+                            <p>${getTotalCartAmount()}.00</p>
+                        </div>
+                    </div>
+                    <div className="cartProducts-total-item">
+                        <button>PROCEED TO CHECKOUT</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     )
 }

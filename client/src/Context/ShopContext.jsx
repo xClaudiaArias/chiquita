@@ -7,11 +7,6 @@ export const ShopContext = createContext(null);
 // get empty cart 
 const getDefaultCart = () => {
     let cart = {};
-    // let fetchData = FetchData().products
-
-    // for (let i = 1; i < fetchData.length + 1; i++){
-    //     cart[i] = 0
-    // }
 
     for (let i = 1; i < 1000 + 1; i++){
         cart[i] = 0
@@ -43,20 +38,42 @@ const ShopContextProvider = (props) => {
         fetchData();
     }, [])
 
-
-
     // add product to cart fn
     // add to cart function
-    const addToCart = (itemId) => {
-        setCartProducts((prev) => ({...prev, [itemId] : prev[itemId] + 1}))
-        // setCartProducts(prev => {
-        //     console.log(cartProducts, " ----first cartproducts")
-        //     console.log({...prev}, prev[itemId], " prev")
-        //     return ({...prev, [itemId] : prev[itemId] + 1})
-        // })
+    const addToCart = (productId) => {
+        setCartProducts((prev) => ({...prev, [productId] : prev[productId] + 1}))
         setCount(count + 1)
         console.log(cartProducts)
     }
+    // remove from cart fn 
+    const removeFromCart = (productId) => {
+        setCartProducts((prev) => ({...prev, [productId] : prev[productId] - 1}))
+        setCount(count - 1)
+    }
+
+    // get TOTAL cart amount
+    const getTotalCartAmount = () => {
+        let totalAmount = 0;
+        for (const item in cartProducts) {
+            //check qty
+            if (cartProducts[item] > 0) {
+                // storing product data in itemInfo 
+                let itemInfo = products.find((product) => product.id === Number(item) )
+                totalAmount += itemInfo.price * cartProducts[item]
+            }
+        }
+        return Math.floor(totalAmount)
+    }
+
+    const getTotalCartProducts = () => {
+        let total = 0
+        for (const product in cartProducts) {
+            if (cartProducts[product] > 0) {
+                total += cartProducts[product]
+            }
+        }
+    }
+
 
     const contextValue = {
         products,
@@ -64,6 +81,9 @@ const ShopContextProvider = (props) => {
         mainCategories,
         cartProducts,
         addToCart, 
+        removeFromCart,
+        getTotalCartAmount,
+        getTotalCartProducts,
         count
     }
 

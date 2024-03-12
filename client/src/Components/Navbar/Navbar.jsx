@@ -1,12 +1,15 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import './Navbar.css'
-
 import { Link } from 'react-router-dom'
+import { ShopContext } from '../../Context/ShopContext'
 
 const Navbar = () => {
 
     const [menu, setMenu] = useState("home")
     const [empty, setEmpty] = useState("0")
+
+    const {count} = useContext(ShopContext)
+    console.log(count, " count")
 
     return (
         <>
@@ -28,7 +31,7 @@ const Navbar = () => {
                     <li>
                         <div className="nav-cart">
                             <Link className={menu === "cart" ? '' : ''} onClick={() => setMenu("cart")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/cart">Cart</Link>
-                            <div className={empty === "0" ? 'empty' : 'nav-cart-count'} onLoad={() => setEmpty("0")}></div>
+                            <div className={count <= 0 ? 'empty' : 'nav-cart-count'} onLoad={() => setEmpty("empty")}>{count}</div>
                         </div>
                     </li>
                 </ul>

@@ -5,7 +5,6 @@
 }
 
 .prodDisplay {
-    /* border: 1px solid red; */
     display: flex;
     justify-content: flex-start;
     gap: 50px;
@@ -15,7 +14,6 @@
 .prodDisplay-left {
     width: 800px;
     height: 540px;
-    /* border: 1px solid fuchsia; */
 }
 
 .prodDisplay-left .main-slider {
@@ -30,17 +28,14 @@
     height: 540px;
     object-fit: cover;
     border-radius: 10px;
-    /* border: 1px solid blue; */
 }
 
 .prodDisplay-left ul .slider{
-    /* border: 1px solid green; */
     height: 540px;
     width: 240px;
 }
 
 .prodDisplay-left ul .slider ul {
-    /* border: 1px solid red; */
     height: 540px;
     display: flex;
     flex-direction: column;
