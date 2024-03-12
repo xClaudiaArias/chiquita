@@ -22,6 +22,7 @@ const CartProducts = () => {
             <div className='cartproducts-list'>
                 <h1>CART</h1>
                 <p className='cartproducts-itemcount'><span>{count}</span> items</p>
+                <div className="cartproducts-card">
                 {
                     products.map((e, i) => {
                             if(cartProducts[e.id] > 0){
@@ -52,7 +53,7 @@ const CartProducts = () => {
                                             </div>
                                         </div>
                                         <div className="cartproducts-list-card-info-price">
-                                            <p>${e.price}</p>
+                                            <p>${e.price*cartProducts[e.id]}.00</p>
                                         </div>
                                         <div className='add-to-wishlist'>
                                             <a href="/">Add to wishlist instead?</a>
@@ -64,7 +65,11 @@ const CartProducts = () => {
                         return null;
                     })
                 }
+                </div>
+                
             </div>
+
+            <div className="cardVertical"></div>
 
             <div className="cartProducts-side">
                 <div className="cartProducts-total">

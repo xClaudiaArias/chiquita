@@ -1,0 +1,86 @@
+
+.navbar {
+    background: white;
+    box-shadow: 0 2px 2px rgba(147,147,147,.4);
+    height: 70px;
+    color: #ce75dd;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 50px;
+    align-items: center;
+}
+
+.navbar-left {
+    width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 60px;
+}
+
+.navbar-left .logo-img {
+    width: 50px;
+    height: 50px;
+    background-color: #ce75dd;
+    box-shadow: 2px 2px 2px rgba(147,147,147,.4);
+    border-radius: 8px;
+}
+
+.navbar-left p {
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: .2rem;
+}
+
+.navbar-left .logo {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: .01rem;
+}
+
+.navbar-right {
+    width: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 60px;
+}
+
+.navbar-right .admin-info {
+    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 60px;
+}
+
+.navbar-right .admin-info img {
+    width: 50px;
+    display: flex;
+    height: 50px;
+    border-radius: 50px;
+    display: flex;
+}
+
+.navbar-right .admin-info p {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.navbar-right .logout button {
+    background: white;
+    border: 2px solid #ce75dd;
+    border-radius: 100px;
+    width: 150px;
+    height: 40px;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #ce75dd;
+    cursor: pointer;
+}
+
+.navbar-right .logout button:hover {
+    background: #ce75dd;
+    border: 2px solid white;
+    color: white;
+}
