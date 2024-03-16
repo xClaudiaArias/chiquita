@@ -54,8 +54,6 @@ app.use(session(sessionConfig));
 // app.use(authCheck)
 
 // ROUTES 
-
-
 app.use('/category', require('./routes/category'))
 app.use('/main-category', require('./routes/mainCategory'))
 app.use('/customers', require('./routes/customer'))
@@ -83,6 +81,8 @@ app.post("/upload", upload.single('product'), (req, res) => {
         success: true,
         image_url: `http://localhost:${PORT}/images/${req.file.filename}`
     })
+
+    console.log(req.file, " --->req.file")
 })
 
 

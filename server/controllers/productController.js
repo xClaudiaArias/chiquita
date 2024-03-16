@@ -15,8 +15,6 @@ const createProduct = asyncHandler(async(req, res) => {
     const products = await Product.find({})
     let id;
 
-    console.log(products, " products")
-
     const { mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price } = req.body
 
     if (products.length > 0) {
@@ -37,7 +35,10 @@ const createProduct = asyncHandler(async(req, res) => {
 
     const product = await Product.create(productObj)
 
-    res.json({message: `Product with id ${product.id} was created.`})
+    res.json({
+        success: true,
+        message: `Product with id ${product.id} was created.`
+    })
 })
 
 const updateProduct = asyncHandler(async(req, res) => {
