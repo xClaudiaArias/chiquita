@@ -4,13 +4,14 @@ import './AddProduct.css'
 
 const AddProduct = () => {
 
-    const [productImages, setProductImages] = useState(false)
+    const [productImages, setProductImages] = useState([])
     
     const [productInfo, setProductInfo] = useState({
         category: "",
         mainCategory: "",
         productName: "",
         productDescription: "",
+        productImages: [],
         size: "XS",
         color: "",
         price: "",
@@ -19,26 +20,35 @@ const AddProduct = () => {
     })
 
     const imageHandler = (e) => {
-        setProductImages(e.target.files[0])
-        console.log(productImages, " -->image")
+        // console.log(e.target.files)
+        const images = Array.prototype.slice.call(e.target.files)
+        // console.log(images , " -->images")
+        handleUploadImgs(images)
+    }
+
+    const handleUploadImgs = files => {
+        // console.log(files, " -->files")
+        const uploaded = [...productImages];
+        files.some((file) => {
+            uploaded.push(file)
+        })
+        setProductImages(uploaded)
+        console.log(uploaded, productImages, " -->uploaded, productImages")
     }
 
     const changeHandler = (e) => {
-        console.log(e.target, "---> e")
         setProductInfo({...productInfo, [e.target.name] : e.target.value})
     }
 
     // submit button handler 
     const addProductBtn = async () => {
-        console.log(productInfo)
-        console.log("I was clicked")
+        console.log(productInfo, " -->productInfo")
+        // console.log("I was clicked")
 
         let responseData;
         let product = productInfo
 
         let formData = new FormData()
-
-        console.log(product, " -->prroductksksk")
 
         switch(product.mainCategory) {
             case "Babies":
@@ -71,10 +81,13 @@ const AddProduct = () => {
             case "Accessories":
                 product.category = "65aae1e8f7ed0db75e9f4478"
         }
-        
 
+        for (let i = 0; i < productImages.length; i++) {
+            console.log(productImages[i])
+            formData.append('product', productImages[i])
+        }
 
-        formData.append('product', productImages)
+        console.log(productImages, ' -->productImages')
 
         await fetch('http://localhost:8000/upload', {
             method: 'POST',
@@ -82,29 +95,30 @@ const AddProduct = () => {
                 Accept: 'application/json'
             },
             body: formData,
-        }).then((resp) => resp.json()).then((data) => { responseData = data })
+        }).then((resp) => resp.json()).then((data) => { 
+            console.log(data, " -->data")
+            return responseData = data
+        })
 
-        console.log(product, " --->product")
+        // if image response is true 
         if(responseData.success) {
-            product.productImages = responseData.image_url 
+            // console.log(responseData, ' -->productImages')
+            product.productImages = responseData.image_url
 
             await fetch('http://localhost:8000/product', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(product)
             }).then((resp) => resp.json()).then((data) => {
-                data.success ? alert("Product Added") : console.log(data)
+                console.log(data, " -->data")
+                return data.success ? console.log("Product Added: ", data) : console.log("Failed: ", data)
             })
         }
-
-        console.log(product, " ---> product")
-
+        console.log(product, " -->product")
     }
-
-    console.log(productImages, typeof(productImages), " -->productImages")
 
     return (
         <div className='addproduct'>
@@ -131,11 +145,18 @@ const AddProduct = () => {
                     </select>
                 </div>
             </div>
-            <div className='addproduct-addfiles'>
+            <div className="uploaded-imgs-list">
+                {
+                    productImages.map(file => {
+                        <div>{file.name}</div>
+                    })
+                }
+            </div>
+            <div className='addproduct-item'>
                 <label htmlFor="file-input">
-                    <img src={productImages ? URL.createObjectURL(productImages) : "https://picsum.photos/seed/picsum/200/300"} alt="" />
+                    <a>Upload Files</a>
                 </label>
-                <input onChange={imageHandler} type="file" id="file-input" name="productImages" hidden/>
+                <input onChange={imageHandler} type="file" id="file-input" name="productImages" accept="image/png" multiple hidden /> 
             </div>
             <div className="addproduct-item">
                 <p>Product name</p>

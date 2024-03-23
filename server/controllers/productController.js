@@ -74,12 +74,16 @@ const deleteProduct = asyncHandler(async(req, res) => {
     const { _id } = req.body
 
     if ( !_id ) {
-        return res.status(400).json({message: "Fields can't be empty."})
+        return res.status(400).json({message: "Product ID required"})
     }
 
-    const product = await product.findById(_id)
+    const product = await Product.findById(_id).exec()
 
-    const deleteproduct = product.deleteOne()
+    if (!product) {
+        return res.status(400).json({message: "Product not found"})
+    }
+
+    const deleteproduct = await product.deleteOne()
 
     res.json({message: `product with ID ${deleteproduct._id} has been deleted.`})
 })

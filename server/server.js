@@ -17,7 +17,8 @@ const connectDB = require('./config/dbConn')
 const mongoose = require('mongoose')
 
 const multer = require('multer')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { FileUpload } = require('@mui/icons-material');
 
 // session 
 const sessionConfig = {
@@ -60,29 +61,44 @@ app.use('/customers', require('./routes/customer'))
 app.use('/product', require('./routes/product'))
 app.use('/wishlist', require('./routes/wishlist'))
 
+
 // IMAGE STORAGE ENGINE
 const storage = multer.diskStorage({
-    destination: './upload/images',
+    // destination: './upload/images',
+    destination: (req, files, cb) => {
+        cb(null, "./upload/images")
+    },
+    // filename: (req, files, callback) => {
+    //     return callback(null, `${files.fieldname}_${Date.now()}${path.extname(files.originalname)}` )
+    // }
     filename: (req, file, callback) => {
         return callback(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}` )
     }
 })
 
 // pass fn to our disk config 
-const upload = multer({storage:storage})
+const upload = multer({ storage:storage }).array("product", 4)
 
 //static endpoint
 app.use('/images', express.static('upload/images'))
 
+
 // endpoint to upload the images
-app.post("/upload", upload.single('product'), (req, res) => {
+app.post("/upload", upload, async (req, res) => {
     // will get and rename and store the image
-    res.json({
-        success: true,
-        image_url: `http://localhost:${PORT}/images/${req.file.filename}`
+    const files = req.files
+
+    let images = []
+
+    files.forEach((f) => {
+        console.log(f, " --> this file")
+        images.push(`http://localhost:${PORT}/images/${f.filename}`)
     })
 
-    console.log(req.file, " --->req.file")
+    await res.json({
+        success: true,
+        image_url: images,
+    })
 })
 
 
