@@ -5,6 +5,8 @@ import './AddProduct.css'
 const AddProduct = () => {
 
     const [productImages, setProductImages] = useState([])
+    const [productColor, setProductColor] = useState([])
+    const [productSize, setProductSize] = useState([])
     
     const [productInfo, setProductInfo] = useState({
         category: "",
@@ -12,22 +14,19 @@ const AddProduct = () => {
         productName: "",
         productDescription: "",
         productImages: [],
-        size: "XS",
-        color: "",
+        size: [],
+        color: [],
         price: "",
         units_in_stock: "",
         in_stock: true
     })
 
     const imageHandler = (e) => {
-        // console.log(e.target.files)
         const images = Array.prototype.slice.call(e.target.files)
-        // console.log(images , " -->images")
         handleUploadImgs(images)
     }
 
     const handleUploadImgs = files => {
-        // console.log(files, " -->files")
         const uploaded = [...productImages];
         files.some((file) => {
             uploaded.push(file)
@@ -38,6 +37,24 @@ const AddProduct = () => {
 
     const changeHandler = (e) => {
         setProductInfo({...productInfo, [e.target.name] : e.target.value})
+    }
+
+    const addColor = (e) => {
+        console.log(e.target.value)
+        let colors = productColor
+        colors.push(e.target.value)
+        
+        setProductColor(colors)
+        console.log(productColor, " -->productColor")
+    }
+
+    const addSize = (e) => {
+        console.log(e.target.value)
+        let sizes = productSize
+        sizes.push(e.target.value)
+        
+        setProductSize(sizes)
+        console.log(productSize, " -->productSize")
     }
 
     // submit button handler 
@@ -87,7 +104,7 @@ const AddProduct = () => {
             formData.append('product', productImages[i])
         }
 
-        console.log(productImages, ' -->productImages')
+        // console.log(productImages, ' -->productImages')
 
         await fetch('http://localhost:8000/upload', {
             method: 'POST',
@@ -104,6 +121,8 @@ const AddProduct = () => {
         if(responseData.success) {
             // console.log(responseData, ' -->productImages')
             product.productImages = responseData.image_url
+            product.color = productColor
+            product.size = productSize
 
             await fetch('http://localhost:8000/product', {
                 method: 'POST',
@@ -166,20 +185,32 @@ const AddProduct = () => {
                 <p>Product description</p>
                 <textarea onChange={changeHandler} value={productInfo.productDescription} name="productDescription" id="" cols="30" rows="10"></textarea>
             </div>
-            <div className="addproduct-item">
+            {/* <div className="addproduct-item">
                 <p>Color</p>
                 <input onChange={changeHandler} value={productInfo.color} type="color" id="product-color" name="color" />
+            </div> */}
+            <div className="addproduct-item">
+                <p>Color</p>
+                <button onClick={addColor} value="red">red</button>
+                <button onClick={addColor} value="orange">orange</button>
+                <button onClick={addColor} value="yellow">yellow</button>
+                <button onClick={addColor} value="green">green</button>
+                <button onClick={addColor} value="blue">blue</button>
+                <button onClick={addColor} value="purple">purple</button>
+                <button onClick={addColor} value="black">black</button>
+                <button onClick={addColor} value="white">white</button>
+                <button onClick={addColor} value="brown">brown</button>
+                <button onClick={addColor} value="beige">beige</button>
+                <button onClick={addColor} value="pink">pink</button>
             </div>
             <div className="addproduct-item">
-                    <p>Sizes</p>
-                    <select value={productInfo.size} onChange={changeHandler} name="size" id="size">
-                        <option name="size" >XS</option>
-                        <option name="size" >S</option>
-                        <option name="size" >M</option>
-                        <option name="size" >L</option>
-                        <option name="size" >XL</option>
-                    </select>
-                </div>
+                <p>Sizes</p>
+                <button onClick={addSize} value="xs">xs</button>
+                <button onClick={addSize} value="S">S</button>
+                <button onClick={addSize} value="M">M</button>
+                <button onClick={addSize} value="L">L</button>
+                <button onClick={addSize} value="XL">XL</button>
+            </div>
             <div className="addproduct-item">
                 <p>Price</p>
                 <input value={productInfo.price} onChange={changeHandler} name="price" type="number" />

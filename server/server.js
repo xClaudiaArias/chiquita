@@ -64,13 +64,9 @@ app.use('/wishlist', require('./routes/wishlist'))
 
 // IMAGE STORAGE ENGINE
 const storage = multer.diskStorage({
-    // destination: './upload/images',
     destination: (req, files, cb) => {
         cb(null, "./upload/images")
     },
-    // filename: (req, files, callback) => {
-    //     return callback(null, `${files.fieldname}_${Date.now()}${path.extname(files.originalname)}` )
-    // }
     filename: (req, file, callback) => {
         return callback(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}` )
     }
