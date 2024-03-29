@@ -18,7 +18,6 @@ const mongoose = require('mongoose')
 
 const multer = require('multer')
 const jwt = require('jsonwebtoken');
-const { FileUpload } = require('@mui/icons-material');
 
 // session 
 const sessionConfig = {
@@ -42,7 +41,6 @@ console.log(mode, process.env.NAME, process.env.SECRET)
 connectDB()
 
 // ------
-
 
 app.use(cors()) 
 app.use(express.json())
@@ -96,6 +94,8 @@ app.post("/upload", upload, async (req, res) => {
         image_url: images,
     })
 })
+
+
 
 
 // ERROR PAGE

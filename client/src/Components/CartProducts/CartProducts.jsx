@@ -53,7 +53,7 @@ const CartProducts = () => {
                                             </div>
                                         </div>
                                         <div className="cartproducts-list-card-info-price">
-                                            <p>${e.price*cartProducts[e.id]}.00</p>
+                                            <p>${e.price*cartProducts[e.id]}</p>
                                         </div>
                                         <div className='add-to-wishlist'>
                                             <a href="/">Add to wishlist instead?</a>

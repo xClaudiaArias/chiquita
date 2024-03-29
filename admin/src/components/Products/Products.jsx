@@ -1,9 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Products.css'
 import ProductHighlight from '../ProductHighlight/ProductHighlight'
 import { Link } from 'react-router-dom'
 
 const Products = () => {
+    const [allProducts, setAllProducts] = useState([])
+
+    const fetchData = async() => {
+        await fetch('http://localhost:8000/product')
+        .then((response) => response.json())
+        .then((data) => {setAllProducts(data)})
+        console.log(allProducts, ' --> allProducts')
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    // TODO: REMOVE PRODUCTS 
+
+    const removeProduct = async(_id) => {
+        await fetch('http://localhost:8000/product', {
+            method: 'DELETE',
+            headers: {
+                Accept: 'appplication/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({_id: _id})
+        })
+        await fetchData()
+    }
+
+
     return (
         <div className='chiquitaproducts'>
             <div className="chiquitaproducts-header">
@@ -18,17 +46,22 @@ const Products = () => {
                 <button>Accessories</button>
             </div>
             <div className="chiquitaproducts-products">
-                <div className="chiquitaproducts-products-card">
-                    <img src="https://picsum.photos/200" alt="" />
-                    <p>Products title</p>
-                    <div className="products-stat">
-                        <div className="chiquitaproducts-price">$20.00</div>
-                        <div className="chiquitaproducts-stock">
-                            <p>Stock:</p>
-                            <p product-stock>8</p>
+            {console.log(allProducts, " --> all products")}
+                { allProducts.map((product, i) => {
+                    return <div key={i} className="chiquitaproducts-products-card">
+                            <img src={product.productImages[0]} alt="product-image" />
+                            <p>{product.productName}</p>
+                            <div className="products-stat">
+                                <div className="chiquitaproducts-price">${product.price}</div>
+                                <div className="chiquitaproducts-stock">
+                                    <p>Stock:</p>
+                                    <p className="product-stock">{product.units_in_stock}</p>
+                                </div>
+                            </div>
+                            <button onClick={() => {removeProduct(product._id)}}>remove</button>
                         </div>
-                    </div>
-                </div>
+                    })
+                }
             </div>
             <div className="chiquitaproducts-product-highlight">
                 <ProductHighlight />
@@ -36,5 +69,7 @@ const Products = () => {
         </div>
     )
 }
+
+
 
 export default Products

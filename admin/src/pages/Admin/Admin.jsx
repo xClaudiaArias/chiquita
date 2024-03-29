@@ -13,10 +13,10 @@ const Admin = () => {
         <div className='admin'>
             <Sidebar />
             <Routes>
-                <Route path='/chiquitaproducts' element={<Products />} />
-                <Route path='/chiquitacustomers' element={<Customers />} />
-                <Route path='/chiquitaorders' element={<Orders />} />
-                <Route path='/chiquitasettings' element={<Settings />} />
+                <Route path='/chiquita-products' element={<Products />} />
+                <Route path='/chiquita-customers' element={<Customers />} />
+                <Route path='/chiquita-orders' element={<Orders />} />
+                <Route path='/chiquita-settings' element={<Settings />} />
                 <Route path='/addproduct' element={<AddProduct />} />
             </Routes>
         </div>

@@ -7,28 +7,28 @@ const Sidebar = () => {
         <div className='sidebar'>
             <p className='sidebar-main'>Main</p>
             {/* products  */}
-            <Link to={'/chiquitaproducts'}>
+            <Link to={'/chiquita-products'}>
                 <div className="sidebar-link">
                     <img src="https://picsum.photos/200/200" alt="" />
                     <p>Products</p>
                 </div>
             </Link>
             {/* customer  */}
-            <Link to={'/chiquitacustomers'}>
+            <Link to={'/chiquita-customers'}>
                 <div className="sidebar-link">
                     <img src="https://picsum.photos/200/200" alt="" />
                     <p>Customer</p>
                 </div>
             </Link>
             {/* orders */}
-            <Link to={'/chiquitaorders'}>
+            <Link to={'/chiquita-orders'}>
                 <div className="sidebar-link">
                     <img src="https://picsum.photos/200/200" alt="" />
                     <p>Orders</p>
                 </div>
             </Link>
             {/* settings */}
-            <Link to={'/chiquitasettings'}>
+            <Link to={'/chiquita-settings'}>
                 <div className="sidebar-link">
                     <img src="https://picsum.photos/200/200" alt="" />
                     <p>Settings</p>
