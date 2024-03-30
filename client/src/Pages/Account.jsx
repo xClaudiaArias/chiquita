@@ -1,8 +1,11 @@
 import React from 'react'
+import Auth from '../Components/Auth/Auth'
 
 const Account = () => {
     return (
-        <div>Account</div>
+        <div className='account'>
+            <Auth />
+        </div>
     )
 }
 

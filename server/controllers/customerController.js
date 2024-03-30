@@ -14,33 +14,27 @@ const getAllCustomers = asyncHandler(async (req, res) => {
 
 
 const createNewCustomer = asyncHandler(async (req, res) => {
-    const { firstname, lastname, email, password } = req.body
+    const { firstname, lastname, email, username, password } = req.body
 
-    if ( !firstname || !lastname || !email || !password) {
+    if ( !firstname || !lastname || !email || !username || !password) {
         return res.status(400).json({message: "All fields are required"})
     }
 
+    const duplicateUsername = await Customer.findOne({ username })
 
-    const duplicateEmail = await Customer.findOne({ email }).lean().exec()
-
-    if (duplicateEmail) {
-        return res.status(409).json({message: 'An account with this email already exists'})
+    if (duplicateUsername) {
+        return res.status(409).json({message: 'An account with this username already exists'})
     }
-
-
 
     const hashedPwd = await bcrypt.hash(password, 10) 
 
-
-
-    const customerObject = { firstname, lastname, email, "password": hashedPwd}
-
+    const customerObject = { firstname, lastname, email, username, "password": hashedPwd}
 
     const customer = await Customer.create(customerObject)
 
     if (customer) {
         const accessToken = jwt.sign(
-            {customer_id: customer._id, email },
+            {customer_id: customer._id, username },
             process.env.ACCESS_TOKEN_SECRET,
             {expiresIn: "2h"}
         );
@@ -55,20 +49,20 @@ const createNewCustomer = asyncHandler(async (req, res) => {
 })
 
 const updateCustomer = asyncHandler(async (req, res) => {
-    const { id, firstname, lastname, email, password } = req.body
+    const { id, firstname, lastname, email, username, password } = req.body
 
 
-    if (!id || !firstname || !lastname ||  !email ) {
+    if (!id || !firstname || !lastname || !username || !email ) {
         return res.status(400).json({message: "All fields are required"})
     }
 
-    const customer = await Customer.findById(id).exec()
+    const customer = await Customer.findById(id)
 
     if(!customer) {
         return res.status(400).json({message: "Customer Not Found"})
     }
 
-    const duplicate = await Customer.findOne({ email }).lean().exec()
+    const duplicate = await Customer.findOne({ username })
 
     if(duplicate && duplicate?._id.toString() !== id) {
         return res.status(409).json({message: "Duplicate email"})
@@ -77,6 +71,7 @@ const updateCustomer = asyncHandler(async (req, res) => {
     customer.firstname = firstname
     customer.lastname = lastname
     customer.email = email
+    customer.username = username
 
 
     if (password) {
@@ -96,7 +91,7 @@ const deleteCustomer = asyncHandler(async (req, res) => {
         return res.status(400).json({message: "Customer id is required"})
     }
 
-    const customer = await Customer.findById(id).exec()
+    const customer = await Customer.findById(id)
 
     if (!customer) {
         return res.status(400).json({message: "Customer not found"})

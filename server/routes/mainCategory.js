@@ -9,4 +9,5 @@ router.route('/')
     .patch(mainCategoryController.updateMainCategory) // update
     .delete(mainCategoryController.deleteMainCategory) // delete
 
+
 module.exports = router

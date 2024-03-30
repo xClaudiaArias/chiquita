@@ -38,7 +38,7 @@ const App = () => {
 
                     <Route path="/cart" element={<Cart />} />
 
-                    <Route path="/account" element={<Account />} />
+                    <Route path="/auth" element={<Account />} />
                 </Routes>
             
             </BrowserRouter>

@@ -55,9 +55,13 @@ app.use(session(sessionConfig));
 // ROUTES 
 app.use('/category', require('./routes/category'))
 app.use('/main-category', require('./routes/mainCategory'))
-app.use('/customers', require('./routes/customer'))
+app.use('/customer', require('./routes/customer'))
 app.use('/product', require('./routes/product'))
 app.use('/wishlist', require('./routes/wishlist'))
+app.use('/auth', require('./routes/auth/auth'))
+app.use('/auth/login', require('./routes/auth/auth'))
+app.use('/auth/register', require('./routes/auth/auth'))
+// app.use('/register', require('./routes/auth/customerAuth'))
 
 
 // IMAGE STORAGE ENGINE

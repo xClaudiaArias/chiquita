@@ -17,7 +17,7 @@ const Navbar = () => {
             <div className='navbar'>
                 <ul className='navMenu'>
                     <li> <Link className={menu === "wishlist" ? '' : ''} onClick={() => setMenu("wishlist")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/wishlist">Wishlist</Link></li>
-                    <li> <Link className={menu === "account" ? '' : ''} onClick={() => setMenu("account")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/account">Account</Link></li>
+                    <li> <Link className={menu === "account" ? '' : ''} onClick={() => setMenu("account")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/auth">Account</Link></li>
 
                     <li className='nav-logo'> 
                         <Link className={menu === "home" ? '' : ''} onClick={() => setMenu("home")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/">
