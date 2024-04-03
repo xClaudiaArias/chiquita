@@ -19,8 +19,6 @@ const Prod = (props) => {
         "boxShadow": "2px 2px 2px rgba(147,147,147,.4)"
     }
 
-    console.log(product.productImages, ' ----> prod images')
-
     return (
         <div className='prodDisplay'>
             {/* img  */}
@@ -31,8 +29,6 @@ const Prod = (props) => {
                         <ul>
                         {
                             product.productImages.map((img, i) => {
-                                console.log(img, " --->img")
-                                console.log(mainImage, " mainImage")
                                 return (
                                     <li key={i}><img src={img} onClick={()=> {setMainImage(img)}} alt={product.productName}/></li>
                                 )

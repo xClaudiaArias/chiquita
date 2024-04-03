@@ -10,7 +10,7 @@ const session = require('express-session');
 const fileURLToPath = require('url');
 const dirname = require('path');
 const bodyParser = require('body-parser');
-// const authCheck = require('./middleware/auth-check');
+const authCheck = require('./middleware/auth-check');
 
 //db connection 
 const connectDB = require('./config/dbConn')
@@ -58,10 +58,10 @@ app.use('/main-category', require('./routes/mainCategory'))
 app.use('/customer', require('./routes/customer'))
 app.use('/product', require('./routes/product'))
 app.use('/wishlist', require('./routes/wishlist'))
+app.use('/cart', require('./routes/cart'))
 app.use('/auth', require('./routes/auth/auth'))
 app.use('/auth/login', require('./routes/auth/auth'))
 app.use('/auth/register', require('./routes/auth/auth'))
-// app.use('/register', require('./routes/auth/customerAuth'))
 
 
 // IMAGE STORAGE ENGINE
@@ -98,9 +98,6 @@ app.post("/upload", upload, async (req, res) => {
         image_url: images,
     })
 })
-
-
-
 
 // ERROR PAGE
 

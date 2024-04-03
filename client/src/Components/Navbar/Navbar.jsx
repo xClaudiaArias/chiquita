@@ -9,7 +9,6 @@ const Navbar = () => {
     const [empty, setEmpty] = useState("0")
 
     const {count} = useContext(ShopContext)
-    console.log(count, " count")
 
     return (
         <>

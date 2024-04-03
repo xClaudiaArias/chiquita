@@ -25,17 +25,22 @@ const ShopContextProvider = (props) => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await axios.get('http://localhost:8000/product');
-                const res2 = await axios.get('http://localhost:8000/category');
-                const res3 = await axios.get('http://localhost:8000/main-category')
-                setProducts(res.data)
-                setCategories(res2.data)
-                setMainCategories(res3.data)
-            } catch (err) {
-                console.log("Failed to get data: ", err.message)
+            axios.all([
+                axios.get('http://localhost:8000/product'),
+                axios.get('http://localhost:8000/category'),
+                axios.get('http://localhost:8000/main-category'),
+                axios.get('http://localhost:8000/cart')
+            ]).then(axios.spread((d1,d2,d3, d4) => {
+                console.log(d4, " -->d4")
+                setProducts(d1.data)
+                setCategories(d2.data)
+                setMainCategories(d3.data)
+            }))
+            } catch(error) {
+                console.log("Failed to get data: ", error.message)
             }
         }
-        fetchData();
+    fetchData()
     }, [])
 
     // add product to cart fn
@@ -43,7 +48,6 @@ const ShopContextProvider = (props) => {
     const addToCart = (productId) => {
         setCartProducts((prev) => ({...prev, [productId] : prev[productId] + 1}))
         setCount(count + 1)
-        console.log(cartProducts)
     }
     // remove from cart fn 
     const removeFromCart = (productId) => {
@@ -72,6 +76,8 @@ const ShopContextProvider = (props) => {
                 total += cartProducts[product]
             }
         }
+
+        return total
     }
 
 

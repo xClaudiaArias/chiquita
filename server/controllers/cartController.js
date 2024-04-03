@@ -1,5 +1,9 @@
 const Cart = require("../models/Cart");
+const Customer = require("../models/Customer");
+const authCheck = require('../middleware/auth-check');
 const asyncHandler = require('express-async-handler');
+
+//NOTE: authcheck should eventually be added for the token to work and login/signout
 
 const getAllCarts = asyncHandler(async(req, res) => {
     const carts = await Cart.find()
@@ -12,7 +16,8 @@ const getAllCarts = asyncHandler(async(req, res) => {
 })
 
 const createCart = asyncHandler(async(req, res) => {
-    const {customer, products, quantity} = req.body
+    const { products, quantity} = req.body
+    const customer = await Customer.findOne({_id: req.user._id})
 
     if (!customer || !products || !quantity) {
         return res.status(400).json({message: "Fields can not be empty."})

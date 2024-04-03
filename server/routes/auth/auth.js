@@ -18,7 +18,6 @@ router.post("/login", asyncHandler(async(req, res) => {
     // find username 
     const customer = await Customer.findOne({ username })
 
-
     const comparePwd = (ct) => {
         if (!ct) {
             console.log(ct, " i am ct")
@@ -29,10 +28,17 @@ router.post("/login", asyncHandler(async(req, res) => {
                 if (err) {
                     console.log(err, " -->err")
                 } else {
+                    const data = {
+                        customer: {
+                            _id: customer._id
+                        }
+                    }
                     console.log(result, " -->result")
+                    const token = jwt.sign(data, "chiqui_secret")
                     res.json({
                         success: true,
-                        message: "User logged in"
+                        message: "User logged in",
+                        token
                     })
                 }
             })
@@ -68,10 +74,18 @@ router.post("/register", asyncHandler(async(req, res) => {
     const customer = await Customer.create(customerObj)
 
     // 🔴🔴🔴🔴 send customer to login here 
+    const data = {
+        customer: {
+            _id: customer._id
+        }
+    }
+
+    const token = jwt.sign(data, "chiqui_secret")
 
     res.json({
         success: true,
-        message: `customer ${customer.firstname} ${customer.lastname} has been added.`
+        message: `customer ${customer.firstname} ${customer.lastname} has been added.`,
+        token
     })
 
 }));
