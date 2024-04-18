@@ -89,7 +89,7 @@ const Prod = ({product}) => {
                     <p>Quantity:</p>
                     <div className="prodDisplay-qty">
                         <button onClick={handleDecreaseQuantity}>-</button>
-                        <p>0</p>
+                        <p>{quantity}</p>
                         <button onClick={handleIncreaseQuantity}>+</button>
                     </div>
                 </div>
