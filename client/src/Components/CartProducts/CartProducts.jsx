@@ -15,6 +15,8 @@ const CartProducts = () => {
         };
     };
 
+    let i = 0
+
     return (
         <div className='cartproducts'>
             <div className='cartproducts-list'>
@@ -26,10 +28,15 @@ const CartProducts = () => {
                     {Object.keys(cartProducts).map((productId, index) => {
                         const quantity = cartProducts[productId];
                         const product = products.find((p) => p._id === productId);
+
                         if (quantity > 0 && product) {
                             return (
                                 <div key={index} className='cartproducts-list-card'>
-                                    <p className='cartproducts-list-card-index'>{index + 1}</p>
+
+                                    
+                                    <p className='cartproducts-list-card-index'>{i += 1}</p>
+
+
                                     <img className='cartproducts-list-card-image' src={product.productImages[0]} alt={product.productName} />
                                     <div className="cartproducts-list-card-info">
                                         <p className='cartproducts-list-card-info-productName'>{product.productName}</p>
