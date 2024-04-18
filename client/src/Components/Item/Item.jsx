@@ -15,7 +15,8 @@ const Item = (props) => {
     return (
         <div className="item">
             <ul className="product-images">
-                <li><Link to={`/product/${props.id}`}><img src={props.productImages[0]} alt={props.productName}/></Link></li>
+                {/* NOTE: change this back to id  */}
+                <li><Link to={`/product/${props._id}`}><img src={props.productImages[0]} alt={props.productName}/></Link></li>
             </ul>
             <ul className="product-colors">
                 <li><div style={colorStyle}></div></li>

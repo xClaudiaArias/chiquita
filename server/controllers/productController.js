@@ -11,6 +11,21 @@ const getAllProducts = asyncHandler(async (req, res) => {
     res.json(products)
 })
 
+const getProductById = asyncHandler(async(req, res) => {
+    try {
+        const productId = req.params.productId;
+        console.log(productId, "productId")
+        const product = await Product.findById(productId)
+        console.log(product, " product")
+        if (!product) {
+            return res.status(404).json({error: 'Product Not Found'})
+        }
+        res.status(200).json(product)
+    } catch (error) {
+        res.status(500).json({ error: "Internal server error"})
+    }
+})
+
 const createProduct = asyncHandler(async(req, res) => {
     const products = await Product.find({})
     let id;
@@ -90,6 +105,7 @@ const deleteProduct = asyncHandler(async(req, res) => {
 
 module.exports = {
     getAllProducts,
+    getProductById,
     createProduct,
     updateProduct,
     deleteProduct

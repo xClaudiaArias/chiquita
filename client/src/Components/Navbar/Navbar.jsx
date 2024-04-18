@@ -16,7 +16,12 @@ const Navbar = () => {
             <div className='navbar'>
                 <ul className='navMenu'>
                     <li> <Link className={menu === "wishlist" ? '' : ''} onClick={() => setMenu("wishlist")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/wishlist">Wishlist</Link></li>
-                    <li> <Link className={menu === "account" ? '' : ''} onClick={() => setMenu("account")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/auth">Account</Link></li>
+                    {/* <li> <Link className={menu === "account" ? '' : ''} onClick={() => setMenu("account")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/auth">Account</Link></li> */}
+
+
+                    {localStorage.getItem('auth-token') ? <button onClick={() => {localStorage.removeItem('auth-token'); window.location.replace("/")}}> Logout </button> : <Link className={menu === "account" ? '' : ''} onClick={() => setMenu("account")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/auth"><button>Login</button></Link>}
+
+
 
                     <li className='nav-logo'> 
                         <Link className={menu === "home" ? '' : ''} onClick={() => setMenu("home")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/">
@@ -27,12 +32,15 @@ const Navbar = () => {
 
 
                     <li> <Link className={menu === "search" ? '' : ''} onClick={() => setMenu("search")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/search">Search</Link></li>
+
+                    {/* CART */}
                     <li>
                         <div className="nav-cart">
                             <Link className={menu === "cart" ? '' : ''} onClick={() => setMenu("cart")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/cart">Cart</Link>
                             <div className={count <= 0 ? 'empty' : 'nav-cart-count'} onLoad={() => setEmpty("empty")}>{count}</div>
                         </div>
                     </li>
+                    {/* CART end  */}
                 </ul>
             </div>
 

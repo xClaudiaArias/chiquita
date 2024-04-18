@@ -15,7 +15,12 @@ const Product = () => {
     const product = products.find((e) => {
         productCategory = e.category
         productMainCategory = e.mainCategory
-        return e.id === Number(productId)
+
+        console.log(e._id === productId)
+        
+        return e._id === productId
+        // NOTE: changed this -- DO NOT DELETE
+        // return e.id === Number(productId)
     })
     
     

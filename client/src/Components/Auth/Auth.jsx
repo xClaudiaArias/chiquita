@@ -54,7 +54,7 @@ const Auth = () => {
             localStorage.setItem('auth-token', responseData.token);
             window.location.replace("/auth")
         } else {
-            alert("Error") //TODO: change this to show error
+            alert("Error") 
         }
 
         console.log(formData, " --->Customer registered")

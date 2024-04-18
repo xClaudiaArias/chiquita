@@ -44,9 +44,6 @@ const productSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true,
-        currency: "USD",
-        get: getPrice, 
-        set: setPrice
     },
     in_stock: {
         type: Boolean,
@@ -60,13 +57,6 @@ const productSchema = new mongoose.Schema({
     { timestamps : true }
 )
 
-function getPrice(num){
-    return (num/100).toFixed(2)
-}
 
-function setPrice(num){
-    console.log(typeof(num), " ::2")
-    return num;
-}
 
 module.exports =  mongoose.model('Product', productSchema)

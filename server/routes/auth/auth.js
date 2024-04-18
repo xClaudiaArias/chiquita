@@ -8,44 +8,39 @@ const router = express.Router();
 
 // LOGIN 
 
-router.post("/login", asyncHandler(async(req, res) => {
-    const { username, password } = req.body
+router.post("/login", asyncHandler(async (req, res) => {
+    try {
+        const { username, password } = req.body
 
-    // make sure fields are not empty 
-    if (!username || !password ) {
-        res.status(400).json({message: "Fields can not be empty."})
-    }
-    // find username 
-    const customer = await Customer.findOne({ username })
-
-    const comparePwd = (ct) => {
-        if (!ct) {
-            console.log(ct, " i am ct")
-            res.status(401).json({message: "Invalid username"})
-        } else {
-            bcrypt.compare(customer.password, ct.password, (err, result) => {
-                console.log(customer.password, ct.password)
-                if (err) {
-                    console.log(err, " -->err")
-                } else {
-                    const data = {
-                        customer: {
-                            _id: customer._id
-                        }
-                    }
-                    console.log(result, " -->result")
-                    const token = jwt.sign(data, "chiqui_secret")
-                    res.json({
-                        success: true,
-                        message: "User logged in",
-                        token
-                    })
-                }
-            })
+        if (!username || !password ) {
+            res.status(400).json({message: "Fields can not be empty."})
         }
-    } 
 
-    return comparePwd(customer)
+        const customer = await Customer.findOne({username})
+
+        if (!customer) {
+            return res.status(400).json({error: 'No customer found'})
+        }
+
+    
+
+        const isPasswordValid = await bcrypt.compare(password, customer.password);
+        if (isPasswordValid) {
+            return res.status(404).json({error: "Invalid credentials"})
+        } 
+
+        const token = jwt.sign({customerId: customer._id}, process.env.JWT_SECRET, {
+            expiresIn: '2h'})
+        
+        res.json({
+            success: true,
+            message: "User logged in",
+            token
+        })
+        
+    } catch (error) {
+        res.status(500).json({error: 'Internal Server Error'})
+    }
 }));
 
 // REGISTER 
@@ -56,8 +51,6 @@ router.post("/register", asyncHandler(async(req, res) => {
     if (!firstname || !lastname || !email || !username || !password ) {
         res.status(400).json({message: "Fields can not be empty."})
     }
-
-    // check if duplicate username 
 
     const customerUsernameDuplicate = await Customer.findOne({ username })
 
@@ -74,13 +67,8 @@ router.post("/register", asyncHandler(async(req, res) => {
     const customer = await Customer.create(customerObj)
 
     // 🔴🔴🔴🔴 send customer to login here 
-    const data = {
-        customer: {
-            _id: customer._id
-        }
-    }
-
-    const token = jwt.sign(data, "chiqui_secret")
+    const token = jwt.sign({customerId: customer._id}, process.env.JWT_SECRET, {
+        expiresIn: '2h'})
 
     res.json({
         success: true,

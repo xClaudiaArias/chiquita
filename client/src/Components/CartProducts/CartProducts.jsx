@@ -1,43 +1,43 @@
-import React, { useContext } from 'react'
-import './CartProducts.css'
-import { ShopContext } from '../../Context/ShopContext'
+import React, { useContext } from 'react';
+import './CartProducts.css';
+import { ShopContext } from '../../Context/ShopContext';
 
 const CartProducts = () => {
-    const { products, cartProducts, count, addToCart, removeFromCart, getTotalCartAmount } = useContext(ShopContext)
+    const { products, cartProducts, addToCart, removeFromCart, getTotalCartAmount } = useContext(ShopContext);
 
-    let sum = 0
-
-    const colorStyle = (e) => {
+    const colorStyle = (color) => {
         return {
-            "backgroundColor": `${e}`,
-            "width": "15px",
-            "height": "15px",
-            "borderRadius": "50px",
-            "boxShadow": "2px 2px 2px rgba(146, 147, 147, .4)"
-        }
-    }
+            backgroundColor: color,
+            width: '15px',
+            height: '15px',
+            borderRadius: '50px',
+            boxShadow: '2px 2px 2px rgba(146, 147, 147, .4)'
+        };
+    };
 
     return (
         <div className='cartproducts'>
             <div className='cartproducts-list'>
                 <h1>CART</h1>
-                <p className='cartproducts-itemcount'><span>{count}</span> items</p>
+                <p className='cartproducts-itemcount'>
+                    <span>{Object.values(cartProducts).reduce((acc, curr) => acc + curr, 0)}</span> items
+                </p>
                 <div className="cartproducts-card">
-                {
-                    products.map((e, i) => {
-                            if(cartProducts[e.id] > 0){
-                                return <div key={i} className='cartproducts-list-card'>
-                                    <p className='cartproducts-list-card-index'>
-                                        {sum += 1}
-                                    </p>
-                                    <img className='cartproducts-list-card-image' src={e.productImages[0]} alt="" />
+                    {Object.keys(cartProducts).map((productId, index) => {
+                        const quantity = cartProducts[productId];
+                        const product = products.find((p) => p._id === productId);
+                        if (quantity > 0 && product) {
+                            return (
+                                <div key={index} className='cartproducts-list-card'>
+                                    <p className='cartproducts-list-card-index'>{index + 1}</p>
+                                    <img className='cartproducts-list-card-image' src={product.productImages[0]} alt={product.productName} />
                                     <div className="cartproducts-list-card-info">
-                                        <p className='cartproducts-list-card-info-productName'>{e.productName}</p>
-                                        <p className='cartproducts-list-card-info-description'>{e.productDescription}</p>
+                                        <p className='cartproducts-list-card-info-productName'>{product.productName}</p>
+                                        <p className='cartproducts-list-card-info-description'>{product.productDescription}</p>
                                         <div className="cartproducts-list-card-info-colorsize">
                                             <div className="cartproducts-list-card-info-color">
                                                 <p>Color:</p>
-                                                <div style={colorStyle(e.color)}></div>
+                                                <div style={colorStyle(product.color)}></div>
                                             </div>
                                             <div className="cartproducts-list-card-info-size">
                                                 <p>Size:</p>
@@ -47,30 +47,26 @@ const CartProducts = () => {
                                         <div className="cartproducts-info-quantity">
                                             <p>Quantity</p>
                                             <div className="qty">
-                                                <button onClick={() => {removeFromCart(e.id)}}>-</button>
-                                                <p>{cartProducts[e.id]}</p> 
-                                                <button onClick={() => {addToCart(e.id)}}>+</button>
+                                                <button onClick={() => removeFromCart(productId)}>-</button>
+                                                <p>{quantity}</p>
+                                                <button onClick={() => addToCart(productId, 1)}>+</button>
                                             </div>
                                         </div>
                                         <div className="cartproducts-list-card-info-price">
-                                            <p>${e.price*cartProducts[e.id]}</p>
+                                            <p>${product.price * quantity}</p>
                                         </div>
                                         <div className='add-to-wishlist'>
                                             <a href="/">Add to wishlist instead?</a>
                                         </div>
                                     </div>
-                                </div> 
-                                
-                            }
+                                </div>
+                            );
+                        }
                         return null;
-                    })
-                }
+                    })}
                 </div>
-                
             </div>
-
             <div className="cardVertical"></div>
-
             <div className="cartProducts-side">
                 <div className="cartProducts-total">
                     <h1>TOTAL</h1>
@@ -78,19 +74,17 @@ const CartProducts = () => {
                         <div className="cartProducts-total-item">
                             <p>Subtotal:</p>
                             <hr />
-                            <p>${getTotalCartAmount()}.00</p>
+                            <p>${getTotalCartAmount()}</p>
                         </div>
-                        {/* <hr /> */}
                         <div className="cartProducts-total-item">
                             <p>Shipping:</p>
                             <hr />
                             <p>Free</p>
                         </div>
-                        {/* <hr /> */}
                         <div className="cartProducts-total-item mainCartProducts-total-item">
                             <p>Total:</p>
                             <hr />
-                            <p>${getTotalCartAmount()}.00</p>
+                            <p>${getTotalCartAmount()}</p>
                         </div>
                     </div>
                     <div className="cartProducts-total-item">
@@ -98,10 +92,8 @@ const CartProducts = () => {
                     </div>
                 </div>
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default CartProducts
-
+export default CartProducts;

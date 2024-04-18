@@ -1,13 +1,28 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import './Prod.css'
 import star_icon from '../Assets/star-icon.png'
 import star_icon_full from '../Assets/star-icon-full.png'
 import { ShopContext } from '../../Context/ShopContext'
 
 
-const Prod = (props) => {
-    const { product } = props;
+const Prod = ({product}) => {
     const { addToCart } = useContext(ShopContext)
+    const [quantity, setQuantity] = useState(1) //initialize quantity with 1
+
+    const handleAddToCart = () => {
+        addToCart(product._id, quantity); // Pass product ID and quantity to addToCart function
+    };
+    
+    const handleIncreaseQuantity = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1); // Increase quantity
+    };
+    
+    const handleDecreaseQuantity = () => {
+    if (quantity > 1) {
+        setQuantity((prevQuantity) => prevQuantity - 1); // Decrease quantity if it's greater than 1
+    }
+    };
+    
 
     const [mainImage, setMainImage] = useState("")
 
@@ -73,9 +88,9 @@ const Prod = (props) => {
                 <div className="prodDisplay-info-quantity">
                     <p>Quantity:</p>
                     <div className="prodDisplay-qty">
-                        <button>-</button>
+                        <button onClick={handleDecreaseQuantity}>-</button>
                         <p>0</p>
-                        <button>+</button>
+                        <button onClick={handleIncreaseQuantity}>+</button>
                     </div>
                 </div>
                 <div className="prodDisplay-footer">
@@ -83,7 +98,7 @@ const Prod = (props) => {
                         <p>Price:</p>
                         <p className='prodDisplay-price' >${product.price}</p>
                     </div>
-                    <button className='prodDisplay-add-to-cart' onClick={() => {addToCart(product.id)}}>ADD TO CART</button>
+                    <button className='prodDisplay-add-to-cart' onClick={handleAddToCart}>ADD TO CART</button>
                 </div>
                 <p className='productdisplay-right-category'><span>Category:</span> {product.category}, {product.productName}</p>
             </div>
