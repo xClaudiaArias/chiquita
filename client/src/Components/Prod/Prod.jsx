@@ -19,9 +19,9 @@ const Prod = ({product}) => {
     };
     
     const handleDecreaseQuantity = () => {
-    if (quantity > 1) {
-        setQuantity((prevQuantity) => prevQuantity - 1); // Decrease quantity if it's greater than 1
-    }
+        if (quantity > 1) {
+            setQuantity((prevQuantity) => prevQuantity - 1); // Decrease quantity if it's greater than 1
+        } 
     };
     
 
@@ -97,7 +97,7 @@ const Prod = ({product}) => {
                 <div className="prodDisplay-footer">
                     <div className="prodDisplay-product-price">
                         <p>Price:</p>
-                        <p className='prodDisplay-price' >${product.price}</p>
+                        <p className='prodDisplay-price'>${product.price * quantity}</p>
                     </div>
                     <button className='prodDisplay-add-to-cart' onClick={handleAddToCart}>ADD TO CART</button>
                 </div>

@@ -48,15 +48,28 @@ const ShopContextProvider = (props) => {
         console.log(cartProducts, " -cartProducts")
     };
 
+    // const removeFromCart = async (productId) => {
+
+    //     setCartProducts(prevCartProducts => ({
+    //         ...prevCartProducts,
+    //         [productId]: Math.max(prevCartProducts[productId] - 1, 0)
+    //     }));
+
+    // }
+
     const removeFromCart = async (productId) => {
-
-        setCartProducts(prevCartProducts => ({
-            ...prevCartProducts,
-            [productId]: Math.max(prevCartProducts[productId] - 1, 0)
-        }));
-
-    }
-
+        setCartProducts(prevCartProducts => {
+            const updatedCart = { ...prevCartProducts };
+            const newQuantity = Math.max(updatedCart[productId] - 1, 0);
+            if (newQuantity === 0) {
+                delete updatedCart[productId]; // Remove the item from the cart
+            } else {
+                updatedCart[productId] = newQuantity;
+            }
+            return updatedCart;
+        });
+    };
+    
 
 
     const getTotalCartAmount = () => {
