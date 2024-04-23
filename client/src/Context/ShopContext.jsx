@@ -1,30 +1,20 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-// import FetchData from "../Data/FetchData";
 
 export const ShopContext = createContext(null);
 
-// const getDefaultCart = () => {
-//     let cart = {};
-
-//     let fData = FetchData().products;
-
-//     fData.forEach((product) => {
-//         cart[product._id] = 0;
-//     });
-
-//     console.log(cart, "---> default cart");
-//     return cart;
-// };
 
 const ShopContextProvider = (props) => {
     const [products, setProducts] = useState([]);
+
     const [categories, setCategories] = useState([]);
     const [mainCategories, setMainCategories] = useState([]);
+
+
     const [cartProducts, setCartProducts] = useState({});
 
     useEffect(() => {
-        async function fetchData() {
+        const fetchData = async () => {
             try {
                 const [productsRes, categoriesRes, mainCategoriesRes] = await Promise.all([
                     axios.get('http://localhost:8000/product'),
@@ -36,43 +26,47 @@ const ShopContextProvider = (props) => {
                 setCategories(categoriesRes.data);
                 setMainCategories(mainCategoriesRes.data);
 
-                const defaultCart = {}
-                productsRes.data.forEach(product => {
-                    defaultCart[product._id] = 0
-                })
-
-                setCartProducts(defaultCart)
             } catch(error) {
-                console.log("Failed to get data: ", error.message);
+                console.log("Failed to get all data: ", error.message);
             }
         }
         fetchData();
     }, []);
 
-    const addToCart = (productId, quantity = 1) => {
+    const addToCart = async (productId, quantity = 1) => {
         setCartProducts(prevCartProducts => ({
             ...prevCartProducts,
-            [productId]: prevCartProducts[productId] + quantity
+            [productId]: (prevCartProducts[productId] || 0)  + quantity
         }));
+
+
+
+        const authToken = localStorage.getItem('auth-token')
+        if (authToken) {
+            console.log(authToken, " -->addtocart auth-token")
+        }
+        console.log(cartProducts, " -cartProducts")
     };
 
-    const removeFromCart = (productId) => {
+    const removeFromCart = async (productId) => {
+
         setCartProducts(prevCartProducts => ({
             ...prevCartProducts,
             [productId]: Math.max(prevCartProducts[productId] - 1, 0)
         }));
-    };
+
+    }
+
+
 
     const getTotalCartAmount = () => {
         let total = 0;
-        for (const productId in cartProducts) {
-            const product = products.find(p => p._id === productId);
-            if (product) {
-                total += product.price * cartProducts[productId];
-            }
+        for (const product in cartProducts) {
+            products.map((p) =>  product === p._id ? total += (p.price * cartProducts[product]) : 0 )
         }
         return total;
     };
+
 
     const contextValue = {
         products,

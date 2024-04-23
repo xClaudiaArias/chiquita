@@ -16,17 +16,15 @@ router.post("/login", asyncHandler(async (req, res) => {
             res.status(400).json({message: "Fields can not be empty."})
         }
 
-        const customer = await Customer.findOne({username})
+        const customer = await Customer.findOne({ username })
 
         if (!customer) {
             return res.status(400).json({error: 'No customer found'})
         }
 
-    
-
         const isPasswordValid = await bcrypt.compare(password, customer.password);
-        if (isPasswordValid) {
-            return res.status(404).json({error: "Invalid credentials"})
+        if (!isPasswordValid) {
+            return res.status(401).json({error: "Invalid credentials"})
         } 
 
         const token = jwt.sign({customerId: customer._id}, process.env.JWT_SECRET, {

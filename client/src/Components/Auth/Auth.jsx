@@ -17,24 +17,30 @@ const Auth = () => {
 
     // login handler 
     const login = async() => {
-        console.log(formData, " --->FormData")
-        let responseData;
+        try {
+            const response = await fetch('http://localhost:8000/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
 
-        await fetch('http://localhost:8000/auth/login', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/form-data',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        }).then((response) => response.json()).then((data) => responseData = data)
+            console.log(response, " response")
 
-        if (responseData.success) {
-            localStorage.setItem('auth-token', responseData.token);
-            window.location.replace("/")
-        } else {
-            console.log(responseData, " --responseData")
-            alert(responseData.errors)
+            const responseData = await response.json()
+            console.log(responseData, " --->responseData, authlogin")
+
+            if (responseData.success) {
+                localStorage.setItem('auth-token', responseData.token)
+                window.location.replace("/")
+            } else {
+                console.log(responseData.errors, " -->responseData")
+                // alert(responseData.errors)
+            }
+        } catch (error) {
+            console.log('Error: ', error)
         }
     }
 

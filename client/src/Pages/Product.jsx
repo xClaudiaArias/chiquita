@@ -19,8 +19,6 @@ const Product = () => {
         console.log(e._id === productId)
         
         return e._id === productId
-        // NOTE: changed this -- DO NOT DELETE
-        // return e.id === Number(productId)
     })
     
     

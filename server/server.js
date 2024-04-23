@@ -49,6 +49,7 @@ app.use(bodyParser.json())
 app.use(cookieParser());
 app.use(session(sessionConfig));
 
+
 // ROUTES 
 app.use('/category', require('./routes/category'))
 app.use('/main-category', require('./routes/mainCategory'))

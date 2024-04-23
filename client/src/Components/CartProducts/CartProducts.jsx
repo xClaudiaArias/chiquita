@@ -5,6 +5,9 @@ import { ShopContext } from '../../Context/ShopContext';
 const CartProducts = () => {
     const { products, cartProducts, addToCart, removeFromCart, getTotalCartAmount } = useContext(ShopContext);
 
+    console.log(products, " -->I am products")
+    console.log(cartProducts, " -->I am cartProducts")
+
     const colorStyle = (color) => {
         return {
             backgroundColor: color,
@@ -24,55 +27,54 @@ const CartProducts = () => {
                 <p className='cartproducts-itemcount'>
                     <span>{Object.values(cartProducts).reduce((acc, curr) => acc + curr, 0)}</span> items
                 </p>
-                <div className="cartproducts-card">
-                    {Object.keys(cartProducts).map((productId, index) => {
-                        const quantity = cartProducts[productId];
-                        const product = products.find((p) => p._id === productId);
+                {/* TODO: show products */}
+                { 
+                    products.map((product) => {
+                        return Object.keys(cartProducts).map((prod, index ) => {
+                            if (prod === product._id) {
+                                return (
+                                    <div key={index} className='cartproducts-list-card'>
+                                        <p className='cartproducts-list-card-index'>{i += 1}</p>
+                                        <img className='cartproducts-list-card-image' src={product.productImages[0]} alt={product.productName} />
 
-                        if (quantity > 0 && product) {
-                            return (
-                                <div key={index} className='cartproducts-list-card'>
-
-                                    
-                                    <p className='cartproducts-list-card-index'>{i += 1}</p>
-
-
-                                    <img className='cartproducts-list-card-image' src={product.productImages[0]} alt={product.productName} />
-                                    <div className="cartproducts-list-card-info">
-                                        <p className='cartproducts-list-card-info-productName'>{product.productName}</p>
-                                        <p className='cartproducts-list-card-info-description'>{product.productDescription}</p>
-                                        <div className="cartproducts-list-card-info-colorsize">
-                                            <div className="cartproducts-list-card-info-color">
-                                                <p>Color:</p>
-                                                <div style={colorStyle(product.color)}></div>
+                                        <div className="cartproducts-list-card-info">
+                                            <p className='cartproducts-list-card-info-productName'>{product.productName}</p>
+                                            <p className='cartproducts-list-card-info-description'>{product.productDescription}</p>
+                                            <div className="cartproducts-list-card-info-colorsize">
+                                                <div className="cartproducts-list-card-info-color">
+                                                    <p>Color:</p>
+                                                    <div style={colorStyle(product.color['0'])}></div>
+                                                </div>
+                                                <div className="cartproducts-list-card-info-size">
+                                                    <p>Size:</p>
+                                                    <p>XS</p>
+                                                </div>
                                             </div>
-                                            <div className="cartproducts-list-card-info-size">
-                                                <p>Size:</p>
-                                                <p>XS</p>
+                                            <div className="cartproducts-info-quantity">
+                                                <p>Quantity</p>
+                                                <div className="qty">
+                                                    <button onClick={() => removeFromCart(product._id)}>-</button>
+                                                    <p>{cartProducts[prod]}</p>
+                                                    <button onClick={() => addToCart(product._id, 1)}>+</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="cartproducts-info-quantity">
-                                            <p>Quantity</p>
-                                            <div className="qty">
-                                                <button onClick={() => removeFromCart(productId)}>-</button>
-                                                <p>{quantity}</p>
-                                                <button onClick={() => addToCart(productId, 1)}>+</button>
+                                            <div className="cartproducts-list-card-info-price">
+                                                <p>${product.price * cartProducts[prod]}</p>
                                             </div>
-                                        </div>
-                                        <div className="cartproducts-list-card-info-price">
-                                            <p>${product.price * quantity}</p>
-                                        </div>
-                                        <div className='add-to-wishlist'>
-                                            <a href="/">Add to wishlist instead?</a>
+                                            <div className='add-to-wishlist'>
+                                                <a href="/">Add to wishlist instead?</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            );
-                        }
-                        return null;
-                    })}
-                </div>
+                                )
+                            } 
+                        })
+                    })
+                }
             </div>
+
+            {/* TODO: get total cart amount  */}
+
             <div className="cardVertical"></div>
             <div className="cartProducts-side">
                 <div className="cartProducts-total">
@@ -100,7 +102,7 @@ const CartProducts = () => {
                 </div>
             </div>
         </div>
-    );
+    )
 };
 
 export default CartProducts;

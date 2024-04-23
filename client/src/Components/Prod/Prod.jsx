@@ -10,6 +10,7 @@ const Prod = ({product}) => {
     const [quantity, setQuantity] = useState(1) //initialize quantity with 1
 
     const handleAddToCart = () => {
+        console.log(product._id, " -->HandleCart Prod.js")
         addToCart(product._id, quantity); // Pass product ID and quantity to addToCart function
     };
     
