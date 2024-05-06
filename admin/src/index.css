@@ -1,6 +1,12 @@
 body {
+  width: 100vw;
   margin: 0;
   font-family: "Poppins", sans-serif;
   background-color: #f6f6f6;
   height: 100vh;
+  text-decoration: none;
+}
+
+.admin-app {
+  width: 100vw;
 }

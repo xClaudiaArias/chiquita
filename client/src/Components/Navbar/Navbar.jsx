@@ -2,11 +2,15 @@ import React, {useContext, useState} from 'react'
 import './Navbar.css'
 import { Link } from 'react-router-dom'
 import { ShopContext } from '../../Context/ShopContext'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import SearchIcon from '@mui/icons-material/Search';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 
 const Navbar = () => {
 
     const [menu, setMenu] = useState("home")
-    const [empty, setEmpty] = useState("0")
+    const [empty, setEmpty] = useState(0)
 
     const {count} = useContext(ShopContext)
 
@@ -15,28 +19,26 @@ const Navbar = () => {
 
             <div className='navbar'>
                 <ul className='navMenu'>
-                    <li> <Link className={menu === "wishlist" ? '' : ''} onClick={() => setMenu("wishlist")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/wishlist">Wishlist</Link></li>
-                    {/* <li> <Link className={menu === "account" ? '' : ''} onClick={() => setMenu("account")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/auth">Account</Link></li> */}
+                    <li> <Link className={menu === "wishlist" ? '' : ''} onClick={() => setMenu("wishlist")} style={{textDecoration: 'none', textTransform: 'uppercase'}} to="/wishlist"> <FavoriteBorderIcon/>  Wishlist </Link></li>
 
-
-                    {localStorage.getItem('auth-token') ? <button onClick={() => {localStorage.removeItem('auth-token'); window.location.replace("/")}}> Logout </button> : <Link className={menu === "account" ? '' : ''} onClick={() => setMenu("account")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/auth"><button>Login</button></Link>}
-
+                    <li>
+                    {localStorage.getItem('auth-token') ? <Link style={{textDecoration: 'none', textTransform: 'uppercase'}} onClick={() => {localStorage.removeItem('auth-token'); window.location.replace("/")}}> <PersonOutlineIcon/> Logout </Link> : <Link className={menu === "account" ? '' : ''} onClick={() => setMenu("account")} style={{textDecoration: 'none', textTransform: 'uppercase'}} to="/auth"> <PersonOutlineIcon/> Login</Link>}
+                    </li>
 
 
                     <li className='nav-logo'> 
-                        <Link className={menu === "home" ? '' : ''} onClick={() => setMenu("home")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/">
-                            <div>-IMG-</div>
+                        <Link className={menu === "home" ? '' : ''} onClick={() => setMenu("home")} style={{textDecoration: 'none', textTransform: 'uppercase'}} to="/">
                             <p>Chiquita</p>
                         </Link>
                     </li>
 
 
-                    <li> <Link className={menu === "search" ? '' : ''} onClick={() => setMenu("search")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/search">Search</Link></li>
+                    <li className="search-container"><SearchIcon/> <input type="text"  /></li>
 
                     {/* CART */}
                     <li>
                         <div className="nav-cart">
-                            <Link className={menu === "cart" ? '' : ''} onClick={() => setMenu("cart")} style={{textDecoration: 'none', textTransform: 'uppercase', color: 'white'}} to="/cart">Cart</Link>
+                            <Link className={menu === "cart" ? '' : ''} onClick={() => setMenu("cart")} style={{textDecoration: 'none', textTransform: 'uppercase'}} to="/cart"> <ShoppingBagOutlinedIcon/> Cart</Link>
                             <div className={count <= 0 ? 'empty' : 'nav-cart-count'} onLoad={() => setEmpty("empty")}>{count}</div>
                         </div>
                     </li>

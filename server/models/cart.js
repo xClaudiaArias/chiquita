@@ -19,6 +19,7 @@ const cartSchema = new mongoose.Schema({
         ref: 'Customer'
     },
     items: [cartItemSchema]
+
 })
 
 module.exports =  mongoose.model('Cart', cartSchema)

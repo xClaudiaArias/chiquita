@@ -11,6 +11,8 @@ import Search from './Pages/Search';
 import baby_banner from './Components/Assets/baby_banner.png';
 import toddler_banner from './Components/Assets/toddler_banner.png';
 import accessories_banner from './Components/Assets/accessories_banner.png'
+import Announcements from './Components/Announcements/Announcements'
+import Footer from './Components/Footer/Footer';
 
 
 
@@ -21,6 +23,7 @@ const App = () => {
 
     return (
         <>
+            <Announcements />
             <BrowserRouter>
                 <Navbar />
                 <Routes>
@@ -41,6 +44,7 @@ const App = () => {
                     <Route path="/auth" element={<Account />} />
                 </Routes>
             
+                <Footer />
             </BrowserRouter>
 
         </>

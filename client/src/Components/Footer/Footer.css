@@ -1,0 +1,95 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+    flex: 1;
+    padding: 0 30px;
+}
+
+.footer-left .logo {
+    font-size: 32px;
+    text-transform: uppercase;
+    color: black;
+    font-weight: 700;
+}
+
+.footer-left p {
+    font-size: 16px;
+    font-weight: 300;
+    padding: 5px 0;
+    align-items: center;
+    height: 250px;
+    margin-top: 20px;
+}
+
+.footer-right .socials {
+    display: flex;
+    gap: 10px;
+}
+
+.footer-right .socials .socials-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #1e1e1e;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.footer-right .socials .facebook:hover {
+    background-color: #3B5999;
+}
+
+.footer-right .socials .instagram:hover {
+    background-color: #E4405F;
+}
+
+.footer-right .socials .pinterest:hover {
+    background-color: #E60023;
+}
+
+.footer-right .socials .x-icon:hover {
+    background-color: #14171A;    
+}
+
+.footer-center ul {
+    padding: 0;
+    margin: 0;
+    margin-top: 8px;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    /* background-color: red; */
+    height: 250px;
+    align-items: center;
+}
+
+.footer-center ul li {
+    width: 50%;
+    margin-bottom: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 300;
+}
+
+.footer-center ul li:hover {
+    color: #c07dff;
+}
+
+.footer-right {
+    align-items: center;
+}
+.footer-right div {
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 8px 0;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+}

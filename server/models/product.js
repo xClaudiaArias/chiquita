@@ -1,5 +1,13 @@
-// order items
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+
+const productVariantSchema = new mongoose.Schema({
+    size: String,
+    color: String,
+    quantity: {
+        type: Number,
+        default: 0
+    },
+});
 
 const productSchema = new mongoose.Schema({
     id: {
@@ -25,38 +33,12 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    productDescription: {
-        type: String,
-        required: true
-    },
-    color: [{
-        type: String,
-        required: true
-    }],
-    units_in_stock: {
-        type: Number,
-        default: 0
-    },
-    size: [{
-        type: String,
-        required: true
-    }],
+    productDescription: String,
     price: {
         type: Number,
-        required: true,
+        required: true
     },
-    in_stock: {
-        type: Boolean,
-        default: true
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    }
-},
-    { timestamps : true }
-)
+    variants: [productVariantSchema], // Reference to product variants
+});
 
-
-
-module.exports =  mongoose.model('Product', productSchema)
+module.exports = mongoose.model('Product', productSchema);

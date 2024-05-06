@@ -3,14 +3,10 @@ import axios from "axios";
 
 export const ShopContext = createContext(null);
 
-
 const ShopContextProvider = (props) => {
     const [products, setProducts] = useState([]);
-
     const [categories, setCategories] = useState([]);
     const [mainCategories, setMainCategories] = useState([]);
-
-
     const [cartProducts, setCartProducts] = useState({});
 
     useEffect(() => {
@@ -26,10 +22,28 @@ const ShopContextProvider = (props) => {
                 setCategories(categoriesRes.data);
                 setMainCategories(mainCategoriesRes.data);
 
-            } catch(error) {
+                // Check if cartProducts are available in localStorage
+                try {
+                    const authToken = localStorage.getItem('auth-token');
+                    if (authToken) {
+                        const response = await axios.post('http://localhost:8000/cart', {
+                            headers: {
+                                'auth-token': authToken
+                            }
+                        });
+
+                        console.log(response)
+                        setCartProducts(localStorage.getItem('cartProducts'))
+                    } else {
+                        console.log("No auth token.");
+                    }
+                } catch (error) {
+                    console.log("Failed to add item to cart: ", error.message);
+                }
+            } catch (error) {
                 console.log("Failed to get all data: ", error.message);
             }
-        }
+        };
         fetchData();
     }, []);
 
@@ -39,23 +53,24 @@ const ShopContextProvider = (props) => {
             [productId]: (prevCartProducts[productId] || 0)  + quantity
         }));
 
-
-
-        const authToken = localStorage.getItem('auth-token')
-        if (authToken) {
-            console.log(authToken, " -->addtocart auth-token")
+        try {
+            const authToken = localStorage.getItem('auth-token');
+            if (authToken) {
+                await axios.post('http://localhost:8000/addToCart', {
+                    productId,
+                    quantity
+                }, {
+                    headers: {
+                        'auth-token': authToken
+                    }
+                });
+            } else {
+                console.log("No auth token.");
+            }
+        } catch (error) {
+            console.log("Failed to add item to cart: ", error.message);
         }
-        console.log(cartProducts, " -cartProducts")
     };
-
-    // const removeFromCart = async (productId) => {
-
-    //     setCartProducts(prevCartProducts => ({
-    //         ...prevCartProducts,
-    //         [productId]: Math.max(prevCartProducts[productId] - 1, 0)
-    //     }));
-
-    // }
 
     const removeFromCart = async (productId) => {
         setCartProducts(prevCartProducts => {
@@ -69,24 +84,30 @@ const ShopContextProvider = (props) => {
             return updatedCart;
         });
     };
-    
 
+    useEffect(() => {
+        // Save cartProducts to localStorage whenever it changes
+        localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+    }, [cartProducts]);
 
     const getTotalCartAmount = () => {
         let total = 0;
         for (const product in cartProducts) {
-            products.map((p) =>  product === p._id ? total += (p.price * cartProducts[product]) : 0 )
+            products.forEach(p => {
+                if (p._id === product) {
+                    total += p.price * cartProducts[product];
+                }
+            });
         }
         return total;
     };
-
 
     const contextValue = {
         products,
         categories,
         mainCategories,
         cartProducts,
-        addToCart, 
+        addToCart,
         removeFromCart,
         getTotalCartAmount
     };

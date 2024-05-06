@@ -27,34 +27,31 @@ const getProductById = asyncHandler(async(req, res) => {
 })
 
 const createProduct = asyncHandler(async(req, res) => {
-    const products = await Product.find({})
-    let id;
+    const { mainCategory, category, productName, productDescription, productImages, variants, price } = req.body;
 
-    const { mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price } = req.body
-
-    if (products.length > 0) {
-        // get last product
-        let last_product_num = products.slice(-1)
-        let last_product = last_product_num[0] //access one product
-        id = last_product.id + 1
-    } else {
-        id = 1
+    if (!mainCategory || !category || !productName || !productDescription || !productImages || !price || !variants || variants.length === 0) {
+        return res.status(400).json({ message: "Fields can't be empty and at least one variant must be provided." });
     }
 
+    const productObj = {
+        mainCategory,
+        category,
+        productName,
+        productDescription,
+        productImages,
+        variants, // Assign variants directly
+        price
+    };
 
-    if (!mainCategory || !category || !productName || !productDescription || !productImages || !color || !units_in_stock || !size || !price) {
-        return res.status(400).json({message: "Fields can't be empty."})
-    }
-
-    const productObj = { id, mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price}
-
-    const product = await Product.create(productObj)
+    // Create product in the database
+    const product = await Product.create(productObj);
 
     res.json({
         success: true,
         message: `Product with id ${product.id} was created.`
-    })
-})
+    });
+});
+
 
 const updateProduct = asyncHandler(async(req, res) => {
     const { _id, id, mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price } = req.body

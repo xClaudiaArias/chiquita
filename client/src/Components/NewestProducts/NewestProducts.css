@@ -1,0 +1,16 @@
+.newestproducts {
+    padding: 50px 0;
+}
+
+.newestproducts h1 {
+    margin-left: 30px;
+    font-size: 34px;
+    padding-bottom: 20px;
+}
+
+.newestproducts-container {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

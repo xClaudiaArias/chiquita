@@ -12,6 +12,7 @@ const Admin = () => {
     return (
         <div className='admin'>
             <Sidebar />
+            <div className="rightside">
             <Routes>
                 <Route path='/chiquita-products' element={<Products />} />
                 <Route path='/chiquita-customers' element={<Customers />} />
@@ -19,6 +20,8 @@ const Admin = () => {
                 <Route path='/chiquita-settings' element={<Settings />} />
                 <Route path='/addproduct' element={<AddProduct />} />
             </Routes>
+            </div>
+
         </div>
     )
 }

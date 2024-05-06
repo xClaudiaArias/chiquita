@@ -1,4 +1,5 @@
 require('dotenv').config();
+console.log(require("dotenv").config(), " let's see")
 const express = require('express');
 const app = express();
 
@@ -57,7 +58,9 @@ app.use('/customer', require('./routes/customer'))
 app.use('/product', require('./routes/product'))
 app.use('/product/productId', require('./routes/product'))
 app.use('/wishlist', require('./routes/wishlist'))
-app.use('/cart', authCheck, require('./routes/cart'))
+app.use('/cart', require('./routes/cart'))
+app.use('/cart/addToCart', require('./routes/cart'))
+app.use('/cart/productId', require('./routes/cart'))
 app.use('/auth', require('./routes/auth/auth'))
 app.use('/auth/login', require('./routes/auth/auth'))
 app.use('/auth/register', require('./routes/auth/auth'))

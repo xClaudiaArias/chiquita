@@ -1,0 +1,18 @@
+.featured-categories {
+    background: #f8f8f8;
+    padding: 50px 0;
+}
+
+.featured-h1 {
+    margin-left: 30px;
+    font-size: 34px;
+    padding-bottom: 20px;
+}
+
+.featured {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    justify-content: center;
+    gap: 20px;
+}

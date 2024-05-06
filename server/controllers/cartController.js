@@ -1,22 +1,37 @@
 const Cart = require("../models/Cart");
 const asyncHandler = require('express-async-handler');
 
-// get all cart products 
 const getCart = asyncHandler(async(req, res) => {
+    const { product, quantity } = req.body.items
+    console.log( product, quantity, " --> product, quantity")
+    const cartItemSchema = {}
+
+
     try {
-        const customerId = req.customer.customerId
-        const cart = await Cart.findOne({ customer: customerId }).populate('items.product')
+        const customerId = req.customer.customerId;
+        console.log(customerId)
+        
+        const cart = await Cart.findOne({ customer: customerId });
+
         if (!cart) {
-            return res.status(404).json({ error: 'Cart not found' })
+            return res.status(404).json({ error: 'Cart not found' });
         }
 
-        console.log(cart, " in getCard in cartController")
-        res.status(200).json(cart)
+        console.log(cart, " -cart")
+
+        cartItemSchema.product = product
+        cartItemSchema.quantity = quantity
+
+        cart.items.push(cartItemSchema)
+        
+        cart.save()
+
+        res.send({message: "successfully added"})
     } catch (error) {
-        console.log("This is what's giving the error")
-        res.status(500).json({ error: 'Internal server error' })
+        console.log("This is what's giving the error:", error);
+        res.status(500).json({ error: 'Internal server error' });
     }
-})
+});
 
 // addToCart function
 const addToCart = asyncHandler(async (req, res) => {
