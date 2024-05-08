@@ -1,7 +1,7 @@
-// order items
+// order productss
 const mongoose = require("mongoose")
 
-const cartItemSchema = new mongoose.Schema({
+const cartProductsSchema = new mongoose.Schema({
     product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
@@ -14,11 +14,11 @@ const cartItemSchema = new mongoose.Schema({
 })
 
 const cartSchema = new mongoose.Schema({
-    customer: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Customer'
+        ref: 'User'
     },
-    items: [cartItemSchema]
+    products: [cartProductsSchema]
 
 })
 

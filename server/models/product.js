@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
 
-const productVariantSchema = new mongoose.Schema({
+const ProductVariantSchema = new mongoose.Schema({
     size: String,
     color: String,
     quantity: {
         type: Number,
-        default: 0
+        default: 1
     },
 });
 
-const productSchema = new mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
     id: {
         type: Number,
         required: true,
@@ -20,25 +20,24 @@ const productSchema = new mongoose.Schema({
         required: true,
         ref: 'MainCategory'
     },
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Category'
+    categories: {
+        type: Array,
+        required: true
     },
-    productImages: [{
+    ProductImages: [{
         type: String,
         required: false
     }],
-    productName: {
+    ProductName: {
         type: String,
         required: true
     },
-    productDescription: String,
+    ProductDescription: String,
     price: {
         type: Number,
         required: true
     },
-    variants: [productVariantSchema], // Reference to product variants
+    variants: [ProductVariantSchema], // Reference to Product variants
 });
 
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model('Product', ProductSchema);

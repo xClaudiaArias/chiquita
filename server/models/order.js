@@ -2,39 +2,39 @@
 const mongoose = require("mongoose")
 
 const orderSchema = new mongoose.Schema({
-    customer: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Customer'
+        ref: 'User'
     },
-    payment: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Payment'
-    },
-    shipment: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Shipment'
-    },
-    total: {
+    products: [
+        {
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product'
+            }, 
+            quantity: {
+                type: Number,
+                default: 1
+            }
+        }
+    ],
+    amount: {
         type: Number,
+        required: true
+    },
+    address: {
+        type: Object,
         required: true,
-        get: getPrice, 
-        set: setPrice
+        status: {
+            type: String,
+            default: "pending"
+        }
     }
     },
     {
         timestamps: true
     }
 )
-
-function getPrice(num){
-    return (num/100).toFixed(2);
-}
-
-function setPrice(num){
-    return num*100;
-}
 
 module.exports =  mongoose.model('Order', orderSchema)
