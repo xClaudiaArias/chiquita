@@ -4,7 +4,7 @@ const cartController = require("../controllers/cartController");
 const authCheck = require("../middleware/auth-check"); 
 
 router.route("/")
-    .post(authCheck, cartController.getCart);
+    .post(cartController.getCart);
 
 router.route("/addToCart")
     .post(cartController.addToCart)

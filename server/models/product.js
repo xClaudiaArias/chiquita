@@ -10,29 +10,19 @@ const ProductVariantSchema = new mongoose.Schema({
 });
 
 const ProductSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    mainCategory: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'MainCategory'
-    },
     categories: {
         type: Array,
         required: true
     },
-    ProductImages: [{
+    productImages: [{
         type: String,
         required: false
     }],
-    ProductName: {
+    productName: {
         type: String,
         required: true
     },
-    ProductDescription: String,
+    productDescription: String,
     price: {
         type: Number,
         required: true

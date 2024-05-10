@@ -1,9 +1,8 @@
 const express = require("express")
-const Customer = require('../../models/Customer');
-const Cart = require('../../models/Cart')
+const User = require('../../models/User');
 const asyncHandler = require('express-async-handler');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const CryptoJS = require("crypto-js")
 const router = express.Router();
 
 
@@ -17,81 +16,79 @@ router.post("/register", asyncHandler(async(req, res) => {
     }
 
     // Check if username is already taken
-    const customerUsernameDuplicate = await Customer.findOne({ username });
-    if (customerUsernameDuplicate) {
+    const userUsernameDuplicate = await User.findOne({ username });
+    if (userUsernameDuplicate) {
         return res.status(400).json({ message: "Username already taken." });
     }
 
     // Hash the password
-    const hashedPwd = await bcrypt.hash(password, 10);
+    const hashedPwd = await CryptoJS.AES.encrypt(req.body.password, process.env.PASS_SECRET).toString() //secure hashed pswd - encrypt
 
-    // Create a customer object
-    const customerObj = { firstname, lastname, email, username, password: hashedPwd };
+    // Create a user object
+    const userObj = { firstname, lastname, email, username, password: hashedPwd };
 
-    // Add customer to database
-    const customer = await Customer.create(customerObj);
+    // Add user to database
+    const user = await User.create(userObj);
 
-    // Generate JWT token
-    const token = jwt.sign({ customerId: customer._id }, process.env.JWT_SECRET, {
-        expiresIn: '2h'
-    });
+    const responseUser = {
+        _id: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        username: user.username
+    };
 
-    // Create a cart for the customer
-    // const cart = await Cart.create({ customer: customer._id, items: [] });
-
-    res.json({
+    res.status(200).json({
         success: true,
-        message: `Customer ${customer.firstname} ${customer.lastname} has been registered.`,
-        token
+        user: responseUser,
+        message: `User ${user.firstname} ${user.lastname} has been registered.`,
     });
 }));
 
-// LOGIN
+
 // LOGIN
 router.post("/login", asyncHandler(async (req, res) => {
     try {
-        const { username, password } = req.body;
-
         // Check if username or password is missing
-        if (!username || !password ) {
+        if (!req.body.username || !req.body.password ) {
             return res.status(400).json({ message: "Fields can not be empty." });
         }
 
-        // Find customer by username
-        const customer = await Customer.findOne({ username });
+        // Find user by username
+        const user = await User.findOne({ username: req.body.username });
 
-        // Check if customer exists
-        if (!customer) {
-            return res.status(404).json({ error: 'Customer not found' });
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ error: 'user not found' });
         }
 
         // Check if password is correct
-        const isPasswordValid = await bcrypt.compare(password, customer.password);
-        if (!isPasswordValid) {
-            return res.status(401).json({ error: "Invalid credentials" });
+        const hashedPassword = CryptoJS.AES.decrypt(
+            user.password,
+            process.env.PASS_SECRET
+        ).toString(CryptoJS.enc.Utf8)
+        
+        console.log(hashedPassword, " -hashedPassword")
+        console.log(req.body.password, " -req.body.password")
+
+        if (hashedPassword !== req.body.password) {
+            return res.status(401).json({ error: 'Password is wrong' });
         }
-
-        // Generate JWT token
-        const token = jwt.sign({ customerId: customer._id }, process.env.JWT_SECRET, {
-            expiresIn: '2h'
+        
+        // Get the password from the request body
+        const accessToken = jwt.sign({
+            id: user._id,
+            isAdmin: user.isAdmin
+        }, process.env.JWT_SEC, {
+            expiresIn: "3d"
         });
 
-        // Find cart items associated with the customer
-        // const cart = await Cart.findOne({ customer: customer._id }).populate('items.product');
 
-        // Prepare cart products object
-        // const cartProducts = {};
-        // cart.items.forEach(item => {
-        //     cartProducts[item.product._id] = item.quantity;
-        // });
+        const { password, ...others } = user._doc;
 
-        res.json({
-            success: true,
-            message: "User logged in",
-            token,
-            cartProducts
-        });
+        res.status(200).json({...others, accessToken})
     } catch (error) {
+        console.log(error, " error")
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }));

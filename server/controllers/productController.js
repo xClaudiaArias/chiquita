@@ -1,22 +1,36 @@
 const Product = require("../models/Product");
 const asyncHandler = require('express-async-handler');
 
+// 🛍️ get all products 
 const getAllProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find()
+    const qNew = req.query.new
+    const qCategory = req.query.category
 
-    if (!products?.length) {
-        return res.status(400).json({message: "No products found"})
+    try {
+        let products;
+        if (qNew) {
+            products = await Product.find().sort({createdAt: -1}).limit(5)
+        } else if (qCategory) {
+            products = await Product.find({categories : {
+                $in: [qCategory]
+            }})
+        } else {
+            products = await Product.find()
+        }
+        
+
+        res.status(200).json(products)
+    } catch(error) {
+        res.status(500).json(error)
     }
-
-    res.json(products)
 })
 
+// 🛍️ get ONE product by id
 const getProductById = asyncHandler(async(req, res) => {
     try {
         const productId = req.params.productId;
-        console.log(productId, "productId")
         const product = await Product.findById(productId)
-        console.log(product, " product")
+
         if (!product) {
             return res.status(404).json({error: 'Product Not Found'})
         }
@@ -26,16 +40,16 @@ const getProductById = asyncHandler(async(req, res) => {
     }
 })
 
+// create product 
 const createProduct = asyncHandler(async(req, res) => {
-    const { mainCategory, category, productName, productDescription, productImages, variants, price } = req.body;
+    const { categories, productName, productDescription, productImages, variants, price } = req.body;
 
-    if (!mainCategory || !category || !productName || !productDescription || !productImages || !price || !variants || variants.length === 0) {
-        return res.status(400).json({ message: "Fields can't be empty and at least one variant must be provided." });
+    if (!productName || !productDescription || !productImages || productImages.length === 0 || !price || !variants || variants.length === 0 || !categories || categories.length === 0) {
+        return res.status(400).json({ message: "Fields can't be empty and at least one variant/category must be provided." });
     }
 
     const productObj = {
-        mainCategory,
-        category,
+        categories,
         productName,
         productDescription,
         productImages,
@@ -48,56 +62,46 @@ const createProduct = asyncHandler(async(req, res) => {
 
     res.json({
         success: true,
-        message: `Product with id ${product.id} was created.`
+        message: `Product with id ${product._id} was created.`
     });
 });
 
-
+// 🛍️ UPDATE product 
 const updateProduct = asyncHandler(async(req, res) => {
-    const { _id, id, mainCategory, category, productName, productDescription, productImages, color, units_in_stock, size, price } = req.body
+    const { id } = req.params
+    const { productName, productDescription, productImages, variants, categories, price } = req.body
 
-    if ( !_id || !id || !mainCategory ||  !category || !productName || !productDescription || !productImages || !color || !units_in_stock || !size || !price  ) {
+    if ( !id || !categories || !productName || !productDescription || !productImages || !variants || !price  ) {
         return res.status(400).json({message: "Fields can't be empty."})
     }
 
-    const product = await Product.findById(_id)
+    const product = await Product.findById(id)
 
     if (!product) {
         return res.status(400).json({message: "No product found."})
     }
 
-    product.id = id
-    product.productName = productName
-    product.productImages = productImages
-    product.category = category
-    product.mainCategory = mainCategory
-    product.productDescription = productDescription
-    product.color = color
-    product.units_in_stock = units_in_stock
-    product.price = price
-    product.size = size
+    product.productName = productName || product.productName 
+    product.productImages = productImages || product.productImages
+    product.categories = categories || product.categories
+    product.productDescription = productDescription || product.productDescription
+    product.variants = variants || product.variants
+    product.price = price || product.price
 
     const updatedProduct = await product.save()
 
-    res.json({message: `Product with ID ${updatedProduct.id} updated.`})
+    res.json({message: `Product with ID ${updatedProduct._id} updated.`})
 })
 
+// 🛍️ DELETE product
 const deleteProduct = asyncHandler(async(req, res) => {
-    const { _id } = req.body
-
-    if ( !_id ) {
-        return res.status(400).json({message: "Product ID required"})
+    try {
+        const { id } = req.params
+        await Product.findByIdAndDelete(id)
+        res.status(200).json("Product has been deleted")
+    } catch(error) {
+        res.status(500).json(err)
     }
-
-    const product = await Product.findById(_id).exec()
-
-    if (!product) {
-        return res.status(400).json({message: "Product not found"})
-    }
-
-    const deleteproduct = await product.deleteOne()
-
-    res.json({message: `product with ID ${deleteproduct._id} has been deleted.`})
 })
 
 module.exports = {

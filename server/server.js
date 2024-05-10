@@ -1,5 +1,4 @@
 require('dotenv').config();
-console.log(require("dotenv").config(), " let's see")
 const express = require('express');
 const app = express();
 
@@ -18,20 +17,6 @@ const connectDB = require('./config/dbConn')
 const mongoose = require('mongoose')
 
 const multer = require('multer')
-const jwt = require('jsonwebtoken');
-
-// session 
-const sessionConfig = {
-    name: process.env.NAME,
-    secret: process.env.SECRET,
-    cookie: { 
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        secure: false,
-        httpOnly: true //means no access from javascript hackers
-    }, // 1 week
-    resave: false, // resave every time you go back and forth??
-    saveUninitialized: true // GDPR laws requires this to be false because user has to give consent
-};
 
 //port 
 const PORT = process.env.PORT || 3500
@@ -48,23 +33,24 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 app.use(cookieParser());
-app.use(session(sessionConfig));
 
 
 // ROUTES 
-app.use('/category', require('./routes/category'))
-app.use('/main-category', require('./routes/mainCategory'))
-app.use('/customer', require('./routes/customer'))
-app.use('/product', require('./routes/product'))
-app.use('/product/productId', require('./routes/product'))
+
+app.use('/user', require('./routes/user'))
+app.use('/products', require('./routes/product'))
+app.use('/products/productId', require('./routes/product'))
 app.use('/wishlist', require('./routes/wishlist'))
 app.use('/cart', require('./routes/cart'))
+app.use('/order', require('./routes/order'))
 app.use('/cart/addToCart', require('./routes/cart'))
 app.use('/cart/productId', require('./routes/cart'))
 app.use('/auth', require('./routes/auth/auth'))
 app.use('/auth/login', require('./routes/auth/auth'))
 app.use('/auth/register', require('./routes/auth/auth'))
-
+app.use('/users', require('./routes/user'))
+app.use('/users/id', require('./routes/user'))
+app.use('/users/stats', require('./routes/user'))
 
 // IMAGE STORAGE ENGINE
 const storage = multer.diskStorage({
