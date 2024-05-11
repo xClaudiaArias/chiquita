@@ -11,7 +11,7 @@ router.route("/:id")
     .patch(verifyTokenAndAdmin, productController.updateProduct)
     .delete(verifyTokenAndAdmin, productController.deleteProduct)
 
-router.route("/:productId")
+router.route("/find/:id")
     .get(productController.getProductById)
 
 module.exports = router

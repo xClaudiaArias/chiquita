@@ -1,94 +1,77 @@
 const Cart = require("../models/Cart");
 const asyncHandler = require('express-async-handler');
 
+// get cart 
 const getCart = asyncHandler(async(req, res) => {
-    const { product, quantity } = req.body.items
-    console.log( product, quantity, " --> product, quantity")
-    const cartItemSchema = {}
-
-
     try {
-        const customerId = req.customer.customerId;
-        console.log(customerId)
-        
-        const cart = await Cart.findOne({ customer: customerId });
-
-        if (!cart) {
-            return res.status(404).json({ error: 'Cart not found' });
-        }
-
-        console.log(cart, " -cart")
-
-        cartItemSchema.product = product
-        cartItemSchema.quantity = quantity
-
-        cart.items.push(cartItemSchema)
-        
-        cart.save()
-
-        res.send({message: "successfully added"})
-    } catch (error) {
-        console.log("This is what's giving the error:", error);
-        res.status(500).json({ error: 'Internal server error' });
+        let carts = await Cart.find()
+        res.status(200).json(carts)
+    } catch(error) {
+        res.status(500).json(error)
     }
 });
 
-// addToCart function
-const addToCart = asyncHandler(async (req, res) => {
+// get cart by id
+const getCartById = asyncHandler(async(req, res) => {
+    const { userId } = req.params 
+
     try {
-        const { productId, quantity } = req.body;
-        console.log(req.customer)
-        const { customerId } = req.customer;
-
-        console.log(customerId, " customerIdin cartConroller")
-        console.log(productId, quantity, " --> productId, quantity in cartController")
-
-        let cart = await Cart.findOne({ customer: customerId });
-        if (!cart) {
-            cart = new Cart({ customer: customerId, items: [] });
-        }
-
-        console.log(cart, " cart iin vcardcontroller addtocart route")
-
-        const existingItemIndex = await cart.items.findIndex(item => item.product.toString() === productId);
-
-        console.log(existingItemIndex, " existingItemIndex in cartcontroller addtocart")
-        if (existingItemIndex !== -1) {
-            cart.items[existingItemIndex].quantity += quantity; // Update existing item quantity
-        } else {
-            cart.items.push({ product: productId, quantity }); // Add new item to cart
-        }
-
-        console.log(cart, " in addtoCart, new Cart saved")
-        await cart.save();
-        res.status(201).json({ message: 'Item added to cart successfully' });
-    } catch (error) {
-        console.log("This is what's giving the error")
-        res.status(500).json({ error: 'Internal server error' });
+        const cart = await Cart.findOne({ userId: userId})
+        res.status(200).json(cart)
+    } catch(error) {
+        res.status(500).json(err)
     }
 });
 
-// removeFromCart function
-const removeFromCart = asyncHandler(async (req, res) => {
+// create cart 
+const createCart = asyncHandler(async(req, res) => {
+    const cart = new Cart(req.body)
+
     try {
-        const { productId } = req.params;
-        const customerId = req.customer.customerId;
+        const savedCart = await cart.save();
+        res.status(200).json(savedCart)
+    } catch  (err) {
+        res.status(500).json(err)
+    }
+});
 
-        const cart = await Cart.findOne({ customer: customerId });
-        if (!cart) {
-            return res.status(404).json({ error: "Cart not found" });
-        }
-
-        cart.items = cart.items.filter(item => item.product.toString() !== productId); // Remove item from cart
-        await cart.save();
-        res.status(200).json({ message: 'Item removed from cart successfully' });
+// update cart 
+const updateCart = asyncHandler(async(req, res) => {
+    try {
+        const { id } = req.params
+        // get the cart by id and update and save cart 
+        const cart = await Cart.findByIdAndUpdate(id, 
+            {
+                // update fields using set 
+                $set: req.body
+            }, 
+            {
+                new: true
+            }
+        )
+        // return cart object as json
+        res.status(200).json(cart) 
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        console.log(error)
+        res.status(500).json(error)
+    }
+});
+
+//delete cart 
+const deleteCart = asyncHandler(async(req, res) => {
+    const { id } = req.params
+    try {
+        await Cart.findByIdAndDelete(id)
+        res.status(200).json("Cart has been deleted")
+    } catch(error) {
+        res.status(500).json(err)
     }
 });
 
 module.exports = {
     getCart,
-    addToCart,
-    removeFromCart
+    getCartById,
+    createCart,
+    updateCart,
+    deleteCart
 }
