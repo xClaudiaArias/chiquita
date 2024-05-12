@@ -1,7 +1,7 @@
 .item {
     width: 340px;
     height: 520px;
-    background-color: white;
+    background: white;
     box-shadow: 2px 2px 6px rgba(0,0,0,.2);
     position: relative;
     border-radius: 16px;
@@ -35,7 +35,6 @@
     object-fit: cover;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
-    /* position: absolute;   */
 }
 
 .product-colors {
@@ -70,4 +69,12 @@
 .product-price p {
     font-size: 18px;
     font-weight: 600;
+    width: 50px;
+    padding: 2px;
+    border-radius: 50px;
+    border: 1px solid rgba(176, 144, 222, 0.6);
+    background-color: rgba(176, 144, 222, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

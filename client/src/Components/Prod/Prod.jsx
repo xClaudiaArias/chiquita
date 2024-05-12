@@ -27,13 +27,21 @@ const Prod = ({product}) => {
 
     const [mainImage, setMainImage] = useState("")
 
-    const colorStyle = {
-        "backgroundColor": `${product.color}`,
-        "width": "15px",
-        "height": "15px",
-        "borderRadius": "50px",
-        "boxShadow": "2px 2px 2px rgba(147,147,147,.4)"
-    }
+    // const colorStyle = {
+    //     "backgroundColor": `${product.color}`,
+    //     "width": "15px",
+    //     "height": "15px",
+    //     "borderRadius": "50px",
+    //     "boxShadow": "2px 2px 2px rgba(147,147,147,.4)"
+    // }
+
+    // TEMPORARY IMAGE OBJECT 
+    const images = [
+        "https://static.zara.net/assets/public/b8c8/c6c3/852e4376a3ae/b494d49fadb4/00673604250-e1/00673604250-e1.jpg?ts=1711036840288&w=850",
+        "https://static.zara.net/assets/public/a980/9802/c89640a992ba/2424e1c181f0/00673604250-e2/00673604250-e2.jpg?ts=1711036842866&w=850",
+        "https://static.zara.net/assets/public/dd31/184b/90e743489199/52a991a392ab/00673604250-e3/00673604250-e3.jpg?ts=1711036841673&w=850",
+        "https://static.zara.net/assets/public/a980/9802/c89640a992ba/2424e1c181f0/00673604250-e2/00673604250-e2.jpg?ts=1711036842866&w=850",
+    ]
 
     return (
         <div className='prodDisplay'>
@@ -44,26 +52,26 @@ const Prod = ({product}) => {
                     <li className="slider">
                         <ul>
                         {
-                            product.productImages.map((img, i) => {
+                            images.map((img, i) => {
                                 return (
-                                    <li key={i}><img src={img} onClick={()=> {setMainImage(img)}} alt={product.productName}/></li>
+                                    <li key={i}><img src={img} onClick={()=> {setMainImage(img)}} alt="" /></li>
                                 )
                             })
                         }
                         </ul>
                     </li>
-                    <li><img className='main-image' src={mainImage === "" ? product.productImages[1] : mainImage} alt="" /></li>
+                    <li><img className='main-image' src={mainImage === "" ? images[1] : mainImage} alt="" /></li>
                 </ul>
             </div>
 
             {/* decription */}
             <div className="prodDisplay-right">
-                <h1>{product.productName}</h1>
-                <p className="product-description">{product.productDescription}</p>
+                <h1>productName</h1>
+                <p className="product-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vero quae id, eaque iusto ipsum nemo debitis quia tempore totam nostrum non, libero modi corrupti mollitia? Dicta culpa dolorum aut voluptatibus!</p>
                 <div className="prodDisplay-colors-reviews">
                     <ul className="product-colors">
                         <li>Colors:</li>
-                        <li><div style={colorStyle}></div></li>
+                        <li><div style={{color: 'red'}}></div></li>
                     </ul>
                     <div className="prodDisplay-reviews">
                         <p>Reviews: </p>
@@ -79,29 +87,32 @@ const Prod = ({product}) => {
                 <div className="prodDisplay-product-sizes">
                     <p>Sizes:</p>
                     <ul>
-                        {    
+                        {/* {    
                             product.size.map((s, i) => {
                                 return <li key={i}><a href="/">{s}</a></li>
                             })
-                        }
+                        } */}
+                        <li>S</li>
+                        <li>M</li>
+                        <li>L</li>
                     </ul>
                 </div>
                 <div className="prodDisplay-info-quantity">
                     <p>Quantity:</p>
                     <div className="prodDisplay-qty">
-                        <button onClick={handleDecreaseQuantity}>-</button>
-                        <p>{quantity}</p>
-                        <button onClick={handleIncreaseQuantity}>+</button>
+                        <button>-</button>
+                        <p>1</p>
+                        <button>+</button>
                     </div>
                 </div>
                 <div className="prodDisplay-footer">
                     <div className="prodDisplay-product-price">
                         <p>Price:</p>
-                        <p className='prodDisplay-price'>${product.price * quantity}</p>
+                        <p className='prodDisplay-price'>$12.00</p>
                     </div>
                     <button className='prodDisplay-add-to-cart' onClick={handleAddToCart}>ADD TO CART</button>
                 </div>
-                <p className='productdisplay-right-category'><span>Category:</span> {product.category}, {product.productName}</p>
+                <p className='productdisplay-right-category'><span>Category:</span> category, productName</p>
             </div>
         </div>  
     )

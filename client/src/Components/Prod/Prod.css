@@ -8,7 +8,7 @@
     display: flex;
     justify-content: flex-start;
     gap: 50px;
-    padding: 20px 50px 0;
+    padding: 20px 50px 100px;
 }
 
 .prodDisplay-left {
@@ -156,7 +156,7 @@
 }
 
 .prodDisplay-right .prodDisplay-product-sizes a:hover {
-    color: #ce75dd;
+    color: #c07dff;
 }
 
 
@@ -230,7 +230,7 @@
 
 .prodDisplay-right .prodDisplay-footer .prodDisplay-add-to-cart {
     margin-top: 5px;
-    background-color: #ce75dd;
+    background-color: #c07dff;
     color: white;
     border-radius: 50px;
     font-size: 18px;
@@ -242,7 +242,7 @@
 }
 
 .prodDisplay-right .prodDisplay-footer .prodDisplay-add-to-cart:hover {
-    background-color: #c068d0;
+    background-color:#af71ea;
 }
 
 .productdisplay-right-category {

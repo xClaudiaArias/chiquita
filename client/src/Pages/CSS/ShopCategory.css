@@ -3,13 +3,47 @@
     padding: 30px;
 }
 
-.shopcategory-indexSort {
-    padding: 10px 30px;
-    width: 100%;
+.shop-category .filter-sort {
+    height: 100px;
+    margin-top: 20px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 10px;
+    margin-right: 30px;
 }
+
+.shop-filter-sort-items {
+    border-radius: 50px;
+    border: 1px solid rgba(176, 144, 222, 0.6);
+    padding: 0 5px;
+}
+
+.shop-filter-sort-items:hover {
+    background-color: rgba(176, 144, 222, 0.2);
+}
+
+.filter-sort p {
+    font-weight: 300;
+    font-size: 18px;
+}
+
+.shop-filter-sort-items span {
+    font-size: 16px;
+    font-weight: 300;
+    margin-right: 5px;
+}
+
+.shop-filter-sort-items select {
+    padding: 5px;
+    background: none;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+}
+
 
 .shopcategory-products {
     width: 100%;
@@ -34,9 +68,170 @@
     font-size: 14px;
 }
 
-/* h1 {
-    padding: 20px 30px;
-    font-size: 40px;
+
+/* LOGIN  */
+
+.login,
+.register {
+    width: 100vw;
+    height: 600px;
+    padding: 50px;
+    display: flex;
+    margin-bottom: 50px;
+    gap: 50px
+}
+
+.login .slideshow,
+.register .slideshow  {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border-radius: 16px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,.2);
+}
+
+.login .slideshow .slide,
+.register .slideshow .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.login .slideshow .slide.active,
+.register .slideshow .slide.active {
+    opacity: 1;
+}
+
+.login-info-container,
+.register-info-container {
+    padding: 30px;
+    border-radius: 16px;
+    flex: 1;
+    box-shadow: 2px 2px 10px rgba(0,0,0,.2);
+}
+
+.login-info-container h1,
+.register-info-container h1  {
+    color: #c07dff;
+}
+
+.login-info-container h1 {
+    margin-bottom: 10px;
+}
+
+.login-info-container .login-slogan {
+    font-weight: 300;
+    color: #818181;
+    letter-spacing: 1.2px;
+    margin-top: 5px;
+}
+
+.login-info-container .login-inputs-container,
+.register-info-container .register-inputs-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.login-info-container .login-inputs-container p,
+.login-info-container .login-inputs-container a,
+.register-info-container .register-inputs-container p,
+.register-info-container .register-inputs-container a  {
+    font-weight: 300;
+    color: #3d3d3d;
+    letter-spacing: 1.2px;
+    margin-top: 5px;
+    padding: 2px 0;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+.login-info-container .login-inputs-container p:hover,
+.login-info-container .login-inputs-container a:hover,
+.register-info-container .register-inputs-container p:hover,
+.register-info-container .register-inputs-container a:hover  {
+    text-decoration: underline;
+    color: #c07dff;
+}
+
+.login-inputs-container button,
+.register-inputs-container button {
+    background: none;
+    padding: 10px;
+    width: 200px;
+    height: 40px;
+    margin-top: 20px;
+    border-radius: 60px;
+    border: 1px solid #1e1e1e;
+    font-size: 16;
     font-weight: 600;
-    text-transform: capitalize;
-} */
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.register-inputs-container button {
+    margin-top: 10px;
+}
+
+.login-inputs-container button:hover,
+.login-inputs-container button:hover,
+.register-inputs-container button:hover,
+.register-inputs-container button:hover   {
+    background-color: #c07dff46;
+    border: 1px solid #c07dff46;
+}
+
+.login-info-container .login-inputs-container .login-ct,
+.login-info-container .login-inputs-container .login-ct {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+
+.login-info-container .login-inputs-container .login-ct input,
+.login-info-container .login-inputs-container .login-ct input {
+    height: 40px;
+    width: 400px;
+    border: none;
+    border-bottom: 1px solid #1e1e1e;
+    padding: 0 10px;
+    font-size: 16px;
+    font-weight: 300;
+    color: #1e1e1e;
+    background: none;
+    margin-left: 20px;
+}
+
+.register-info-container .register-inputs-container .register-ct,
+.register-info-container .register-inputs-container .register-ct {
+    display: flex;
+    align-items: center;
+}
+
+.register-info-container .register-inputs-container .register-ct input,
+.register-info-container .register-inputs-container .register-ct input  {
+    height: 30px;
+    width: 400px;
+    border: none;
+    border-bottom: 1px solid #1e1e1e;
+    padding: 0 10px;
+    font-size: 16px;
+    font-weight: 300;
+    color: #1e1e1e;
+    background: none;
+    margin-left: 20px;
+}

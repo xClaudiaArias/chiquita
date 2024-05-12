@@ -6,7 +6,7 @@
 
 .cartproducts h1 {
     font-size: 32px;
-    padding: 20px 0 10px;
+    padding: 20px 0 0;
 }
 
 .cartproducts img{
@@ -17,7 +17,7 @@
 
 .cartproducts .cartproducts-itemcount {
     font-weight: 300;
-    font-size: 16px;
+    font-size: 18px;
     color: #484848;
 }
 
@@ -30,7 +30,6 @@
 }
 
 .cartproducts-card {
-    /* border: 1px solid orangered; */
     height: 500px;
     overflow: scroll;
     padding: 0 20px;
@@ -67,13 +66,13 @@
 
 .cartproducts-list-card-info-productName {
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 300;
 }
 
 .cartproducts-list-card-info-description {
     font-size: 14px;
     font-weight: 300;
-    padding: 5px 0;
+    padding: 7px 0;
     color: rgb(86, 86, 86);
 }
 
@@ -93,7 +92,6 @@
 .cartproducts-list-card-info-color p,
 .cartproducts-list-card-info-size p {
     font-size: 14px;
-    font-weight: 400;
     color: #484848;
 }
 
@@ -108,6 +106,18 @@
     font-size: 14px;
     color: #484848;
 }
+
+.cartproducts-info-quantity p:nth-child(2){
+    font-size: 14px;
+    color: #484848;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
 
 .cartproducts-info-quantity .qty{
     display: flex;
@@ -128,12 +138,9 @@
     color: #484848;
 }
 
-.cartproducts-info-quantity .qty button:hover{
-    color: #ce75dd;
-}
 
 .cartproducts-list-card-info-price {
-    background-color: rgba(206, 117, 221, 1);
+    background-color: rgba(205, 117, 221, 0.226);
     width: 80px;
     border-radius: 50px;
     padding: 2px 0;
@@ -142,19 +149,31 @@
     font-size: 18px;
     font-weight: 600;
     text-align: center;
-    color: white;
+    color: #1e1e1e;
 }
 
 .cartproducts-list-card-info .add-to-wishlist {
-    padding: 7px 0;
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
 }
 
 
-.cartproducts-list-card-info .add-to-wishlist a{
-    color: #484848;
+.cartproducts-list-card-info .add-to-wishlist button{
+    background: none;
+    border: none;
     cursor: pointer;
+    color: #484848;
     font-weight: 300;
     font-size: 14px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+    align-items: center;
+}
+
+.cartproducts-list-card-info .add-to-wishlist button:hover{
+    text-decoration: underline;
 }
 
 .cartproducts-list-card-info .add-to-wishlist a:hover{
@@ -169,8 +188,6 @@
 }
 
 .cartProducts-side {
-    /* border: 1px solid hotpink; */
-    /* border-left: 1px solid #e1e1e1; */
     padding: 10px 20px;
     width: 100%;
 }
@@ -179,24 +196,32 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    /* border: 1px solid blue; */
+    margin-top: 80px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 16px;
+    box-shadow: 0 1px 6px rgba(213, 213, 213, 0.6);
+}
+
+.cartProducts-total h1 {
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 30px;
 }
 
 .cartProducts-total-item {
     /* border: 1px solid aqua; */
     width:100%;
-    padding: 30px 0;
+    padding: 20px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.cartProducts-total-item hr {
+.cartProducts-total-item .line-div {
     width: 400px;
     height: 1px;
-    background: #e1e1e1;
-    border: none;
-    outline: none;
+    border-bottom: 1px rgb(165, 165, 165) dashed;
 }
 
 
@@ -205,6 +230,16 @@
     width: 120px;
     text-align: left;
     /* border: 1px solid red; */
+    font-weight: 300;
+}
+
+.cartProducts-total-item p:nth-child(3){
+    font-size: 18px;
+    width: 120px;
+    text-align: center;
+    background-color: #e8e8e848;
+    border: 1px dashed  rgb(175, 175, 175) ;
+    border-radius: 50px;
 }
 
 .mainCartProducts-total-item p{
@@ -213,27 +248,25 @@
     width: 120px;
 }
 
-.mainCartProducts-total-item hr{
-    width: 400px;
-    height: 2px;
-    background: #c4c4c4;
-    border: none;
-    outline: none;
+.mainCartProducts-total-item p:nth-child(3){
+    /* background-color: rgb(39, 170, 54); */
+    font-size: 24px;
+    background-color: #d5d5d548;
+    border-radius: 50px;
+    border: 1px dashed  rgb(135, 135, 135) ;
 }
 
 .cartProducts-total button {
-    margin-top: 5px;
     background-color: #ce75dd;
     color: white;
     border-radius: 50px;
     font-size: 18px;
-    width: 400px;
+    width: 320px;
     border: none;
     height: 50px;
     box-shadow: 2px 2px 2px rgba(147,147,147,.6);
     cursor: pointer;
-    margin-left: 150px;
-    margin-top: 100px;
+    margin-left: 180px;
 }
 
 .cartProducts-total button:hover {

@@ -37,7 +37,7 @@ const Newsletter = () => {
         <p>Get updates from your favorite products and our new arrivals.</p>
         <div className="newsletter-input-container">
             <MailOutlineIcon />
-            <input type="text" placeholder="Your email" />
+            <input type="email" placeholder="Your email" />
             <button>
                 <SendIcon fontSize={'16px'} />
             </button>           

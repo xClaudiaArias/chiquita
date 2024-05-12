@@ -11,7 +11,7 @@ const Footer = () => {
                 <div className="logo">CHIQUITA</div>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Unde praesentium explicabo quo veritatis reiciendis aperiam, labore cumque quaerat sed pariatur quos aliquam molestias! Perferendis, at debitis? Reprehenderit iure fugit labore!
 
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est, doloremque voluptas? Voluptate tempore voluptas, ducimus minus sunt mollitia modi possimus esse nisi perspiciatis vitae rerum nihil unde reprehenderit fuga neque!
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est, doloremque voluptas? Voluptate tempore voluptas, ducimus minus sunt mollitia modi possimus esse nisi. 🛍️
                 </p>
             </div>
 

@@ -42,7 +42,6 @@
 }
 
 .featured-items .featured-items-info button:hover {
-    background-color: #c07dff;
-    border: 1px solid #c07dff;
-    color: white;
+    background-color: #c07dff46;
+    border: 1px solid #c07dff46;
 }

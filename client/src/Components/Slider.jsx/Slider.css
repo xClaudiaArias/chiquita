@@ -94,7 +94,6 @@ img {
 }
 
 .info-container button:hover {
-    background-color: #c07dff;
-    border: 1px solid #c07dff;
-    color: white;
+    background-color: rgba(176, 144, 222, 0.2);
+    border: 1px solid rgba(176, 144, 222, 0.6);;
 }

@@ -19,6 +19,49 @@ export const sliderItems = [
     }
 ]
 
+export const similarItems = [
+    { 
+        id: 1,
+        img: "https://static.zara.net/assets/public/1add/a430/2cca4b5aa386/693dd5d279e7/11229330203-e1/11229330203-e1.jpg?ts=1710750923769&w=850",
+        title: "Cutest bag to ever exist ",
+        productName: "Cutest bag to ever exist ",
+        size: "XS",
+        color: "yellow",
+        price: 20,
+        description: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF NEW ARRIVALS"
+    },
+    { 
+        id: 2,
+        img: "https://static.zara.net/assets/public/d50d/07ba/f2c44a248f80/bebda06183d1/06224821250-e1/06224821250-e1.jpg?ts=1711447630097&w=850",
+        title: "You will love this shirt",
+        productName: "You will love this shir ",
+        size: "S",
+        color: "red",
+        price: 15,
+        description: "NEW STYLES YOU WILL LOVE! GET FLAT 30% OFF NEW ARRIVALS"
+    },
+    { 
+        id: 3,
+        img: "https://static.zara.net/assets/public/31cd/4e13/144a4809bdfb/9ab06c2889da/01440695701-e2/01440695701-e2.jpg?ts=1713888293539&w=850",
+        title: "Dress for Summer fun ",
+        productName: "Dress for Summer fun ",
+        size: "S",
+        color: "brown",
+        price: 22,
+        description: "FIND THAT UNIQUELY YOURS EDGE! GET FLAT 30% OFF NEW ARRIVALS"
+    },
+    { 
+        id: 4,
+        img: "https://static.zara.net/assets/public/8a4b/6e82/b39648cabddd/92a8da3c5088/03920614712-e2/03920614712-e2.jpg?ts=1713275543626&w=850",
+        title: "Love skirt One size True ",
+        productName: "Dress for Summer fun ",
+        size: "L",
+        color: "orange",
+        price: 10,
+        description: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF NEW ARRIVALS"
+    }
+]
+
 export const categories = [
     {
         id: 1,

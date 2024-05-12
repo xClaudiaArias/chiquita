@@ -6,6 +6,7 @@
     justify-content: center;
     flex-direction: column;
     padding: 50px;
+    margin-bottom: 100px;
 }
 
 .newsletter .slideshow {
@@ -78,5 +79,6 @@
 }
 
 .newsletter-input-container button:hover {
-    background-color: white;
+    background-color: rgba(176, 144, 222, 0.2);
+    border: 1px solid rgba(176, 144, 222, 0.6);
 }

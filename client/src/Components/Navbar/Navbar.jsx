@@ -6,6 +6,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import { Badge } from '@mui/material';
 
 const Navbar = () => {
 
@@ -22,7 +23,7 @@ const Navbar = () => {
                     <li> <Link className={menu === "wishlist" ? '' : ''} onClick={() => setMenu("wishlist")} style={{textDecoration: 'none', textTransform: 'uppercase'}} to="/wishlist"> <FavoriteBorderIcon/>  Wishlist </Link></li>
 
                     <li>
-                    {localStorage.getItem('auth-token') ? <Link style={{textDecoration: 'none', textTransform: 'uppercase'}} onClick={() => {localStorage.removeItem('auth-token'); window.location.replace("/")}}> <PersonOutlineIcon/> Logout </Link> : <Link className={menu === "account" ? '' : ''} onClick={() => setMenu("account")} style={{textDecoration: 'none', textTransform: 'uppercase'}} to="/auth"> <PersonOutlineIcon/> Login</Link>}
+                    {localStorage.getItem('auth-token') ? <Link style={{textDecoration: 'none', textTransform: 'uppercase'}} onClick={() => {localStorage.removeItem('auth-token'); window.location.replace("/")}}> <PersonOutlineIcon/> Logout </Link> : <Link className={menu === "account" ? '' : ''} onClick={() => setMenu("account")} style={{textDecoration: 'none', textTransform: 'uppercase'}} to="/login"> <PersonOutlineIcon/> Login</Link>}
                     </li>
 
 
@@ -37,10 +38,12 @@ const Navbar = () => {
 
                     {/* CART */}
                     <li>
-                        <div className="nav-cart">
-                            <Link className={menu === "cart" ? '' : ''} onClick={() => setMenu("cart")} style={{textDecoration: 'none', textTransform: 'uppercase'}} to="/cart"> <ShoppingBagOutlinedIcon/> Cart</Link>
-                            <div className={count <= 0 ? 'empty' : 'nav-cart-count'} onLoad={() => setEmpty("empty")}>{count}</div>
-                        </div>
+                        <Badge badgeContent={4} color="secondary">
+                            <div className="nav-cart">
+                                <Link className={menu === "cart" ? '' : ''} onClick={() => setMenu("cart")} style={{textDecoration: 'none', textTransform: 'uppercase'}} to="/cart"> <ShoppingBagOutlinedIcon/> Cart</Link>
+                                <div className={count <= 0 ? 'empty' : 'nav-cart-count'} onLoad={() => setEmpty("empty")}>{count}</div>
+                            </div>
+                        </Badge>
                     </li>
                     {/* CART end  */}
                 </ul>

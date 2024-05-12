@@ -4,7 +4,6 @@ import Navbar from './Components/Navbar/Navbar';
 import Home from './Pages/Home';
 import ShopCategory from './Pages/ShopCategory';
 import Cart from './Pages/Cart';
-import Account from './Pages/Account';
 import Product from './Pages/Product';
 import Wishlist from './Pages/Wishlist';
 import Search from './Pages/Search';
@@ -13,6 +12,8 @@ import toddler_banner from './Components/Assets/toddler_banner.png';
 import accessories_banner from './Components/Assets/accessories_banner.png'
 import Announcements from './Components/Announcements/Announcements'
 import Footer from './Components/Footer/Footer';
+import Login from './Pages/Login';
+import Register from './Pages/Register';
 
 
 
@@ -35,13 +36,14 @@ const App = () => {
                     <Route path="/kids" element={<ShopCategory mainCategoryName="kids"  mainCategory="65bbe5c2062e04db1ac1b0c1"/>} />
                     <Route path="/accessories" element={<ShopCategory banner={accessories_banner} mainCategoryName="accessories"  mainCategory="65bbe5ca062e04db1ac1b0c3"/>} />
 
-                    <Route path="/product" element={<Product />}>
+                    <Route path="/products" element={<Product />}>
                         <Route path=":productId" element={<Product />} />
                     </Route>
 
                     <Route path="/cart" element={<Cart />} />
 
-                    <Route path="/auth" element={<Account />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                 </Routes>
             
                 <Footer />
