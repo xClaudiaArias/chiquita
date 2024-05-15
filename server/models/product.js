@@ -1,14 +1,5 @@
 const mongoose = require("mongoose");
 
-const ProductVariantSchema = new mongoose.Schema({
-    size: String,
-    color: String,
-    quantity: {
-        type: Number,
-        default: 1
-    },
-});
-
 const ProductSchema = new mongoose.Schema({
     categories: {
         type: Array,
@@ -23,11 +14,20 @@ const ProductSchema = new mongoose.Schema({
         required: true
     },
     productDescription: String,
+    size: Array,
+    color: Array,
+    quantity: {
+        type: Number,
+        default: 1
+    },
     price: {
         type: Number,
         required: true
     },
-    variants: [ProductVariantSchema], // Reference to Product variants
+    inStock: {
+        type: Boolean,
+        default: true
+    }
 });
 
 module.exports = mongoose.model('Product', ProductSchema);

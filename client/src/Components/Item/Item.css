@@ -28,11 +28,12 @@
     border-top-right-radius: 16px;
 }
 
-.item .product-images img {
+.item .product-images li a img {
     width: 340px;
     height: 400px;
     object-position: center;
     object-fit: cover;
+    border-radius: 0;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
 }

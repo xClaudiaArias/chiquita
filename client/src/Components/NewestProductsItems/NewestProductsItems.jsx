@@ -1,24 +1,28 @@
-import { FavoriteBorderOutlined, Search, ShoppingBagOutlined } from '@mui/icons-material'
-import React from 'react'
+import { FavoriteBorderOutlined } from '@mui/icons-material'
+import React, { useEffect, useState } from 'react'
 import './NewestProductsItems.css'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import { Link, useLocation } from 'react-router-dom';
 
 const NewestProductsItems = ({item}) => {
+
     return (
         <div className='newestproductsitems'>
-            <img src={item.img} alt="" />
+            {item.productImages && item.productImages.length > 0 && (
+                <img src={item.productImages[0]} alt="" />
+            )}
             <div className="newestproductsitems-info">
-                <div className="newestproductsitems-info-icon">
-                    <VisibilityOutlinedIcon /> VIEW
-                </div>
-                <div className="newestproductsitems-info-icon">
-                    <ShoppingBagOutlined /> BUY
-                </div>
+                <Link to={`/products/${item._id}`}>
+                    <div className="newestproductsitems-info-icon">
+                            <VisibilityOutlinedIcon /> VIEW
+                    </div>
+                </Link>
                 <div className="newestproductsitems-info-icon">
                     <FavoriteBorderOutlined /> SAVE
+                    
                 </div>
             </div>
-            <p>Product Name Here <span>$20.00</span></p>
+            <p>{item.productName} <span>$20.00</span></p>
         </div>
     )
 }

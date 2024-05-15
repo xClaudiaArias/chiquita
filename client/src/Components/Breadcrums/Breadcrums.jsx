@@ -1,5 +1,6 @@
 import React from 'react'
 import './Breadcrums.css'
+import { Link } from 'react-router-dom'
 
 
 const Breadcrums = (props) => {
@@ -8,17 +9,13 @@ const Breadcrums = (props) => {
     return (
         <div className='breadcrums'>
             <p>
-                {/* <span className='main-cat'>{mainCategory.mainCategoryName}</span>
+                <Link to={`/products/${props.mainCategory}`}>
+                    <span className='main-cat'>{props.mainCategory}</span>
+                </Link>
                 <span className='divider'>|</span> 
-                <span className='cat'>{category.categoryName}</span>
+                <span className='cat'>{props.category}</span>
                 <span className='divider'>|</span>
-                {product.productName} </p> */}
-
-                <span className='main-cat'>Main Category</span>
-                <span className='divider'>|</span> 
-                <span className='cat'>Category</span>
-                <span className='divider'>|</span>
-                productName </p>
+                {props.productName} </p>
 
                 {/* FIXME: CHANGE THIS BACK */}
                 {/* hello */}

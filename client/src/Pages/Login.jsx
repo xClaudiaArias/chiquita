@@ -5,6 +5,8 @@ import { similarItems } from "../Data/data"
 import PersonIcon from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
 import { Link } from 'react-router-dom';
+import { login } from '../redux/apiCalls';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
 
@@ -19,8 +21,18 @@ const Login = () => {
         return () => clearInterval(interval); 
     }, [currentSlide]); 
     
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const dispatch = useDispatch()
 
+    // handle errors 
+    const { isFetching, error } = useSelector((state) => state.user)
 
+    const handleClick = (e) => {
+        e.preventDefault() //prevent pg from refresging 
+        console.log('I was clicked')
+        login(dispatch, { username, password })
+    }
 
     return (
         <div className='login'>
@@ -41,18 +53,19 @@ const Login = () => {
                 <div className="login-inputs-container">
                     <div className="login-ct login-username">
                         <PersonIcon />
-                        <input type="text" placeholder="Username" />
+                        <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
                     </div>
                     <div className="login-ct login-password">
                         <PasswordIcon />
-                        <input type="password" placeholder="******" />
+                        <input type="password" placeholder="******" onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <p>Forgot Username?</p>
                     <Link to="/register">Don't have an account? REGISTER HERE</Link>
 
-                    <button>
+                    <button onClick={handleClick} disabled={isFetching}>
                         Login
-                    </button>           
+                    </button>   
+                    {error && <div className="error-container">Something went wrong</div>   }     
                 </div>
             </div>
         </div>

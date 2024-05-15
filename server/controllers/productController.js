@@ -9,7 +9,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
     try {
         let products;
         if (qNew) {
-            products = await Product.find().sort({createdAt: -1}).limit(5)
+            products = await Product.find().sort({createdAt: -1}).limit(8)
         } else if (qCategory) {
             products = await Product.find({categories : {
                 $in: [qCategory]
@@ -42,9 +42,9 @@ const getProductById = asyncHandler(async(req, res) => {
 
 // create product 
 const createProduct = asyncHandler(async(req, res) => {
-    const { categories, productName, productDescription, productImages, variants, price } = req.body;
+    const { categories, productName, productDescription, productImages, color, size, price } = req.body;
 
-    if (!productName || !productDescription || !productImages || productImages.length === 0 || !price || !variants || variants.length === 0 || !categories || categories.length === 0) {
+    if (!productName || !productDescription || !productImages || productImages.length === 0 || !price || !color || color.length === 0 || !size || size.length === 0 || !categories || categories.length === 0) {
         return res.status(400).json({ message: "Fields can't be empty and at least one variant/category must be provided." });
     }
 
@@ -53,7 +53,8 @@ const createProduct = asyncHandler(async(req, res) => {
         productName,
         productDescription,
         productImages,
-        variants, // Assign variants directly
+        color,
+        size,
         price
     };
 
@@ -69,9 +70,9 @@ const createProduct = asyncHandler(async(req, res) => {
 // 🛍️ UPDATE product 
 const updateProduct = asyncHandler(async(req, res) => {
     const { id } = req.params
-    const { productName, productDescription, productImages, variants, categories, price } = req.body
+    const { productName, productDescription, productImages, color, size, categories, price } = req.body
 
-    if ( !id || !categories || !productName || !productDescription || !productImages || !variants || !price  ) {
+    if ( !id || !categories || !productName || !productDescription || !productImages || !color || !size || !price  ) {
         return res.status(400).json({message: "Fields can't be empty."})
     }
 
@@ -85,7 +86,8 @@ const updateProduct = asyncHandler(async(req, res) => {
     product.productImages = productImages || product.productImages
     product.categories = categories || product.categories
     product.productDescription = productDescription || product.productDescription
-    product.variants = variants || product.variants
+    product.color = color || product.color
+    product.size = size || product.size
     product.price = price || product.price
 
     const updatedProduct = await product.save()

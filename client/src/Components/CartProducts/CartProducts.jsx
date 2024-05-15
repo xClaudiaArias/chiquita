@@ -1,174 +1,153 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './CartProducts.css';
-import { ShopContext } from '../../Context/ShopContext';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useDispatch, useSelector } from 'react-redux';
+import { decreaseQuantity, increaseQuantity, clearCart, removeProduct } from '../../redux/cartRedux';
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+
+
+const KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || 'pk_test_51PF6Q9RqtddZ7Hs3UaCbOYqwAXgiQK7Nf7ywYMJdzYiolPw1XK9g6vMuoXY2LE9QpZIXhSFStN7zgxQp7I1CwXeA00xS8s27uX'
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2M2E5ZTRhNzAxOTVhMjI1Y2I4YmY1MiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNTU2MDkzMSwiZXhwIjoxNzE1ODIwMTMxfQ.SATVnT9wxN2fYubIyetQ-MBo_GNFzyJDUtS6OYVPw64";
+console.log(KEY, " KEY");
 
 const CartProducts = () => {
-    const { products, cartProducts, addToCart, removeFromCart, getTotalCartAmount } = useContext(ShopContext);
 
-    // const colorStyle = (color) => {
-    //     return {
-    //         backgroundColor: color,
-    //         width: '15px',
-    //         height: '15px',
-    //         borderRadius: '50px',
-    //         boxShadow: '2px 2px 2px rgba(146, 147, 147, .4)'
-    //     };
-    // };
+
+    const cart = useSelector(state => state.cart);
+    const dispatch = useDispatch();
+
+    const totalQuantity = cart.products.reduce((total, product) => total + product.quantity, 0);
+
+    const [stripeToken, setStripeToken] = useState(null)
+    const navigate = useNavigate();
+
+    const makePayment = useCallback(
+        async (token) => {
+            try {
+                const res = await axios.post(
+                'http://localhost:8000/payment',
+                {
+                    tokenId: token.id,
+                    amount: cart.total * 100,
+                },
+                {
+                    headers: {
+                    token: `Bearer ${TOKEN}`,
+                    },
+                }
+                );
+                console.log(res.data);
+                navigate('/', { data: res.data });
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        [navigate, cart.total]
+    );
+
+
+    const onToken = useCallback(
+        (token) => {
+            setStripeToken(token);
+            makePayment(token);
+        },
+        [makePayment]
+    );
+
+    useEffect(() => {
+    if (stripeToken && cart.total >= 1) {
+        makePayment(stripeToken);
+    }
+    }, [stripeToken, cart.total, makePayment]);
+    
+
+    useEffect(() => {
+        const makePayment = async () => {
+            try {
+                const res = await axios.post('http://localhost:8000/checkout/payment',
+                    {
+                        tokenId: stripeToken.id,
+                        amount: cart.total * 100
+                    },
+                    {
+                        headers: {
+                            token: `Bearer ${TOKEN}`
+                        }
+                    }
+                );
+                console.log(res.data); 
+                dispatch(clearCart());
+                navigate('/success', {data: res.data});
+            } catch (error) {
+                console.error(error); 
+            }
+        };
+    
+        if (stripeToken && cart.total >= 1) {
+            makePayment();
+        }
+    }, [stripeToken, cart.total, navigate, dispatch]);
+
+    console.log(stripeToken, " stripeToken")
 
     // DO NOT DELETE ⚠️ for the items 👇
-    // let i = 0
+    let i = 0
 
     return (
         <div className='cartproducts'>
             <div className='cartproducts-list'>
                 <h1>YOUR SHOPPING BAG</h1>
                 <p className='cartproducts-itemcount'>
-                    <span> 4 </span> items
+                    <span> {totalQuantity} </span> item(s)
                 </p>
 
                 <div className="cartproducts-card">  {/* START CART CONTAINER */}
 
+                    { cart.products.map(product => (
                     <div className='cartproducts-list-card'>
-                        <p className='cartproducts-list-card-index'>1</p>
-                        <img className='cartproducts-list-card-image' src="https://static.zara.net/assets/public/4ae2/eaf5/b10f4b37bbce/7c36455e3302/01605785712-e1/01605785712-e1.jpg?ts=1715242793951&w=850" alt="cute dress" />
+                        
+                        <p className='cartproducts-list-card-index'>{i += 1}</p>
+                        <img className='cartproducts-list-card-image' src={product.productImages[0]} alt="cute dress" />
 
                         <div className="cartproducts-list-card-info">
-                            <p className='cartproducts-list-card-info-productName'>Cute Dress Floral</p>
-                            <p className='cartproducts-list-card-info-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis debitis eos exercitationem quod culpa.</p>
+                            <p className='cartproducts-list-card-info-productName'>{product.productName}</p>
+                            <p className='cartproducts-list-card-info-description'>{product.productDescription}</p>
                             <div className="cartproducts-list-card-info-colorsize">
                                 <div className="cartproducts-list-card-info-color">
                                     <p>Color:</p>
-                                    <div style={{"color": "blue"}}></div>
+                                    <div style={{backgroundColor: product.color, width: 15, height: 15, border: '1px solid lightgrey', borderRadius: '50px' }}></div>
                                 </div>
                                 <div className="cartproducts-list-card-info-size">
                                     <p>Size:</p>
-                                    <p>XS</p>
+                                    <p>{product.size}</p>
                                 </div>
                             </div>
                             <div className="cartproducts-info-quantity">
                                 <p>Quantity</p>
                                 <div className="qty">
-                                    <RemoveIcon style={{ fill: '#1E1E1E', fontSize: 18, cursor: 'pointer' }} />
-                                    <p>2</p>
-                                    <AddIcon style={{ fill: '#1E1E1E', fontSize: 18, cursor: 'pointer' }} />
+                                    {console.log(product._id, " product.Id")}
+                                    <RemoveIcon style={{ fill: '#1E1E1E', fontSize: 18, cursor: 'pointer' }} 
+                                    onClick={() => dispatch(decreaseQuantity(product._id))} />
+                                    <p>{product.quantity}</p>
+                                    <AddIcon style={{ fill: '#1E1E1E', fontSize: 18, cursor: 'pointer' }} onClick={() => dispatch(increaseQuantity(product._id))} />
                                 </div>
                             </div>
                             <div className="cartproducts-list-card-info-price">
-                                <p>$20.00</p>
+                                <p>${product.price * product.quantity}</p>
                             </div>
                             <div className='add-to-wishlist'>
                                 <button><FavoriteBorderIcon style={{ fill: '#1E1E1E', fontSize: 14 }} /> Add to wishlist instead?</button>
                             </div>
                         </div>
+                        <button className='removeProduct-btn' onClick={() => dispatch(removeProduct(product._id))}>x</button>
                     </div>
+                    ))
+                    }
 
-                    {/* --------  */}
-
-                    <div className='cartproducts-list-card'>
-                        <p className='cartproducts-list-card-index'>2</p>
-                        <img className='cartproducts-list-card-image' src="https://static.zara.net/assets/public/a3c8/7fcd/e0434d2ebf58/8c164a00aa1e/04441579400-e1/04441579400-e1.jpg?ts=1712158714340&w=850" alt="cute dress" />
-
-                        <div className="cartproducts-list-card-info">
-                            <p className='cartproducts-list-card-info-productName'>Jean Dress Casual</p>
-                            <p className='cartproducts-list-card-info-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis debitis eos exercitationem quod culpa.</p>
-                            <div className="cartproducts-list-card-info-colorsize">
-                                <div className="cartproducts-list-card-info-color">
-                                    <p>Color:</p>
-                                    <div style={{"color": "blue"}}></div>
-                                    <div style={{"color": "pink"}}></div>
-                                </div>
-                                <div className="cartproducts-list-card-info-size">
-                                    <p>Size:</p>
-                                    <p>XS</p>
-                                </div>
-                            </div>
-                            <div className="cartproducts-info-quantity">
-                                <p>Quantity</p>
-                                <div className="qty">
-                                    <RemoveIcon style={{ fill: '#1E1E1E', fontSize: 18, cursor: 'pointer' }} />
-                                    <p>1</p>
-                                    <AddIcon style={{ fill: '#1E1E1E', fontSize: 18, cursor: 'pointer' }} />
-                                </div>
-                            </div>
-                            <div className="cartproducts-list-card-info-price">
-                                <p>$30.00</p>
-                            </div>
-                            <div className='add-to-wishlist'>
-                                <button><FavoriteBorderIcon style={{ fill: '#1E1E1E', fontSize: 14 }} /> Add to wishlist instead?</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='cartproducts-list-card'>
-                        <p className='cartproducts-list-card-index'>3</p>
-                        <img className='cartproducts-list-card-image' src="https://static.zara.net/assets/public/f25f/0aca/36a5424989db/de500d5c92c6/01561494615-e1/01561494615-e1.jpg?ts=1712917013926&w=850" alt="cute dress" />
-
-                        <div className="cartproducts-list-card-info">
-                            <p className='cartproducts-list-card-info-productName'>Yellow A line dress</p>
-                            <p className='cartproducts-list-card-info-description'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis debitis eos exercitationem quod culpa.</p>
-                            <div className="cartproducts-list-card-info-colorsize">
-                                <div className="cartproducts-list-card-info-color">
-                                    <p>Color:</p>
-                                    <div style={{"color": "yellow"}}></div>
-                                </div>
-                                <div className="cartproducts-list-card-info-size">
-                                    <p>Size:</p>
-                                    <p>XS</p>
-                                </div>
-                            </div>
-                            <div className="cartproducts-info-quantity">
-                                <p>Quantity</p>
-                                <div className="qty">
-                                    <RemoveIcon style={{ fill: '#1E1E1E', fontSize: 18, cursor: 'pointer' }} />
-                                    <p>2</p>
-                                    <AddIcon style={{ fill: '#1E1E1E', fontSize: 18, cursor: 'pointer' }} />
-                                </div>
-                            </div>
-                            <div className="cartproducts-list-card-info-price">
-                                <p>$30.00</p>
-                            </div>
-                            <div className='add-to-wishlist'>
-                                <button><FavoriteBorderIcon style={{ fill: '#1E1E1E', fontSize: 14 }} /> Add to wishlist instead?</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='cartproducts-list-card'>
-                        <p className='cartproducts-list-card-index'>4</p>
-                        <img className='cartproducts-list-card-image' src="https://static.zara.net/assets/public/b8c8/c6c3/852e4376a3ae/b494d49fadb4/00673604250-e1/00673604250-e1.jpg?ts=1711036840288&w=850" alt="cute dress" />
-
-                        <div className="cartproducts-list-card-info">
-                            <p className='cartproducts-list-card-info-productName'>TECHNICAL FABRIC PLEATED TEXT DRESS</p>
-                            <p className='cartproducts-list-card-info-description'>consectetur adipisicing elit. Blanditiis debitis eos exercitationem quod culpa.</p>
-                            <div className="cartproducts-list-card-info-colorsize">
-                                <div className="cartproducts-list-card-info-color">
-                                    <p>Color:</p>
-                                    <div style={{"color": "blue"}}></div>
-                                </div>
-                                <div className="cartproducts-list-card-info-size">
-                                    <p>Size:</p>
-                                    <p>XS</p>
-                                </div>
-                            </div>
-                            <div className="cartproducts-info-quantity">
-                                <p>Quantity</p>
-                                <div className="qty">
-                                    <RemoveIcon style={{ fill: '#1E1E1E', fontSize: 18, cursor: 'pointer' }} />
-                                    <p>2</p>
-                                    <AddIcon style={{ fill: '#1E1E1E', fontSize: 18, cursor: 'pointer' }} />
-                                </div>
-                            </div>
-                            <div className="cartproducts-list-card-info-price">
-                                <p>$20.00</p>
-                            </div>
-                            <div className='add-to-wishlist'>
-                                <button><FavoriteBorderIcon style={{ fill: '#1E1E1E', fontSize: 14 }} /> Add to wishlist instead?</button>
-                            </div>
-                        </div>
-                    </div>
-                       {/* -------------  */}
                     </div> {/* END CARD container div DO NOT DELETE  */}
                     
             </div>
@@ -183,26 +162,42 @@ const CartProducts = () => {
                         <div className="cartProducts-total-item">
                             <p>Subtotal:</p>
                             <div className="line-div"></div>
-                            <p>$123.00</p>
+                            <p>${cart.total}</p>
                         </div>
                         <div className="cartProducts-total-item">
                             <p>Shipping:</p>
                             <div className="line-div"></div>
-                            <p>$5.00</p>
+                            <p>$0.00</p>
                         </div>
                         <div className="cartProducts-total-item">
                             <p>Discount:</p>
                             <div className="line-div"></div>
-                            <p>$5.00</p>
+                            <p>$0.00</p>
                         </div>
                         <div className="cartProducts-total-item mainCartProducts-total-item">
                             <p>TOTAL:</p>
                             <div className="line-div"></div>
-                            <p>$128.00</p>
+                            <p>${cart.total}</p>
                         </div>
                     </div>
                     <div className="cartProducts-total-item">
-                        <button>PROCEED TO CHECKOUT</button>
+                        
+                        <StripeCheckout
+                            name="CHIQUITA" // the pop-in header title
+                            description={`Your total is ${cart.total}.00`} // the pop-in header subtitle
+                            image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png" 
+                            amount={cart.total * 100} // cents
+                            currency="USD"
+                            stripeKey={KEY}
+                            shippingAddress
+                            billingAddress={false}
+                            zipCode={false}
+                            alipay
+                            allowRememberMe 
+                            token={onToken}
+                            >
+                                <button>PROCEED TO CHECKOUT</button>
+                        </StripeCheckout>
                     </div>
                 </div>
             </div>

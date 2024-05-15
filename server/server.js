@@ -51,6 +51,7 @@ app.use('/auth/register', require('./routes/auth/auth'))
 app.use('/users', require('./routes/user'))
 app.use('/users/id', require('./routes/user'))
 app.use('/users/stats', require('./routes/user'))
+app.use('/checkout', require('./routes/stripe'))
 
 // IMAGE STORAGE ENGINE
 const storage = multer.diskStorage({

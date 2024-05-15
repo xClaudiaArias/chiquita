@@ -229,7 +229,6 @@
     font-size: 18px;
     width: 120px;
     text-align: left;
-    /* border: 1px solid red; */
     font-weight: 300;
 }
 
@@ -257,7 +256,7 @@
 }
 
 .cartProducts-total button {
-    background-color: #ce75dd;
+    background-color: #c07dff;
     color: white;
     border-radius: 50px;
     font-size: 18px;
@@ -270,7 +269,29 @@
 }
 
 .cartProducts-total button:hover {
-    background-color: #c068d0;
+    background-color: #b072ea;
 }
 
+.removeProduct-btn {
+    align-self: baseline;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 300;
+    border: 1px solid rgb(177, 177, 177);
+    border-radius: 4px;
+}
 
+.removeProduct-btn:hover {
+    align-self: baseline;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 300;
+    border: 1px solid #c07dff;
+    border-radius: 4px;
+    background-color: #c07dff;
+    color: white;
+}

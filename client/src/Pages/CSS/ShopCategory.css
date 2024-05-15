@@ -191,6 +191,12 @@
     border: 1px solid #c07dff46;
 }
 
+.login-inputs-container button:disabled {
+    background-color: lightgrey;
+    color:#3d3d3d;
+    cursor: not-allowed;
+}
+
 .login-info-container .login-inputs-container .login-ct,
 .login-info-container .login-inputs-container .login-ct {
     display: flex;
@@ -234,4 +240,8 @@
     color: #1e1e1e;
     background: none;
     margin-left: 20px;
+}
+.error-container {
+    color: red;
+    font-weight: 300;
 }

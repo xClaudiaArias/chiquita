@@ -17,15 +17,21 @@
     font-weight: 200;
 }
 
+.breadcrums p a{
+    text-decoration: none;
+}
+
 .breadcrums p .main-cat{
     font-size: 32px;
     font-weight: 600;
     color: #c07dff;
+    text-transform: capitalize;
 }
 
 .breadcrums p .cat {
     font-size: 28px;
     font-weight: 300;
+    text-transform: capitalize;
 }
 
 .breadcrums p .divider {
