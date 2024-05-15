@@ -17,7 +17,7 @@ const Wishlist = () => {
                     {wishlist.map(product => (
                         <div className="wishlist-item" key={product._id}>
                             {product.productImages && product.productImages.length > 0 && (
-                            <img src={product.productImages[0]} alt="" />
+                            <img style={{width: 250, height: 250}} src={product.productImages[0]} alt="" />
                             )}
                             <div className="wishlist-item-details">
                                 <p>{product.productName}</p>

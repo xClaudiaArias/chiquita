@@ -50,7 +50,7 @@ router.post("/register", asyncHandler(async(req, res) => {
 router.post("/login", asyncHandler(async (req, res) => {
     try {
         // Check if username or password is missing
-        if (!req.body.username || !req.body.password ) {
+        if (!req.body.username || !req.body.password) {
             return res.status(400).json({ message: "Fields can not be empty." });
         }
 
@@ -59,34 +59,31 @@ router.post("/login", asyncHandler(async (req, res) => {
 
         // Check if user exists
         if (!user) {
-            return res.status(404).json({ error: 'user not found' });
+            return res.status(404).json({ error: 'User not found' });
         }
 
-        // Check if password is correct
-        const hashedPassword = CryptoJS.AES.decrypt(
+        // Decrypt and compare passwords
+        const decryptedPassword = CryptoJS.AES.decrypt(
             user.password,
             process.env.PASS_SECRET
-        ).toString(CryptoJS.enc.Utf8)
-        
-        console.log(hashedPassword, " -hashedPassword")
-        console.log(req.body.password, " -req.body.password")
+        ).toString(CryptoJS.enc.Utf8);
 
-        if (hashedPassword !== req.body.password) {
+        if (decryptedPassword !== req.body.password) {
             return res.status(401).json({ error: 'Password is wrong' });
         }
         
-        // Get the password from the request body
+        // Generate and send access token
         const accessToken = jwt.sign({
             id: user._id,
             isAdmin: user.isAdmin
-        }, process.env.JWT_SEC, {
+        }, process.env.JWT_SECRET, {
             expiresIn: "3d"
         });
 
+        // Exclude password from user data sent in response
+        const { password, ...userData } = user._doc;
 
-        const { password, ...others } = user._doc;
-
-        res.status(200).json({...others, accessToken})
+        res.status(200).json({ user: userData, accessToken });
     } catch (error) {
         console.log(error, " error")
         res.status(500).json({ error: 'Internal Server Error' });

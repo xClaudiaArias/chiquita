@@ -2,20 +2,20 @@ export const sliderItems = [
     { 
         id: 1,
         img: "https://static.zara.net/assets/public/1add/a430/2cca4b5aa386/693dd5d279e7/11229330203-e1/11229330203-e1.jpg?ts=1710750923769&w=850",
-        title: "SPRING SALE 💐 ",
-        description: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF NEW ARRIVALS"
+        title: "GRAND OPENING 🛍️ ",
+        description: "STYLE THAT SPEAKS: YOUR NEW BOUTIQUE DESTINATION."
     },
     { 
         id: 2,
         img: "https://static.zara.net/assets/public/d50d/07ba/f2c44a248f80/bebda06183d1/06224821250-e1/06224821250-e1.jpg?ts=1711447630097&w=850",
-        title: "SUMMER SALE 😎",
-        description: "NEW STYLES YOU WILL LOVE! GET FLAT 30% OFF NEW ARRIVALS"
+        title: "STYLE DOESN'T COMPROMISE 🎀 ",
+        description: "CUTE AND LIFETIME QUALITY PRODUCTS THAT YOU WILL LOVE FOREVER."
     },
     { 
         id: 3,
         img: "https://static.zara.net/assets/public/31cd/4e13/144a4809bdfb/9ab06c2889da/01440695701-e2/01440695701-e2.jpg?ts=1713888293539&w=850",
-        title: "SPRING SALE 🌸 ",
-        description: "FIND THAT UNIQUELY YOURS EDGE! GET FLAT 30% OFF NEW ARRIVALS"
+        title: "UNIQUE STYLES 👚 ",
+        description: "ONE OF A KIND DESIGNS; HOME-MADE WITH CARE."
     }
 ]
 

@@ -7,17 +7,17 @@ const AddProduct = () => {
     const [productImages, setProductImages] = useState([])
     const [productColor, setProductColor] = useState([])
     const [productSize, setProductSize] = useState([])
+    const [categories, setCategories] = useState([])
     
     const [productInfo, setProductInfo] = useState({
-        category: "",
-        mainCategory: "",
+        categories: [],
         productName: "",
         productDescription: "",
         productImages: [],
         size: [],
         color: [],
         price: "",
-        units_in_stock: "",
+        units_in_stock: "1",
         in_stock: true
     })
 
@@ -39,14 +39,11 @@ const AddProduct = () => {
         setProductInfo({...productInfo, [e.target.name] : e.target.value})
     }
 
-    const addColor = (e) => {
-        console.log(e.target.value)
-        let colors = productColor
-        colors.push(e.target.value)
-        
-        setProductColor(colors)
-        console.log(productColor, " -->productColor")
+    const addColor = (color) => {
+        setProductInfo({ ...productInfo, color: [...productInfo.color, color] });
     }
+
+    
 
     const addSize = (e) => {
         console.log(e.target.value)
@@ -67,44 +64,16 @@ const AddProduct = () => {
 
         let formData = new FormData()
 
-        switch(product.mainCategory) {
-            case "Babies":
-                product.mainCategory = "65bbe5b0062e04db1ac1b0bd"
-                break;
-            case "Toddlers":
-                product.mainCategory = "65bbe5bd062e04db1ac1b0bf"
-                break;
-            case "Kids":
-                product.mainCategory = "65bbe5c2062e04db1ac1b0c1"
-                break;
-            case "Accessories":
-                product.mainCategory = "65bbe5ca062e04db1ac1b0c3"
-                break;
-        }
+        const categoriesArray = productInfo.categories.split(",").map(category => category.trim());
+        setProductInfo({ ...productInfo, categories: categoriesArray });
 
-        switch(product.category) {
-            case "Bottoms":
-                product.category = "6573723586343b42bfcc0ac8"
-                break;
-            case "Tops":
-                product.category = "6573723a86343b42bfcc0aca"
-                break;
-            case "Dresses":
-                product.category = "65aae1bff7ed0db75e9f4474"
-                break;
-            case "Nightwear":
-                product.category = "65aae1def7ed0db75e9f4476"
-                break;
-            case "Accessories":
-                product.category = "65aae1e8f7ed0db75e9f4478"
-        }
 
         for (let i = 0; i < productImages.length; i++) {
             console.log(productImages[i])
             formData.append('product', productImages[i])
         }
 
-        // console.log(productImages, ' -->productImages')
+        console.log(productImages, ' -->productImages')
 
         await fetch('http://localhost:8000/upload', {
             method: 'POST',
@@ -124,7 +93,7 @@ const AddProduct = () => {
             product.color = productColor
             product.size = productSize
 
-            await fetch('http://localhost:8000/product', {
+            await fetch('http://localhost:8000/products', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -144,24 +113,8 @@ const AddProduct = () => {
 
             <div className="addproduct-categories">
                 <div className="addproduct-item">
-                    <p>Main category</p>
-                    <select name="mainCategory" value={productInfo.mainCategory} onChange={changeHandler} id="mainCategory">
-                        <option>Babies</option>
-                        <option>Toddlers</option>
-                        <option>Kids</option>
-                        <option>Accessories</option>
-                    </select>
-                </div>
-
-                <div className="addproduct-item">
-                    <p>Category</p>
-                    <select name="category" value={productInfo.category} onChange={changeHandler} id="category">
-                        <option>Bottoms</option>
-                        <option>Tops</option>
-                        <option>Dresses</option>
-                        <option>Nightwear</option>
-                        <option>Accessories</option>
-                    </select>
+                    <p>Categories</p>
+                    <input onChange={changeHandler} value={productInfo.categories} name="categories" type="text" /> 
                 </div>
             </div>
             <div className="uploaded-imgs-list">
@@ -185,23 +138,19 @@ const AddProduct = () => {
                 <p>Product description</p>
                 <textarea onChange={changeHandler} value={productInfo.productDescription} name="productDescription" id="" cols="30" rows="10"></textarea>
             </div>
-            {/* <div className="addproduct-item">
-                <p>Color</p>
-                <input onChange={changeHandler} value={productInfo.color} type="color" id="product-color" name="color" />
-            </div> */}
             <div className="addproduct-item">
                 <p>Color</p>
-                <button onClick={addColor} value="red">red</button>
-                <button onClick={addColor} value="orange">orange</button>
-                <button onClick={addColor} value="yellow">yellow</button>
-                <button onClick={addColor} value="green">green</button>
-                <button onClick={addColor} value="blue">blue</button>
-                <button onClick={addColor} value="purple">purple</button>
-                <button onClick={addColor} value="black">black</button>
-                <button onClick={addColor} value="white">white</button>
-                <button onClick={addColor} value="brown">brown</button>
-                <button onClick={addColor} value="beige">beige</button>
-                <button onClick={addColor} value="pink">pink</button>
+                <button onClick={() => addColor("red")}>red</button>
+                <button onClick={() => addColor("orange")}>orange</button>
+                <button onClick={() => addColor("yellow")}>yellow</button>
+                <button onClick={() => addColor("green")}>green</button>
+                <button onClick={() => addColor("blue")}>blue</button>
+                <button onClick={() => addColor("purple")}>purple</button>
+                <button onClick={() => addColor("black")}>black</button>
+                <button onClick={() => addColor("white")}>white</button>
+                <button onClick={() => addColor("brown")}>brown</button>
+                <button onClick={() => addColor("beige")}>beige</button>
+                <button onClick={() => addColor("pink")}>pink</button>
             </div>
             <div className="addproduct-item">
                 <p>Sizes</p>
@@ -210,6 +159,11 @@ const AddProduct = () => {
                 <button onClick={addSize} value="M">M</button>
                 <button onClick={addSize} value="L">L</button>
                 <button onClick={addSize} value="XL">XL</button>
+            </div>
+            <div className="addproduct-item">
+                    {productInfo.color.map((color, index) => (
+                        <span key={index} style={{ backgroundColor: color }}>{color}</span>
+                    ))}
             </div>
             <div className="addproduct-item">
                 <p>Price</p>

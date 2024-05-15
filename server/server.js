@@ -99,21 +99,17 @@ app.all('*', (req, res) => {
 });
 
 // mongoose connection
+// mongoose connection
 mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
+    .then(async () => {
         console.log('Connected to MongoDB');
-        // connect and start server 
         const db = mongoose.connection.useDb('chiquitaDB');
-        console.log(db.name);
+        // console.log(db.name);
         app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
     })
     .catch(err => {
         console.error('Error connecting to MongoDB:', err.message);
     });
 
-mongoose.connection.on('error', err => {
-    console.log('MongoDB connection error:', err);
-});
 
-console.log(mongoose.connection, " nm");
 
