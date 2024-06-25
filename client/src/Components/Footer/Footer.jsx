@@ -9,9 +9,7 @@ const Footer = () => {
 
             <div className="footer-left">
                 <div className="logo">CHIQUITA</div>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Unde praesentium explicabo quo veritatis reiciendis aperiam, labore cumque quaerat sed pariatur quos aliquam molestias! Perferendis, at debitis? Reprehenderit iure fugit labore!
-
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est, doloremque voluptas? Voluptate tempore voluptas, ducimus minus sunt mollitia modi possimus esse nisi. 🛍️
+                <p>CHIQUITA is a small-scale business founded by Isel with a focus on crafting unique and personalized clothing items for young girls. Being inspired by her two daughters and with a passion to create beautiful designs, Isel has garnered a loyal customer base within the local community. 🛍️
                 </p>
             </div>
 

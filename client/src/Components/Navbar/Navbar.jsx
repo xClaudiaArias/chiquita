@@ -1,6 +1,6 @@
 import React, { useState} from 'react'
 import './Navbar.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import SearchIcon from '@mui/icons-material/Search';
@@ -16,6 +16,14 @@ const Navbar = () => {
     const totalQuantity = cart.products.reduce((total, product) => total + product.quantity, 0);
     const isAuthenticated = useSelector(state => state.user.isAuthenticated);
     const dispatch = useDispatch();
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearch = (e) => {
+        if (e.key === 'Enter') {
+            navigate(`/search?q=${searchQuery}`);
+        }
+    };
 
     const handleLogout = () => {
         dispatch(logout())
@@ -56,7 +64,16 @@ const Navbar = () => {
                     </li>
 
 
-                    <li className="search-container"><SearchIcon/> <input type="text"  /></li>
+                    <li className="search-container">
+                        <SearchIcon />
+                        <input 
+                            type="text" 
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onKeyDown={handleSearch}
+                            placeholder="Search products..." 
+                        />
+                    </li>
 
                     {/* CART */}
                     <li>

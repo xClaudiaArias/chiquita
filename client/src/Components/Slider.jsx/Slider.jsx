@@ -2,6 +2,7 @@ import './Slider.css'
 import { ArrowLeft, ArrowRight } from '@mui/icons-material'
 import React, { useState } from 'react'
 import { sliderItems } from '../../Data/data'
+import { Link } from 'react-router-dom'
 
 
 const Slider = () => {
@@ -34,7 +35,7 @@ const Slider = () => {
                         <div className="info-container">
                             <h1>{item.title}</h1>
                             <p>{item.description}</p>
-                            <button>START SHOPPING!</button>
+                            <Link to="/products/babies"><button>START SHOPPING!</button></Link>
                         </div>
                     </div>
                 ))}

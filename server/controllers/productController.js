@@ -3,27 +3,33 @@ const asyncHandler = require('express-async-handler');
 
 // 🛍️ get all products 
 const getAllProducts = asyncHandler(async (req, res) => {
-    const qNew = req.query.new
-    const qCategory = req.query.category
+    const qNew = req.query.new;
+    const qCategory = req.query.category;
+    const qSearch = req.query.search;
 
     try {
         let products;
         if (qNew) {
-            products = await Product.find().sort({createdAt: -1}).limit(8)
+            products = await Product.find().sort({createdAt: -1}).limit(8);
         } else if (qCategory) {
-            products = await Product.find({categories : {
-                $in: [qCategory]
-            }})
+            products = await Product.find({
+                categories: {
+                    $in: [qCategory] 
+                }
+            });
+        } else if (qSearch) {
+            products = await Product.find({
+                productName: { $regex: qSearch, $options: 'i' } // Case-insensitive search
+            });
         } else {
-            products = await Product.find()
+            products = await Product.find();
         }
         
-
-        res.status(200).json(products)
+        res.status(200).json(products);
     } catch(error) {
-        res.status(500).json(error)
+        res.status(500).json(error);
     }
-})
+});
 
 // 🛍️ get ONE product by id
 const getProductById = asyncHandler(async(req, res) => {
