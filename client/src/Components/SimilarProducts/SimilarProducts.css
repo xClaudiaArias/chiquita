@@ -45,7 +45,7 @@
     padding: 2px 0;
 }
 
-.similarproducts-info-btns button {
+.similarproducts-info-btns a {
     padding: 5px 10px;
     font-size: 14px;
     background-color: transparent;
@@ -57,9 +57,10 @@
     align-items: center;
     color: #414141;
     font-weight: 300;
+    text-decoration: none;
 }
 
-.similarproducts .similarproducts-info button:hover {
+.similarproducts .similarproducts-info a:hover {
     background-color: #c07dff46;
     border: 1px solid #c07dff46;
 }

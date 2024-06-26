@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import './CSS/ShopCategory.css'
 
 const Search = () => {
     const [products, setProducts] = useState([]);
@@ -35,7 +36,7 @@ const Search = () => {
     if (error) return <div>{error}</div>;
 
     return (
-        <div>
+        <div className='search-cont'>
             <h1>Search Results</h1>
             {products.length > 0 ? (
                 <ul>
@@ -44,9 +45,11 @@ const Search = () => {
                             {/* TODO: style this: */}
                             <Link to={`/products/${product._id}`}>
                                 <img src={product.productImages} alt={product.productName} />
-                                <p key={product._id}>{product.productName}</p>
-                                <p>${product.price}</p>
                             </Link>
+                            <p key={product._id}>{product.productName}</p>
+                            <div className="search-desc">
+                                <p>${product.price}</p>
+                            </div>
                         </li>
                     ))}
                 </ul>

@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addProduct } from '../../redux/cartRedux';
 import { addToWishlist } from '../../redux/wishlistRedux'; 
+import { FavoriteBorderOutlined, Favorite } from '@mui/icons-material';
 
 const Prod = () => {
     const location = useLocation();
@@ -19,6 +20,7 @@ const Prod = () => {
     const [showWishlistConfirmation, setShowWishlistConfirmation] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [isFavorited, setIsFavorited] = useState(false);
 
     useEffect(() => {
         const getProduct = async () => {
@@ -50,6 +52,7 @@ const Prod = () => {
     const handleAddToWishlist = () => {
         // checking if product is not null before dispatching the action to avoid err 
         if (product !== null) {
+            setIsFavorited(!isFavorited);
             dispatch(addToWishlist({ ...product }));
             setShowWishlistConfirmation(true);
         }
@@ -133,10 +136,12 @@ const Prod = () => {
                 <div className="prodDisplay-footer">
                     <div className="prodDisplay-product-price">
                         <p>Price:</p>
-                        <p className='prodDisplay-price'>${product.price * quantity}</p>
+                        <p className='prodDisplay-price'>${product.price * quantity}.00</p>
                     </div>
                     <button className='prodDisplay-add-to-cart' onClick={handleClick}>ADD TO CART</button>
-                    <button className='prodDisplay-add-to-wishlist' onClick={handleAddToWishlist}>ADD TO WISHLIST</button>
+                </div>
+                <div className='prodDisplay-add-to-wishlist' onClick={handleAddToWishlist}>
+                        {isFavorited ? <Favorite /> : <FavoriteBorderOutlined />} ADD TO WISHLIST
                 </div>
                 <p className='productdisplay-right-category'><span>Category:</span> category, productName</p>
                 {
