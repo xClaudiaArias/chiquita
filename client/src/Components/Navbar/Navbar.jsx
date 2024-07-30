@@ -34,9 +34,6 @@ const Navbar = () => {
     }
 
 
-
-
-    console.log(isAuthenticated, " isAuthenticated?")
     return (
         <>
 

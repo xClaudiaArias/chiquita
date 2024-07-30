@@ -1,48 +1,43 @@
-import React from 'react'
-import "./CSS/ShopCategory.css"
-import { useEffect, useState } from 'react';
-import { similarItems } from "../Data/data"
+import React, { useEffect, useState } from 'react';
+import "./CSS/ShopCategory.css";
+import { similarItems } from "../Data/data";
 import PersonIcon from '@mui/icons-material/Person';
 import PasswordIcon from '@mui/icons-material/Password';
 import { Link } from 'react-router-dom';
-import { login } from '../redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../redux/apiCalls';
 
 const Login = () => {
-
-
     const [currentSlide, setCurrentSlide] = useState(0);
-        const nextSlide = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
+    const { isFetching, error } = useSelector((state) => state.user);
+
+    const nextSlide = () => {
         setCurrentSlide((prevSlide) => (prevSlide === similarItems.length - 1 ? 0 : prevSlide + 1));
-        };
-    
+    };
+
     useEffect(() => {
         const interval = setInterval(nextSlide, 3000);
-        return () => clearInterval(interval); 
-    }, [currentSlide]); 
-    
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const dispatch = useDispatch()
-
-    // handle errors 
-    const { isFetching, error } = useSelector((state) => state.user)
+        return () => clearInterval(interval);
+    }, [currentSlide]);
 
     const handleClick = (e) => {
-        e.preventDefault() //prevent pg from refresging 
-        console.log('I was clicked')
-        login(dispatch, { username, password })
-    }
+        e.preventDefault();
+        console.log('I was clicked');
+        console.log(username, password);
+        login(dispatch, { username, password });
+    };
 
     return (
         <div className='login'>
-
             <div className="slideshow">
                 {similarItems.map((item, index) => (
                     <div
-                    key={index}
-                    className={`slide ${index === currentSlide ? 'active' : ''}`}
-                    style={{ backgroundImage: `url(${item.img})` }}
+                        key={index}
+                        className={`slide ${index === currentSlide ? 'active' : ''}`}
+                        style={{ backgroundImage: `url(${item.img})` }}
                     ></div>
                 ))}
             </div>
@@ -64,12 +59,12 @@ const Login = () => {
 
                     <button onClick={handleClick} disabled={isFetching}>
                         Login
-                    </button>   
-                    {error && <div className="error-container">Something went wrong</div>   }     
+                    </button>
+                    {/* {error && <span className="error-message">Something went wrong. Please try again.</span>} */}
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

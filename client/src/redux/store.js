@@ -16,12 +16,11 @@ import {
 
 import storage from "redux-persist/lib/storage";
 
-
 const persistConfig = {
     key: 'root',
     version: 1,
     storage,
-}
+};
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -31,14 +30,15 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = configureStore({
+const store = configureStore({
     reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware({
-        serializableCheck: {
-            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-        }
-    })
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),
 });
 
 export let persistor = persistStore(store);
+export default store;

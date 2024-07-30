@@ -21,7 +21,7 @@ const Register = () => {
     }, [currentSlide]); 
     
 
-
+    
 
     return (
         <div className='register'>

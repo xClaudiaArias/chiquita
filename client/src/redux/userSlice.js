@@ -11,7 +11,8 @@ const userSlice = createSlice({
     reducers: {
         // create three reducers (login, success and failuer )
         loginStart: (state) => {
-            state.isFetching = true
+            state.isFetching = true;
+            state.error = false;
         },// at beginning we dont need actin since we won't send anything
         loginSuccess: (state, action) => {
             state.isFetching = false;
@@ -19,7 +20,7 @@ const userSlice = createSlice({
             state.isAuthenticated = true;
         }, //async fn makes api req if succ, take actionpayload and update curr user
         loginFailure: (state) => {
-            state.isFetching = false; // if smething is wrong with out api
+            state.isFetching = false; // if something is wrong with out api
             state.error = true
         },
         logout: (state) => {
@@ -29,11 +30,5 @@ const userSlice = createSlice({
     }
 });
 
-export const LOGOUT = "user/logout";
-
-export const logout = () => ({
-    type: LOGOUT,
-});
-
-export const { loginStart, loginSuccess, loginFailure } = userSlice.actions;
-export default userSlice.reducer; // use inside store
+export const { loginStart, loginSuccess, loginFailure, logout } = userSlice.actions;
+export default userSlice.reducer;
